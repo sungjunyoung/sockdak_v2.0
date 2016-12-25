@@ -8,7 +8,7 @@ const styles = {
         display: 'table',
         position: 'fixed',
         width: '100%',
-        height: 68,
+        height: 66,
         top: 0,
         left: 0,
         textAlign: 'center',

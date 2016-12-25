@@ -4,15 +4,36 @@
 import React, {Component} from 'react'; // React 임포트
 import {browserHistory} from 'react-router';
 
-import Header from '../../common/header/header'
+import Alert from 'react-s-alert';
+import 'react-s-alert/dist/s-alert-default.css';
+import 'react-s-alert/dist/s-alert-css-effects/jelly.css';
+
 
 import Styles from './styles';
+import Header from '../../common/header/header'
 
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import TextField from 'material-ui/TextField';
 import Toggle from 'material-ui/Toggle';
 import RaisedButton from 'material-ui/RaisedButton';
+
+// 알림창 모듈
+function alert(type, message) {
+    if (type == 'error') {
+        Alert.error(message, {
+            position: 'top',
+            effect: 'jelly',
+            timeout: 1500
+        })
+    } else if (type == 'success') {
+        Alert.success(message, {
+            position: 'top',
+            effect: 'jelly',
+            timeout: 1500
+        })
+    }
+}
 
 class Login extends Component {
     constructor(props) {
@@ -41,17 +62,44 @@ class Login extends Component {
     onApproveChange(event, value) {
         this.setState({approve: value})
     }
-
     // END
 
+
+    // 로그인시 호출
     onLogin(event, value) {
-        console.log(this.state);
+        event.preventDefault();
+
+        // 로그인 예외처리
+        if (this.state.school != '경희대학교') {
+            alert('error', '학교를 선택해 주세요!');
+            return;
+        }
+
+        if(this.state.id.length != 10){
+            alert('error', '학번을 정확히 입력해 주세요!');
+            return;
+        }
+
+        if(this.state.pw.length == 0){
+            alert('error', '비밀번호를 입력해 주세요!');
+            return;
+        }
+        if(this.state.approve == false){
+            alert('error', '이용약관에 동의해 주세요!');
+            return;
+        }
+        // END
+
+        /*TODO
+        - 로그인 로직 구현
+         */
     }
 
 
     render() {
         return (
             <div style={Styles.container}>
+                <Alert stack={{limit: 3}}/>
                 <Header title="로그인"/>
                 <div style={Styles.formContainer}>
                     <div style={Styles.subContainer}>

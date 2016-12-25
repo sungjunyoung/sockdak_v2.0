@@ -62,6 +62,7 @@ class Login extends Component {
     onApproveChange(event, value) {
         this.setState({approve: value})
     }
+
     // END
 
 
@@ -75,24 +76,41 @@ class Login extends Component {
             return;
         }
 
-        if(this.state.id.length != 10){
+        if (this.state.id.length != 10) {
             alert('error', '학번을 정확히 입력해 주세요!');
             return;
         }
 
-        if(this.state.pw.length == 0){
+        if (this.state.pw.length == 0) {
             alert('error', '비밀번호를 입력해 주세요!');
             return;
         }
-        if(this.state.approve == false){
+        if (this.state.approve == false) {
             alert('error', '이용약관에 동의해 주세요!');
             return;
         }
         // END
 
         /*TODO
-        - 로그인 로직 구현
+         - 로그인 로직 구현
          */
+
+        // 결과 promise 로 리턴
+        var resultPromise = Meteor.callPromise('loginToKhu', this.state.id, this.state.pw);
+
+        // 로그인 결과 받기
+        resultPromise.then(function (res) {
+            console.log(res);
+            if (res == 'ERROR') {
+                alert('error', '종합정보시스템 서버에 문제가 있습니다.')
+            } else if (res == 'INCORRECT') {
+                alert('error', '학번과 비밀번호를 다시 확인해주세요.')
+            } else if (res == 'REST') {
+                alert('error', '혹시 휴학생이세요..?')
+            } else{
+                alert('success', '환영합니다! '+res.info.name + '님')
+            }
+        })
     }
 
 

@@ -1,0 +1,12 @@
+html * {
+    font-family: Arial !important;
+
+}
+
+.render-target {
+    position: relative;
+    max-width: 500px;
+    margin: auto;
+}
+
+/*html 파일 전체 적용*/

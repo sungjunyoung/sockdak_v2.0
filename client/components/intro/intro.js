@@ -25,7 +25,7 @@ class Intro extends Component {
             <div style={Styles.container}>
                 <div style={Styles.subContainer}>
                     <div style={Styles.logo}>SOCKDAK</div>
-                    <RaisedButton onTouchTap={this.onStart} style={Styles.startButton} label="시작하기"/>
+                    <RaisedButton className="start-button" onTouchTap={this.onStart} style={Styles.startButton} label="시작하기"/>
                 </div>
             </div>
         );

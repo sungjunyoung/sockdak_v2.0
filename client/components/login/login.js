@@ -7,7 +7,6 @@ import {browserHistory} from 'react-router';
 import Alert from 'react-s-alert';
 import 'react-s-alert/dist/s-alert-default.css';
 import 'react-s-alert/dist/s-alert-css-effects/jelly.css';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 // import components, styles
 import Styles from './styles';
@@ -38,6 +37,7 @@ function alert(type, message) {
     }
 }
 
+
 class Login extends Component {
     constructor(props) {
         super(props);
@@ -46,15 +46,15 @@ class Login extends Component {
             id: '',
             pw: '',
             approve: false,
-            loadingState: 'hide',
             height: $(window).height(),
             width: $(window).width(),
+            showAdditionalInput: false
         }
     }
 
     // input 변화시 state 에 저장
     onSchoolChange(event, index, value) {
-        this.setState({school: value});
+        this.setState({school: value, showAdditionalInput: true});
     }
 
     onIdChange(event, value) {
@@ -97,10 +97,6 @@ class Login extends Component {
         }
         // END
 
-        /*TODO
-         - 로그인 로직 구현
-         */
-
         // 결과 promise 로 리턴
         var resultPromise = Meteor.callPromise('loginToKhu', this.state.id, this.state.pw);
 
@@ -121,22 +117,21 @@ class Login extends Component {
 
     }
 
+    onTextFieldFocus(event){
+        event.preventDefault();
+        event.stopPropagation();
+        window.scrollTo(0,0);
+    }
 
     render() {
         return (
             <div style={Styles.container}>
+
                 <Alert stack={{limit: 3}}/>
                 <Header title="로그인"/>
-
-                <ReactCSSTransitionGroup style={Styles.formContainer}
-                                         className="login-form"
-                                         transitionName="login-form"
-                                         transitionAppear={true}
-                                         transitionAppearTimeout={500}
-                                         transitionLeaveTimeout={500}>
-                    <div style={Styles.subContainer}>
+                <div style={Styles.formContainer}>
+                    <div className="school-select" style={Styles.subContainer}>
                         <div style={Styles.infoText}>학교 선택</div>
-
                         <SelectField
                             style={Styles.schoolSelectField}
                             floatingLabelText="재학중인 학교를 선택해 주세요 :)"
@@ -148,44 +143,48 @@ class Login extends Component {
                         </SelectField>
                     </div>
 
-                    <div style={Styles.subContainer}>
-                        <div style={Styles.infoText}>종합정보시스템 정보 입력</div>
-                        <TextField
-                            onChange={this.onIdChange.bind(this)}
-                            style={Styles.userIdField}
-                            hintText="종합정보시스템 학번을 입력해주세요."
-                            hintStyle={{fontSize: '12px', color: '#999999'}}
-                            floatingLabelText="학번"
-                            floatingLabelStyle={{fontSize: '14px'}}
-                        />
-                        <TextField
-                            onChange={this.onPasswordChange.bind(this)}
-                            type='password'
-                            style={Styles.userPasswordField}
-                            hintText="종합정보시스템 비밀번호를 입력해주세요."
-                            hintStyle={{fontSize: '12px', color: '#999999'}}
-                            floatingLabelText="패스워드"
-                            floatingLabelStyle={{fontSize: '14px'}}
-                        />
-                    </div>
 
-                    <div style={Styles.subContainer}>
-                        <Toggle
-                            onToggle={this.onApproveChange.bind(this)}
-                            label="속닥 이용약관에 동의합니다."
-                            labelPosition="right"
-                            labelStyle={{fontSize: '14px'}}
-                            style={Styles.approveToggle}
-                        />
-                    </div>
+                    {this.state.showAdditionalInput &&
+                    <div className="additional-input">
+                        <div style={Styles.subContainer}>
+                            <div style={Styles.infoText}>종합정보시스템 정보 입력</div>
+                            <TextField
+                                onFocus={this.onTextFieldFocus.bind(this)}
+                                onChange={this.onIdChange.bind(this)}
+                                style={Styles.userIdField}
+                                hintText="종합정보시스템 학번을 입력해주세요."
+                                hintStyle={{fontSize: '12px', color: '#999999'}}
+                                floatingLabelText="학번"
+                                floatingLabelStyle={{fontSize: '14px'}}
+                            />
 
-                </ReactCSSTransitionGroup>
+                            <TextField
+                                onChange={this.onPasswordChange.bind(this)}
+                                type='password'
+                                style={Styles.userPasswordField}
+                                hintText="종합정보시스템 비밀번호를 입력해주세요."
+                                hintStyle={{fontSize: '12px', color: '#999999'}}
+                                floatingLabelText="패스워드"
+                                floatingLabelStyle={{fontSize: '14px'}}
+                            />
+                        </div>
+
+                        <div style={Styles.subContainer}>
+                            <Toggle
+                                onToggle={this.onApproveChange.bind(this)}
+                                label="속닥 이용약관에 동의합니다."
+                                labelPosition="right"
+                                labelStyle={{fontSize: '14px'}}
+                                style={Styles.approveToggle}
+                            />
+                        </div>
+                    </div>
+                    }
+                </div>
 
                 <div style={Styles.subContainer}>
                     <RaisedButton onTouchTap={this.onLogin.bind(this)} style={Styles.loginButton} label="로그인"/>
                 </div>
-
-
             </div>
         );
     }

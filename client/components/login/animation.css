@@ -1,10 +1,21 @@
-.login-form-appear{
-    transition: 500ms;
-    opacity:0;
-    transform: translateX(-100%);
+.school-select {
+    animation-duration: .6s;
+    animation-name: slidein;
 }
 
-.login-form-appear-active{
-    opacity:1;
-    transform: translateX(0);
+.additional-input {
+    animation-duration: .6s;
+    animation-name: slidein;
+}
+
+@keyframes slidein {
+    from {
+        margin-left: -100%;
+        width: 100%
+    }
+
+    to {
+        margin-left: 0%;
+        width: 100%;
+    }
 }

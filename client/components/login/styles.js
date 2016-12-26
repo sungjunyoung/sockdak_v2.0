@@ -48,6 +48,9 @@ const styles = {
         left: 10,
         bottom : 10,
         maxWidth: '500px',
+    },
+    loading: {
+
     }
 };
 

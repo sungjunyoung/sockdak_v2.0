@@ -5,18 +5,25 @@
 const styles = {
 
     container: {
-        display: 'table',
         position: 'fixed',
         width: '100%',
         height: 66,
         top: 0,
         left: 0,
-        textAlign: 'center',
         backgroundColor: 'lightgray'
     },
     title: {
-        display: 'table-cell',
-        verticalAlign: 'middle'
+        position: 'absolute',
+        textAlign: 'center',
+        width: 200,
+        fontSize: 18,
+        top: 24,
+        left: '50%',
+        marginLeft: -100
+    },
+    backButton: {
+        float:'left',
+        marginTop: 14,
     }
 };
 

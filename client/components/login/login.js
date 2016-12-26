@@ -7,16 +7,19 @@ import {browserHistory} from 'react-router';
 import Alert from 'react-s-alert';
 import 'react-s-alert/dist/s-alert-default.css';
 import 'react-s-alert/dist/s-alert-css-effects/jelly.css';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
-
+// import components, styles
 import Styles from './styles';
 import Header from '../../common/header/header'
 
+// material ui import
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import TextField from 'material-ui/TextField';
 import Toggle from 'material-ui/Toggle';
 import RaisedButton from 'material-ui/RaisedButton';
+
 
 // 알림창 모듈
 function alert(type, message) {
@@ -42,7 +45,10 @@ class Login extends Component {
             school: '',
             id: '',
             pw: '',
-            approve: false
+            approve: false,
+            loadingState: 'hide',
+            height: $(window).height(),
+            width: $(window).width(),
         }
     }
 
@@ -102,15 +108,17 @@ class Login extends Component {
         resultPromise.then(function (res) {
             console.log(res);
             if (res == 'ERROR') {
-                alert('error', '종합정보시스템 서버에 문제가 있습니다.')
+                alert('error', '종합정보시스템 서버에 문제가 있습니다.');
             } else if (res == 'INCORRECT') {
-                alert('error', '학번과 비밀번호를 다시 확인해주세요.')
+                alert('error', '학번과 비밀번호를 다시 확인해주세요.');
             } else if (res == 'REST') {
-                alert('error', '혹시 휴학생이세요..?')
-            } else{
-                alert('success', '환영합니다! '+res.info.name + '님')
+                alert('error', '혹시 휴학생이세요..?');
+            } else {
+                alert('success', '환영합니다! ' + res.info.name + '님')
             }
-        })
+
+        });
+
     }
 
 
@@ -119,7 +127,13 @@ class Login extends Component {
             <div style={Styles.container}>
                 <Alert stack={{limit: 3}}/>
                 <Header title="로그인"/>
-                <div style={Styles.formContainer}>
+
+                <ReactCSSTransitionGroup style={Styles.formContainer}
+                                         className="login-form"
+                                         transitionName="login-form"
+                                         transitionAppear={true}
+                                         transitionAppearTimeout={500}
+                                         transitionLeaveTimeout={500}>
                     <div style={Styles.subContainer}>
                         <div style={Styles.infoText}>학교 선택</div>
 
@@ -165,10 +179,13 @@ class Login extends Component {
                         />
                     </div>
 
-                    <div style={Styles.subContainer}>
-                        <RaisedButton onTouchTap={this.onLogin.bind(this)} style={Styles.loginButton} label="로그인"/>
-                    </div>
+                </ReactCSSTransitionGroup>
+
+                <div style={Styles.subContainer}>
+                    <RaisedButton onTouchTap={this.onLogin.bind(this)} style={Styles.loginButton} label="로그인"/>
                 </div>
+
+
             </div>
         );
     }

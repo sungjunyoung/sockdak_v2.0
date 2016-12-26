@@ -1,0 +1,10 @@
+.login-form-appear{
+    transition: 500ms;
+    opacity:0;
+    transform: translateX(-100%);
+}
+
+.login-form-appear-active{
+    opacity:1;
+    transform: translateX(0);
+}

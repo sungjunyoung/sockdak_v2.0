@@ -7,6 +7,7 @@ import {browserHistory} from 'react-router';
 import Alert from 'react-s-alert';
 import 'react-s-alert/dist/s-alert-default.css';
 import 'react-s-alert/dist/s-alert-css-effects/jelly.css';
+import {WindowResizeListener} from 'react-window-resize-listener';
 
 // import components, styles
 import Styles from './styles';
@@ -110,29 +111,33 @@ class Login extends Component {
             } else if (res == 'REST') {
                 alert('error', '혹시 휴학생이세요..?');
             } else {
-                alert('success', '환영합니다! ' + res.info.name + '님')
+                alert('success', '환영합니다! ' + res.info.name + '님');
+                browserHistory.push('home');
             }
 
         });
 
     }
 
-    onTextFieldFocus(event){
-        event.preventDefault();
-        event.stopPropagation();
-        window.scrollTo(0,0);
+    onTextFieldFocus(event, value) {
+        console.log(value);
     }
 
     render() {
         return (
-            <div style={Styles.container}>
+            <div style={Object.assign(Styles.container,{height: this.state.height-80})}>
+
+                <WindowResizeListener onResize={windowSize => {
+                    this.setState({height: windowSize.windowHeight, width: windowSize.windowWidth});
+                }}/>
 
                 <Alert stack={{limit: 3}}/>
                 <Header title="로그인"/>
-                <div style={Styles.formContainer}>
-                    <div className="school-select" style={Styles.subContainer}>
-                        <div style={Styles.infoText}>학교 선택</div>
+                <div className="formContainer" style={Styles.formContainer}>
+                    <div style={Styles.subContainer}>
+                        <div className="school-select" style={Styles.infoText}>학교 선택</div>
                         <SelectField
+                            className="additional-input"
                             style={Styles.schoolSelectField}
                             floatingLabelText="재학중인 학교를 선택해 주세요 :)"
                             floatingLabelStyle={{fontSize: '14px'}}
@@ -145,10 +150,11 @@ class Login extends Component {
 
 
                     {this.state.showAdditionalInput &&
-                    <div className="additional-input">
+                    <div>
                         <div style={Styles.subContainer}>
-                            <div style={Styles.infoText}>종합정보시스템 정보 입력</div>
+                            <div className="additional-input" style={Styles.infoText}>종합정보시스템 정보 입력</div>
                             <TextField
+                                className="additional-input"
                                 onFocus={this.onTextFieldFocus.bind(this)}
                                 onChange={this.onIdChange.bind(this)}
                                 style={Styles.userIdField}
@@ -159,6 +165,7 @@ class Login extends Component {
                             />
 
                             <TextField
+                                className="additional-input"
                                 onChange={this.onPasswordChange.bind(this)}
                                 type='password'
                                 style={Styles.userPasswordField}
@@ -171,6 +178,7 @@ class Login extends Component {
 
                         <div style={Styles.subContainer}>
                             <Toggle
+                                className="additional-input"
                                 onToggle={this.onApproveChange.bind(this)}
                                 label="속닥 이용약관에 동의합니다."
                                 labelPosition="right"

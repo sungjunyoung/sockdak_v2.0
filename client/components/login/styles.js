@@ -6,10 +6,9 @@ const styles = {
     container: {
         position: 'absolute',
         width: '100%',
-        height: '100%',
         left: 0,
         top: 0,
-        paddingTop: 80,
+        paddingTop: 66,
         // backgroundColor: 'red'
     },
     formContainer:{
@@ -27,7 +26,7 @@ const styles = {
         fontSize: 15
     },
     schoolSelectField: {
-        marginTop: -10,
+        marginTop: -8,
         width: '100%'
     },
     userIdField: {
@@ -48,6 +47,7 @@ const styles = {
         left: 10,
         bottom : 10,
         maxWidth: '500px',
+        zIndex: 999
     },
     loading: {
 

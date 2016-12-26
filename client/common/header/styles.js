@@ -10,7 +10,8 @@ const styles = {
         height: 66,
         top: 0,
         left: 0,
-        backgroundColor: 'lightgray'
+        backgroundColor: 'lightgray',
+        zIndex: 999
     },
     title: {
         position: 'absolute',

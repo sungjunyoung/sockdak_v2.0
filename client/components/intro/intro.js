@@ -22,7 +22,7 @@ class Intro extends Component {
 
     render() {
         return (
-            <div style={Styles.container}>
+            <div className="container" style={Styles.container}>
                 <div style={Styles.subContainer}>
                     <div style={Styles.logo}>SOCKDAK</div>
                     <RaisedButton className="start-button" onTouchTap={this.onStart} style={Styles.startButton} label="시작하기"/>

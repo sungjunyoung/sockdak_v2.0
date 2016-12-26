@@ -6,15 +6,21 @@ import injectTapEventPlugin from 'react-tap-event-plugin'; // 버튼 탭 이벤�
 injectTapEventPlugin();
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-import Intro from './components/intro/intro'
-import Login from './components/login/login'
+import App from './components/app';
+
+import Intro from './components/intro/intro';
+import Login from './components/login/login';
+import Home from './components/home/home';
+
+
 
 const routes = (
     <MuiThemeProvider>
         <Router history={browserHistory}>
-            <Route path="/">
+            <Route path="/" component={App}>
                 <IndexRoute component={Intro}/>
                 <Route path="login" component={Login}/>
+                <Route path="home" component={Home}/>
             </Route>
         </Router>
     </MuiThemeProvider>

@@ -3,7 +3,7 @@
  */
 import React, {Component} from 'react'; // React 임포트
 import FlatButton from 'material-ui/FlatButton'; // material-ui 플랫버튼 임포트
-import BackButton from 'material-ui/svg-icons/navigation/chevron-left';
+import BackButtonIcon from 'material-ui/svg-icons/navigation/chevron-left';
 import {browserHistory} from 'react-router'
 
 import Styles from './styles';
@@ -26,7 +26,7 @@ class Header extends Component {
                     target="_blank"
                     label="BACK"
                     secondary={true}
-                    icon={<BackButton color="#555555"/>}
+                    icon={<BackButtonIcon color="#555555"/>}
                     labelStyle={{color: '#555555'}}
                     primary={true}
                 />

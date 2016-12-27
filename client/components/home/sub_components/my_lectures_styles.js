@@ -4,12 +4,12 @@
 
 const styles = {
 
-    container: {
+    channelColorBox: {
         position: 'absolute',
-        width: '100%',
-        left: 0,
-        top: 0,
-        paddingTop: 66,
+        height: 56,
+        width: 10,
+        float: 'left',
+        backgroundColor: 'lightgray'
     }
 
 };

@@ -9,6 +9,7 @@ import 'react-s-alert/dist/s-alert-default.css';
 import 'react-s-alert/dist/s-alert-css-effects/jelly.css';
 import {WindowResizeListener} from 'react-window-resize-listener';
 
+
 // import components, styles
 import Styles from './styles';
 import Header from '../../common/header/header'

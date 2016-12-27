@@ -11,20 +11,18 @@ import Styles from './styles';
 class Intro extends Component {
 
     onStart() {
-        // event.preventDefault();
-        // if(Meteor.user()){
-        //     browserHistory.push('home');
-        // } else{
+        if(Meteor.user()){
+            browserHistory.push('home');
+        } else{
         browserHistory.push('login');
-        // }
-
+        }
     }
 
     render() {
         return (
             <div className="container" style={Styles.container}>
                 <div style={Styles.subContainer}>
-                    <div style={Styles.logo}>SOCKDAK</div>
+                    <div className="logo" style={Styles.logo}>SOCKDAK</div>
                     <RaisedButton className="start-button" onTouchTap={this.onStart} style={Styles.startButton} label="시작하기"/>
                 </div>
             </div>

@@ -5,7 +5,7 @@ html * {
 
 .render-target {
     position: relative;
-    max-width: 500px;
+    max-width: 480px;
     margin: auto;
 }
 

@@ -5,15 +5,29 @@ import React, {Component} from 'react'; // React 임포트
 
 import {WindowResizeListener} from 'react-window-resize-listener';
 
+import IconButton from 'material-ui/IconButton';
+import SearchButtonIcon from 'material-ui/svg-icons/action/search'
+
 import MyLectures from './sub_components/my_lectures';
 
 import Styles from './styles';
 import Header from '../../common/header/header'
 
 
+class SubHeader extends Component {
+    render() {
+        return (
+            <div>
+                <IconButton style={Styles.searchButton}>
+                    <SearchButtonIcon/>
+                </IconButton>
+            </div>
+        )
+    }
+}
 
 class Home extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             height: $(window).height(),
@@ -29,7 +43,10 @@ class Home extends Component {
                     this.setState({height: windowSize.windowHeight, width: windowSize.windowWidth});
                 }}/>
 
-                <Header title="홈"/>
+                <Header title="LOGO" backButtonDisplay="none"/>
+                <SubHeader/>
+
+
                 <MyLectures/>
 
                 <div style={Styles.subContainer}>

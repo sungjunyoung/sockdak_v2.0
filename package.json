@@ -10,6 +10,7 @@
     "cheerio": "^0.22.0",
     "material-ui": "^0.16.5",
     "meteor-node-stubs": "~0.2.0",
+    "node-pre-gyp": "^0.6.32",
     "promise": "^7.1.1",
     "react": "^15.4.1",
     "react-addons-css-transition-group": "^15.4.1",

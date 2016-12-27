@@ -15,15 +15,16 @@ const styles = {
     },
     title: {
         width:'100%',
-        position: 'absolute',
+        position: 'fixed',
         fontSize: 18,
         top: 24,
         textAlign: 'center'
     },
     backButton: {
-        float:'left',
-        marginTop: 14,
-        zIndex: 999
+        position: 'fixed',
+        left:0,
+        top:14,
+        zIndex:999
     }
 };
 

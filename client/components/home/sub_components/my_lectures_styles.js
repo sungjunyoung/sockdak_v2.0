@@ -9,7 +9,13 @@ const styles = {
         height: 56,
         width: 10,
         float: 'left',
-        backgroundColor: 'lightgray'
+    },
+    loading: {
+        position: 'fixed',
+        top: '50%',
+        left: '50%',
+        marginLeft: -20,
+        marginTop: -20
     }
 
 };

@@ -16,8 +16,10 @@ const styles = {
         left:10,
         top:10,
         zIndex:999
+    },
+    searchText:{
+        marginTop: -10,
     }
-
 };
 
 export default styles;

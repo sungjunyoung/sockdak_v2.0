@@ -4,6 +4,7 @@
 import {Lectures} from '../imports/collections/lectures'
 import {Meteor, Accounts} from 'meteor/meteor';
 
+
 Meteor.methods({
 
     'lectureUpdate' : function(name, code, professor){

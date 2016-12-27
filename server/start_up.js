@@ -16,4 +16,11 @@ Meteor.startup(() => {
         // return Lectures.find({});
     })
 
+    Meteor.publish('findLectures', function (toFind) {
+        if (!toFind) {
+            return undefined;
+        }
+        toFind = ".*" + toFind + ".*";
+        return Lectures.find({$or: [{lecture_name: {$regex: toFind}}, {lecture_professor: {$regex: toFind}}]}, {sort: {lecture_name: 1}});
+    });
 });

@@ -16,17 +16,18 @@ import Avatar from 'material-ui/Avatar';
 import Subheader from 'material-ui/Subheader';
 
 
-import Styles from './my_lectures_styles';
+import Styles from './lectures_list_styles';
 
 class Lecture extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
     }
 
-    render(){
+    render() {
         return (
             <div>
-                <div className="channel-color-box" style={Object.assign(Styles.channelColorBox,{backgroundColor: this.props.lecture.lecture_color})}></div>
+                <div className="channel-color-box"
+                     style={Object.assign(Styles.channelColorBox, {backgroundColor: this.props.lecture.lecture_color})}></div>
                 <ListItem leftAvatar={<Avatar src=""/>}>
                     <div>
                         {this.props.lecture.lecture_name}
@@ -39,10 +40,11 @@ class Lecture extends Component {
     }
 }
 
-class MyLectures extends Component {
+class LecturesList extends Component {
     constructor(props) {
         super(props);
     }
+
 
     // 강의리스트 렌더링
     renderLectureList() {
@@ -54,8 +56,6 @@ class MyLectures extends Component {
             str = str.replace(/[0-9]/g, '');
 
             lecture.lecture_color = ColorCode[str];
-            console.log(str);
-            console.log(ColorCode[str]);
             // lecture.url = `/channel/${channel.code}`;
 
             timer += 1;
@@ -73,7 +73,7 @@ class MyLectures extends Component {
 
         return (
             <div style={{marginLeft: -8, marginRight: -8}}>
-                <CircularProgress style={Object.assign(Styles.loading,{visibility: this.props.loadingVisibility})}/>
+                <CircularProgress style={Object.assign(Styles.loading, {visibility: this.props.loadingVisibility})}/>
                 <List>
                     <Subheader>내 강의실</Subheader>
                     {this.renderLectureList()}
@@ -85,16 +85,30 @@ class MyLectures extends Component {
 
 export default createContainer((props) => {
 
-    Meteor.subscribe('userLectures');
-
     var loadingVisibility;
-    if(Lectures.find({}).fetch().length == 0){
-        loadingVisibility = 'visible';
-        return {lectures: Lectures.find({}).fetch(), loadingVisibility};
-    } else {
+
+    // 강의 검색일 때때
+    if (props.find) {
+        console.log(Lectures.find({}).fetch());
+        Meteor.subscribe('findLectures', props.toFind);
+
         loadingVisibility = 'hidden';
         return {lectures: Lectures.find({}).fetch(), loadingVisibility};
+
+    }
+    // 유저 강의 목록일 때때
+    else {
+        console.log(Lectures.find({}).fetch());
+        var subscriptHandle = Meteor.subscribe('userLectures');
+
+        if (!subscriptHandle.ready()) {
+            loadingVisibility = 'visible';
+            return {lectures: [], loadingVisibility};
+        } else {
+            loadingVisibility = 'hidden';
+            return {lectures: Lectures.find({}).fetch(), loadingVisibility};
+        }
     }
 
 
-}, MyLectures);
+}, LecturesList);

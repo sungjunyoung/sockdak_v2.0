@@ -72,7 +72,7 @@ class LecturesList extends Component {
     render() {
 
         return (
-            <div style={{marginLeft: -8, marginRight: -8}}>
+            <div style={{marginLeft: -8, marginRight: -8, marginTop: this.props.lectureListMargin}}>
                 <CircularProgress style={Object.assign(Styles.loading, {visibility: this.props.loadingVisibility})}/>
                 <List>
                     <Subheader>{this.props.listTitle}</Subheader>

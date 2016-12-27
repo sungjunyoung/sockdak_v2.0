@@ -4,13 +4,14 @@
 import React, {Component} from 'react'; // React 임포트
 
 import {WindowResizeListener} from 'react-window-resize-listener';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
 
 import IconButton from 'material-ui/IconButton';
 import SearchButtonIcon from 'material-ui/svg-icons/action/search'
 import QuitSearchButtonIcon from 'material-ui/svg-icons/navigation/close'
 import TextField from 'material-ui/TextField';
 
-import MyLectures from './sub_components/lectures_list';
+import LectureList from './sub_components/lectures_list';
 
 import Styles from './styles';
 import Header from '../../common/header/header'
@@ -25,17 +26,17 @@ class SubHeader extends Component {
                 </IconButton>
 
                 {this.props.findState ?
-                    <div className="search-text-container" style={Styles.searchTextContainer} >
-                        <TextField
-                            multiLine={true}
-                            underlineShow={false}
-                            onChange={this.props.onChangeSearchText}
-                            fullWidth={true}
-                            style={Styles.searchText}
-                            hintText="교수님 또는 강좌명으로 검색해보세요 :)"
-                            hintStyle={{fontSize: '12px', color: '#999999', paddingLeft: 10, paddingRight: 10}}
-                            textareaStyle={{paddingLeft: 10, paddingRight: 10}}/>
-                    </div>
+                        <div className="search-text-container" style={Styles.searchTextContainer}>
+                            <TextField
+                                multiLine={false}
+                                underlineShow={false}
+                                onChange={this.props.onChangeSearchText}
+                                fullWidth={true}
+                                style={Styles.searchText}
+                                hintText="교수님 또는 강좌명으로 검색해보세요 :)"
+                                hintStyle={{fontSize: '12px', color: '#999999', paddingLeft: 20, paddingRight: 20}}
+                                inputStyle={{paddingLeft: 20, paddingRight: 20}}/>
+                        </div>
                     : null}
             </div>
         )
@@ -49,13 +50,14 @@ class Home extends Component {
             height: $(window).height(),
             width: $(window).width(),
             findState: false,
-            toFind: ''
-        }
+            toFind: '',
+            lectureListMargin: 0
+        };
     }
 
     onSearchButton() {
         if (this.state.findState == false)
-            this.setState({findState: true});
+            this.setState({findState: true, lectureListMargin: 30});
         else
             this.setState({toFind: '', findState: false});
     }
@@ -65,6 +67,7 @@ class Home extends Component {
     }
 
     render() {
+
 
         return (
             <div className="container" style={Object.assign(Styles.container, {height: this.state.height - 80})}>
@@ -78,7 +81,10 @@ class Home extends Component {
                            onChangeSearchText={this.onChangeSearchText.bind(this)}/>
 
 
-                {this.state.findState ? <MyLectures find={true} toFind={this.state.toFind}/> : <MyLectures/>}
+                {this.state.findState ? <LectureList
+                        find={true}
+                        toFind={this.state.toFind}
+                        lectureListMargin={this.state.lectureListMargin}/> : <LectureList/>}
 
                 <div style={Styles.subContainer}>
                 </div>

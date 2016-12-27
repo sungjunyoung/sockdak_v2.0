@@ -21,9 +21,12 @@ const styles = {
         marginTop: -10,
     },
     searchTextContainer:{
-        marginLeft: '-8px',
-        marginRight: '-8px',
-        marginTop: '-8px',
+        position:'fixed',
+        width: '100%',
+        left: 0,
+        // marginLeft: '-8px',
+        // marginRight: '-8px',
+        marginTop: '-10px',
         backgroundColor: 'lightgray'
     }
 };

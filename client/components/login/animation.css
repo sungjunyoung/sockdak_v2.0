@@ -1,16 +1,11 @@
-.school-select {
-    animation-duration: .5s;
-    animation-name: slidein;
-}
-
 .additional-input {
     animation-duration: .5s;
     animation-name: slidein;
 }
 
-@keyframes slidein {
+@-webkit-keyframes slidein {
     from {
-        margin-left: 100%;
+        margin-left: -100%;
         width: 100%;
     }
 

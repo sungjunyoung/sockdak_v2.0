@@ -14,17 +14,16 @@ const styles = {
         zIndex: 999
     },
     title: {
+        width:'100%',
         position: 'absolute',
-        textAlign: 'center',
-        width: 200,
         fontSize: 18,
         top: 24,
-        left: '50%',
-        marginLeft: -100
+        textAlign: 'center'
     },
     backButton: {
         float:'left',
         marginTop: 14,
+        zIndex: 999
     }
 };
 

@@ -20,10 +20,8 @@ var khuAuth = (function () {
                 form: {USER_ID: id, PASSWORD: pw}
             }, function (err, res, body) {
                 if (err) {
-                    console.log('Error Occured While Login');
                     reject('ERROR');
                 } else {
-                    console.log('Login Success');
                     resolve(body);
                 }
             })
@@ -41,7 +39,6 @@ var khuAuth = (function () {
                 method: "GET"
             }, function (err, res, body) {
                 if(err){
-                    console.log('Error Occured While getUserInfo');
                     reject('ERROR');
                 } else {
                     var $ = cheerio.load(body);
@@ -61,7 +58,6 @@ var khuAuth = (function () {
                         count++;
                     });
 
-                    console.log('getUserInfo Success');
                     resolve(result);
                 }
             })

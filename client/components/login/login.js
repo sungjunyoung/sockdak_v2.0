@@ -98,20 +98,48 @@ class Login extends Component {
         }
         // END
 
+        var id = this.state.id;
+        var pw = this.state.pw;
+
         // 결과 promise 로 리턴
         var resultPromise = Meteor.callPromise('loginToKhu', this.state.id, this.state.pw);
 
         // 로그인 결과 받기
-        resultPromise.then(function (res) {
-            console.log(res);
-            if (res == 'ERROR') {
+        resultPromise.then(function (loginResult) {
+
+            if (loginResult == 'ERROR') {
                 alert('error', '종합정보시스템 서버에 문제가 있습니다.');
-            } else if (res == 'INCORRECT') {
+            } else if (loginResult == 'INCORRECT') {
                 alert('error', '학번과 비밀번호를 다시 확인해주세요.');
-            } else if (res == 'REST') {
+            } else if (loginResult == 'REST') {
                 alert('error', '혹시 휴학생이세요..?');
             } else {
-                alert('success', '환영합니다! ' + res.info.name + '님');
+                alert('success', '환영합니다! ' + loginResult.info.name + '님');
+
+                Meteor.call('findUserByUsername', id, function (err, findUserResult) {
+
+                    // 유저를 찾고 있으면 바로 로그인
+                    if(findUserResult){
+                        Meteor.loginWithPassword(id, pw, function (err, res) {
+                            console.log('INFO :: login complete username : ' + loginResult.info.name)
+                        });
+                    }
+
+                    // 없으면 강의정보 및 회원정보 만들기
+                    else {
+                        console.log('INFO :: user not exist, create user');
+                        Accounts.createUser({username: id, password: pw, profile: {nickname: '테스트'}});
+
+                        Meteor.loginWithPassword(id, pw, function (err, res) {
+                            console.log('INFO :: login complete username : ' + loginResult.info.name)
+                        });
+
+                        for (var i in loginResult.lectures) {
+                            Meteor.call('lectureUpdate', loginResult.lectures[i].lecture_name, loginResult.lectures[i].lecture_code, loginResult.lectures[i].professor);
+                        }
+                    }
+                });
+
                 browserHistory.push('home');
             }
 
@@ -119,13 +147,9 @@ class Login extends Component {
 
     }
 
-    onTextFieldFocus(event, value) {
-        console.log(value);
-    }
-
     render() {
         return (
-            <div style={Object.assign(Styles.container,{height: this.state.height-80})}>
+            <div style={Object.assign(Styles.container, {height: this.state.height - 80})}>
 
                 <WindowResizeListener onResize={windowSize => {
                     this.setState({height: windowSize.windowHeight, width: windowSize.windowWidth});
@@ -135,7 +159,7 @@ class Login extends Component {
                 <Header title="로그인"/>
                 <div className="formContainer" style={Styles.formContainer}>
                     <div style={Styles.subContainer}>
-                        <div className="school-select" style={Styles.infoText}>학교 선택</div>
+                        <div className="additional-input" style={Styles.infoText}>학교 선택</div>
                         <SelectField
                             className="additional-input"
                             style={Styles.schoolSelectField}
@@ -155,7 +179,6 @@ class Login extends Component {
                             <div className="additional-input" style={Styles.infoText}>종합정보시스템 정보 입력</div>
                             <TextField
                                 className="additional-input"
-                                onFocus={this.onTextFieldFocus.bind(this)}
                                 onChange={this.onIdChange.bind(this)}
                                 style={Styles.userIdField}
                                 hintText="종합정보시스템 학번을 입력해주세요."

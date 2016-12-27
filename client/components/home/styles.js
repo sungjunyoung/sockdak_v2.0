@@ -19,6 +19,12 @@ const styles = {
     },
     searchText:{
         marginTop: -10,
+    },
+    searchTextContainer:{
+        marginLeft: '-8px',
+        marginRight: '-8px',
+        marginTop: '-8px',
+        backgroundColor: 'lightgray'
     }
 };
 

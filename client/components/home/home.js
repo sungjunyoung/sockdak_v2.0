@@ -25,12 +25,17 @@ class SubHeader extends Component {
                 </IconButton>
 
                 {this.props.findState ?
-                    <TextField
-                        onChange={this.props.onChangeSearchText}
-                        fullWidth={true}
-                        style={Styles.searchText}
-                        hintText="검색할 강좌를 입력해보세요 :)"
-                        hintStyle={{fontSize: '12px', color: '#999999', fontWeight: 400}}/>
+                    <div className="search-text-container" style={Styles.searchTextContainer} >
+                        <TextField
+                            multiLine={true}
+                            underlineShow={false}
+                            onChange={this.props.onChangeSearchText}
+                            fullWidth={true}
+                            style={Styles.searchText}
+                            hintText="교수님 또는 강좌명으로 검색해보세요 :)"
+                            hintStyle={{fontSize: '12px', color: '#999999', paddingLeft: 10, paddingRight: 10}}
+                            textareaStyle={{paddingLeft: 10, paddingRight: 10}}/>
+                    </div>
                     : null}
             </div>
         )
@@ -52,10 +57,10 @@ class Home extends Component {
         if (this.state.findState == false)
             this.setState({findState: true});
         else
-            this.setState({toFind: '',findState: false});
+            this.setState({toFind: '', findState: false});
     }
 
-    onChangeSearchText(event){
+    onChangeSearchText(event) {
         this.setState({toFind: event.target.value})
     }
 

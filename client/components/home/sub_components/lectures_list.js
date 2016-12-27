@@ -75,7 +75,7 @@ class LecturesList extends Component {
             <div style={{marginLeft: -8, marginRight: -8}}>
                 <CircularProgress style={Object.assign(Styles.loading, {visibility: this.props.loadingVisibility})}/>
                 <List>
-                    <Subheader>내 강의실</Subheader>
+                    <Subheader>{this.props.listTitle}</Subheader>
                     {this.renderLectureList()}
                 </List>
             </div>
@@ -86,27 +86,33 @@ class LecturesList extends Component {
 export default createContainer((props) => {
 
     var loadingVisibility;
+    var subscribeHandle;
 
     // 강의 검색일 때때
     if (props.find) {
-        console.log(Lectures.find({}).fetch());
-        Meteor.subscribe('findLectures', props.toFind);
+        subscribeHandle = Meteor.subscribe('findLectures', props.toFind);
 
-        loadingVisibility = 'hidden';
-        return {lectures: Lectures.find({}).fetch(), loadingVisibility};
+        if (!subscribeHandle.ready()) {
+            loadingVisibility = 'hidden';
+            return {lectures: [], loadingVisibility, listTitle:"검색 결과"};
+        } else {
+            loadingVisibility = 'hidden';
+            return {lectures: Lectures.find({}).fetch(), loadingVisibility, listTitle:"검색 결과"};
+        }
+
 
     }
     // 유저 강의 목록일 때때
     else {
-        console.log(Lectures.find({}).fetch());
-        var subscriptHandle = Meteor.subscribe('userLectures');
+        subscribeHandle = Meteor.subscribe('userLectures');
 
-        if (!subscriptHandle.ready()) {
+        // 구독이 끝나지 않았을 때, 로딩화면과 빈 리스트를 prop 로 넘긴다.
+        if (!subscribeHandle.ready()) {
             loadingVisibility = 'visible';
-            return {lectures: [], loadingVisibility};
+            return {lectures: [], loadingVisibility, listTitle:"내 강의실"};
         } else {
             loadingVisibility = 'hidden';
-            return {lectures: Lectures.find({}).fetch(), loadingVisibility};
+            return {lectures: Lectures.find({}).fetch(), loadingVisibility, listTitle:"내 강의실"};
         }
     }
 

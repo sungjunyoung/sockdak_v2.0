@@ -50,7 +50,11 @@ const styles = {
         zIndex: 999
     },
     loading: {
-
+        position: 'fixed',
+        top: '50%',
+        left: '50%',
+        marginLeft: -20,
+        marginTop: -20
     }
 };
 

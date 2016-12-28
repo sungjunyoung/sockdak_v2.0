@@ -20,6 +20,7 @@ import MenuItem from 'material-ui/MenuItem';
 import TextField from 'material-ui/TextField';
 import Toggle from 'material-ui/Toggle';
 import RaisedButton from 'material-ui/RaisedButton';
+import CircularProgress from 'material-ui/CircularProgress';
 
 
 // 알림창 모듈
@@ -50,7 +51,8 @@ class Login extends Component {
             approve: false,
             height: $(window).height(),
             width: $(window).width(),
-            showAdditionalInput: false
+            showAdditionalInput: false,
+            loadingVisibility: 'hidden'
         }
     }
 
@@ -77,24 +79,29 @@ class Login extends Component {
     // 로그인시 호출
     onLogin(event, value) {
         event.preventDefault();
+        this.setState({loadingVisibility: 'visible'});
 
         // 로그인 예외처리
         if (this.state.school != '경희대학교') {
             alert('error', '학교를 선택해 주세요!');
+            this.setState({loadingVisibility: 'hidden'});
             return;
         }
 
         if (this.state.id.length != 10) {
             alert('error', '학번을 정확히 입력해 주세요!');
+            this.setState({loadingVisibility: 'hidden'});
             return;
         }
 
         if (this.state.pw.length == 0) {
             alert('error', '비밀번호를 입력해 주세요!');
+            this.setState({loadingVisibility: 'hidden'});
             return;
         }
         if (this.state.approve == false) {
             alert('error', '이용약관에 동의해 주세요!');
+            this.setState({loadingVisibility: 'hidden'});
             return;
         }
         // END
@@ -107,6 +114,8 @@ class Login extends Component {
 
         // 로그인 결과 받기
         resultPromise.then(function (loginResult) {
+
+            this.setState({loadingVisibility: 'hidden'});
 
             if (loginResult == 'ERROR') {
                 alert('error', '종합정보시스템 서버에 문제가 있습니다.');
@@ -141,11 +150,11 @@ class Login extends Component {
                     }
                 });
 
+
                 browserHistory.push('home');
             }
 
-        });
-
+        }.bind(this));
     }
 
     render() {
@@ -155,6 +164,7 @@ class Login extends Component {
                 <WindowResizeListener onResize={windowSize => {
                     this.setState({height: windowSize.windowHeight, width: windowSize.windowWidth});
                 }}/>
+                <CircularProgress style={Object.assign(Styles.loading, {visibility: this.state.loadingVisibility})}/>
 
                 <Alert stack={{limit: 3}}/>
                 <Header title="로그인"/>

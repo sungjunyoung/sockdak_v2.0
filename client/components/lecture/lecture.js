@@ -19,7 +19,8 @@ import {Lectures} from '../../../imports/collections/lectures';
 
 //component import
 import Header from '../../common/header/header'
-import ColorCode from '../../../imports/constants/color_code'
+import ColorCode from '../../../imports/constants/color_code';
+import CircularProgress from 'material-ui/CircularProgress';
 
 // style import
 import Styles from './styles';
@@ -35,6 +36,7 @@ class Lecture extends Component {
         this.state = {
             height: $(window).height(),
             width: $(window).width(),
+            loadingVisibility: 'visible'
         };
     }
 
@@ -42,7 +44,9 @@ class Lecture extends Component {
     render() {
 
         if(!this.props.lecture){
-            return(<div>로딩중</div>)
+            return(
+                <CircularProgress style={Object.assign(Styles.loading, {visibility: this.state.loadingVisibility})}/>
+                )
         }
 
         // 이름 잘라버리기

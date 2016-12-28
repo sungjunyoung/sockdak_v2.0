@@ -11,6 +11,13 @@ const styles = {
         top: 0,
         paddingTop: 66,
         // backgroundColor: 'red'
+    },
+    loading: {
+        position: 'fixed',
+        top: '50%',
+        left: '50%',
+        marginLeft: -20,
+        marginTop: -20
     }
 };
 

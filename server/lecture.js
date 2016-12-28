@@ -1,7 +1,7 @@
 /**
  * Created by Junyoung on 2016. 12. 27..
  */
-import {Lectures} from '../../imports/collections/lectures'
+import {Lectures} from '../imports/collections/lectures'
 import {Meteor, Accounts} from 'meteor/meteor';
 
 

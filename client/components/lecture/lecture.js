@@ -36,7 +36,6 @@ class Lecture extends Component {
         this.state = {
             height: $(window).height(),
             width: $(window).width(),
-            loadingVisibility: 'visible'
         };
     }
 
@@ -45,7 +44,7 @@ class Lecture extends Component {
 
         if(!this.props.lecture){
             return(
-                <CircularProgress style={Object.assign(Styles.loading, {visibility: this.state.loadingVisibility})}/>
+                <CircularProgress style={Object.assign(Styles.loading, {visibility: this.props.loadingVisibility})}/>
                 )
         }
 

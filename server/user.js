@@ -4,7 +4,7 @@
 import {Meteor} from 'meteor/meteor';
 import {Accounts} from 'meteor/accounts-base';
 
-import khuAuth from '../modules/khu_auth'
+import khuAuth from './modules/khu_auth'
 
 Meteor.methods({
 

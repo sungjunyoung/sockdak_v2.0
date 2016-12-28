@@ -15,7 +15,8 @@ const styles = {
         top: '50%',
         left: '50%',
         marginLeft: -20,
-        marginTop: -20
+        marginTop: -20,
+        zIndex:999
     }
 
 };

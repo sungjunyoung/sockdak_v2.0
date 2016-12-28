@@ -28,11 +28,9 @@ class Lecture extends Component {
             <div>
                 <div className="channel-color-box"
                      style={Object.assign(Styles.channelColorBox, {backgroundColor: this.props.lecture.lecture_color})}></div>
-                <ListItem leftAvatar={<Avatar src=""/>}>
+                <ListItem leftAvatar={<Avatar src=""/>} onTouchTap={() => browserHistory.push(this.props.lecture.lecture_url)}>
                     <div>
                         {this.props.lecture.lecture_name}
-                    </div>
-                    <div>
                     </div>
                 </ListItem>
             </div>
@@ -56,7 +54,7 @@ class LecturesList extends Component {
             str = str.replace(/[0-9]/g, '');
 
             lecture.lecture_color = ColorCode[str];
-            // lecture.url = `/channel/${channel.code}`;
+            lecture.lecture_url = `/lecture/${lecture.lecture_code}`;
 
             timer += 1;
 
@@ -94,10 +92,10 @@ export default createContainer((props) => {
 
         if (!subscribeHandle.ready()) {
             loadingVisibility = 'hidden';
-            return {lectures: [], loadingVisibility, listTitle:"검색 결과"};
+            return {lectures: [], loadingVisibility, listTitle: "검색 결과"};
         } else {
             loadingVisibility = 'hidden';
-            return {lectures: Lectures.find({}).fetch(), loadingVisibility, listTitle:"검색 결과"};
+            return {lectures: Lectures.find({}).fetch(), loadingVisibility, listTitle: "검색 결과"};
         }
 
 
@@ -109,10 +107,10 @@ export default createContainer((props) => {
         // 구독이 끝나지 않았을 때, 로딩화면과 빈 리스트를 prop 로 넘긴다.
         if (!subscribeHandle.ready()) {
             loadingVisibility = 'visible';
-            return {lectures: [], loadingVisibility, listTitle:"내 강의실"};
+            return {lectures: [], loadingVisibility, listTitle: "내 강의실"};
         } else {
             loadingVisibility = 'hidden';
-            return {lectures: Lectures.find({}).fetch(), loadingVisibility, listTitle:"내 강의실"};
+            return {lectures: Lectures.find({}).fetch(), loadingVisibility, listTitle: "내 강의실"};
         }
     }
 

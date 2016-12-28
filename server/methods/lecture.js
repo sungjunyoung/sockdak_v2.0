@@ -1,12 +1,13 @@
 /**
  * Created by Junyoung on 2016. 12. 27..
  */
-import {Lectures} from '../imports/collections/lectures'
+import {Lectures} from '../../imports/collections/lectures'
 import {Meteor, Accounts} from 'meteor/meteor';
 
 
 Meteor.methods({
 
+    // 신규 로그인시 강좌 를 검색하고, 강좌가 있으면 lecture_users 에 해당 유저 추가 / 없으면 강좌 추가
     'lectureUpdate' : function(name, code, professor){
         var lecture = Lectures.findOne({lecture_code: code});
         if(lecture){
@@ -28,6 +29,7 @@ Meteor.methods({
                 lecture_created_at : new Date()
             })
         }
-    }
+    },
+
 
 });

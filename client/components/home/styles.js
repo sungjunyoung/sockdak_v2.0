@@ -11,23 +11,33 @@ const styles = {
         top: 0,
         paddingTop: 66,
     },
-    searchButton:{
+    searchButton: {
         position: 'fixed',
-        left:10,
-        top:10,
-        zIndex:999
+        left: 10,
+        top: 10,
+        zIndex: 999
     },
-    searchText:{
+    searchText: {
         marginTop: -10,
     },
-    searchTextContainer:{
-        position:'fixed',
+    searchTextContainer: {
+        position: 'fixed',
         width: '100%',
         left: 0,
-        // marginLeft: '-8px',
-        // marginRight: '-8px',
         marginTop: '-10px',
         backgroundColor: 'lightgray'
+    },
+    myPageButton:{
+        position: 'fixed',
+        right: 50,
+        top: 10,
+        zIndex: 999
+    },
+    notificationButton: {
+        position: 'fixed',
+        right: 10,
+        top: 10,
+        zIndex: 999
     }
 };
 

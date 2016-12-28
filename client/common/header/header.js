@@ -1,11 +1,18 @@
 /**
  * Created by Junyoung on 2016. 12. 25..
  */
-import React, {Component} from 'react'; // React 임포트
-import FlatButton from 'material-ui/FlatButton'; // material-ui 플랫버튼 임포트
-import BackButtonIcon from 'material-ui/svg-icons/navigation/chevron-left';
+
+// React base import
+import React, {Component} from 'react';
+
+// additional module import
 import {browserHistory} from 'react-router'
 
+// material-ui component import
+import FlatButton from 'material-ui/FlatButton';
+import BackButtonIcon from 'material-ui/svg-icons/navigation/chevron-left';
+
+// style import
 import Styles from './styles';
 
 class Header extends Component {
@@ -13,18 +20,30 @@ class Header extends Component {
         super(props);
     }
 
-    onBack(){
+    onBack() {
         browserHistory.goBack();
     }
 
     render() {
+
+        if(!this.props){
+            return(<div>로딩중</div>)
+        }
+
+        var headerColor;
+        if(!this.props.headerColor){
+            headerColor = 'lightgray';
+        } else {
+            headerColor = this.props.headerColor;
+        }
+
         return (
-            <div style={Styles.container}>
+            <div style={Object.assign(Styles.container, {backgroundColor: headerColor})}>
                 <FlatButton
                     onTouchTap={this.onBack.bind(this)}
                     style={Object.assign(Styles.backButton, {display: this.props.backButtonDisplay})}
                     target="_blank"
-                    label="BACK"
+                    label={this.props.backButtonLabel ? this.props.backButtonLabel : 'BACK' }
                     secondary={true}
                     icon={<BackButtonIcon color="#555555"/>}
                     labelStyle={{color: '#555555'}}

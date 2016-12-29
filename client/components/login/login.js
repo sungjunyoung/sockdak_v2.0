@@ -8,7 +8,6 @@ import Alert from 'react-s-alert';
 import 'react-s-alert/dist/s-alert-default.css';
 import 'react-s-alert/dist/s-alert-css-effects/jelly.css';
 import {WindowResizeListener} from 'react-window-resize-listener';
-import forEach from 'async-foreach'
 
 // import components, styles
 import Styles from './styles';
@@ -144,9 +143,7 @@ class Login extends Component {
                             console.log('INFO :: login complete username : ' + loginResult.info.name)
                         });
 
-                        for (var i in loginResult.lectures) {
-                            Meteor.call('lectureUpdate', loginResult.lectures[i].lecture_name, loginResult.lectures[i].lecture_code, loginResult.lectures[i].professor);
-                        }
+                        Meteor.call('lectureUpdate', loginResult.lectures);
                     }
                 });
 

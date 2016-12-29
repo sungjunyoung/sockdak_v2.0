@@ -50,7 +50,12 @@ const styles = {
         right: 0,
         height: 37,
         color: 'white'
+    },
+    subComponent: {
+        marginLeft: -8,
+        marginRight: -8
     }
+
 };
 
 export default styles;

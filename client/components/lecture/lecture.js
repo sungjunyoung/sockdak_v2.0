@@ -23,6 +23,7 @@ import {Lectures} from '../../../imports/collections/lectures';
 import Header from '../../common_components/header/header'
 import ColorCode from '../../../imports/constants/color_code';
 import CircularProgress from 'material-ui/CircularProgress';
+import PostsList from './sub_components/posts_list';
 
 // style import
 import Styles from './styles';
@@ -124,10 +125,10 @@ class Lecture extends Component {
                     {/*<List style={{marginLeft: -8, marginRight: -8}}>*/}
                     {/*<Subheader>알림</Subheader>*/}
                     {/*</List>*/}
-                    <div style={{backgroundColor: '#aadddd', height: this.state.height-120}}>
-
+                    <div className="postsList" style={Object.assign(Styles.subComponent,{height: this.state.height-120})}>
+                        <PostsList floatingColor={this.props.lectureColor} />
                     </div>
-                    <div style={{backgroundColor: '#ddaaaa', height: this.state.height-120}}>
+                    <div className="chatsList" style={Object.assign(Styles.subComponent,{height: this.state.height-120})}>
 
                     </div>
                 </SwipeableViews>

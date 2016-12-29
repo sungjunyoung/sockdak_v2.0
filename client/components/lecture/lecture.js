@@ -43,7 +43,7 @@ class SubHeader extends Component {
                 <FlatButton onTouchTap={this.props.onPostsTap}
                             style={Object.assign({width: this.props.width / 2}, Styles.postsTab)} label="게시판"/>
                 <FlatButton onTouchTap={this.props.onChatsTap}
-                            style={Object.assign({width: this.props.width / 2}, Styles.chatsTab)} label="대화방"/>
+                            style={Object.assign({width: this.props.width / 2 + 9}, Styles.chatsTab)} label="대화방"/>
             </div>
         )
     }

@@ -1,16 +1,16 @@
 
-.tab-bar {
-    animation-duration: .3s;
+.search-text-container {
+    animation-duration: .5s;
     animation-name: slideDown;
 }
 
 
 @-webkit-keyframes slideDown {
     from {
-        margin-top: -30px;
+        transform: translateY(-100%);
     }
 
     to {
-        margin-top: -8px;
+        transform: translateY(0%);
     }
 }

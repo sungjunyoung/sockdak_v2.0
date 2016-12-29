@@ -1,0 +1,16 @@
+
+.tab-bar {
+    animation-duration: .5s;
+    animation-name: slideDown;
+}
+
+
+@-webkit-keyframes slideDown {
+    from {
+        transform: translateY(-100%);
+    }
+
+    to {
+        transform: translateY(0%);
+    }
+}

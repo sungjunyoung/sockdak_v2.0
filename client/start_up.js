@@ -20,6 +20,7 @@ import Home from './components/home/home';
 import MyPage from './components/mypage/mypage';
 import Notification from './components/notification/notification';
 import Lecture from './components/lecture/lecture';
+import WritePost from './components/write_post/write_post';
 
 const routes = (
     <MuiThemeProvider>
@@ -31,6 +32,7 @@ const routes = (
                 <Route path="mypage" component={MyPage}/>
                 <Route path="notification" component={Notification}/>
                 <Route path="lecture/:lecture_code" component={Lecture}/>
+                <Route path="lecture/:lecture_code/write-post" component={WritePost}/>
             </Route>
         </Router>
     </MuiThemeProvider>

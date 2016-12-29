@@ -18,8 +18,15 @@ import Divider from 'material-ui/Divider';
 import Avatar from 'material-ui/Avatar';
 import Subheader from 'material-ui/Subheader';
 
+//components import
+
+
+// additional module import
+import Infinite from 'react-infinite';
+
 
 import Styles from './post_list_style';
+
 
 
 class PostsList extends Component {
@@ -27,16 +34,25 @@ class PostsList extends Component {
         super(props);
     }
 
+    onWritePost(){
+        browserHistory.push('/lecture/' + this.props.lecture.lecture_code + '/write-post');
+    }
+
+    renderPostList(){
+
+    }
 
     render() {
 
         return (
             <div>
                 <FloatingActionButton
+                    onTouchTap={this.onWritePost.bind(this)}
                     backgroundColor={this.props.floatingColor}
                     style={Styles.floatingButton}>
                     <ContentAdd/>
                 </FloatingActionButton>
+
             </div>
         )
     }

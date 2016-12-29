@@ -1,0 +1,41 @@
+
+.input-post-title {
+    animation-duration: .5s;
+    animation-name: slideInRight;
+}
+
+.input-post-content {
+    animation-duration: .5s;
+    animation-name: slideInRight;
+}
+
+.input-post-confirm {
+    animation-duration: .5s;
+    animation-name: slideInLeft;
+}
+
+.input-post-upload-images {
+    animation-duration: .5s;
+    animation-name: slideInRight;
+}
+
+
+@-webkit-keyframes slideInRight {
+    from {
+        transform: translateX(-100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+@-webkit-keyframes slideInLeft {
+    from {
+        transform: translateX(100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}

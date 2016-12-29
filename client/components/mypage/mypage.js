@@ -12,7 +12,7 @@ import UserImage from 'material-ui/svg-icons/action/account-circle';
 import {List, ListItem} from 'material-ui/List';
 
 //component import
-import Header from '../../common/header/header'
+import Header from '../../common_components/header/header'
 import Avatar from 'material-ui/Avatar';
 
 

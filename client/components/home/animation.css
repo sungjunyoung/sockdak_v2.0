@@ -1,25 +1,15 @@
 
 .search-text-container {
     animation-duration: .3s;
-    animation-name: slidedown;
+    animation-name: slideDown;
 }
 
-@-webkit-keyframes slidedown {
+@-webkit-keyframes slideDown {
     from {
         margin-top: -30px;
     }
 
     to {
         margin-top: -8px;
-    }
-}
-
-@-webkit-keyframes slideup {
-    from {
-        margin-top: -8px;
-    }
-
-    to {
-        margin-top: -30px;
     }
 }

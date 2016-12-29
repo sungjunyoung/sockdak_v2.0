@@ -14,7 +14,7 @@ import Avatar from 'material-ui/Avatar';
 import Subheader from 'material-ui/Subheader';
 
 //component import
-import Header from '../../common/header/header'
+import Header from '../../common_components/header/header'
 
 // style import
 import Styles from './styles';

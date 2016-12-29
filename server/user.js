@@ -64,6 +64,11 @@ Meteor.methods({
     // 학번으로 유저 정보 검색
     'findUserByUsername': function (id) {
         return Accounts.findUserByUsername(id);
+    },
+
+    // 유저 로그인 체크
+    'checkUserLogin': function(){
+        return Meteor.user();
     }
 
 });

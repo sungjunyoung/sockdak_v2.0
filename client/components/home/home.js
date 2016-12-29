@@ -9,6 +9,7 @@ import React, {Component} from 'react'; // React 임포트
 import {WindowResizeListener} from 'react-window-resize-listener';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
 import {browserHistory} from 'react-router';
+import AlertModule from '../../modules/alert';
 
 // material-ui import
 import IconButton from 'material-ui/IconButton';
@@ -20,7 +21,7 @@ import NotificationButtonIcon from 'material-ui/svg-icons/social/notifications';
 
 // component import
 import LectureList from './sub_components/lectures_list';
-import Header from '../../common/header/header'
+import Header from '../../common_components/header/header'
 
 // style import
 import Styles from './styles';

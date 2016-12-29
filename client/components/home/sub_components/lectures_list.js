@@ -59,7 +59,7 @@ class LecturesList extends Component {
             timer += 1;
 
             return (
-                <div style={{animationDuration: '.' + timer + 's', animationName: 'slidein', marginBottom: 2}}
+                <div style={{animationDuration: '.' + timer + 's', animationName: 'slideIn', marginBottom: 2}}
                      key={lecture.lecture_code}>
                     <Lecture lecture={lecture}/>
                 </div>

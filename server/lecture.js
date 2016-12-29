@@ -18,7 +18,6 @@ Meteor.methods({
             Meteor.setTimeout(
                 function () {
                     if (Lectures.find({lecture_code: value.lecture_code}).count() > 0) {
-                        console.log('exist');
                         Lectures.update(
                             {lecture_code: value.lecture_code},
                             {
@@ -27,7 +26,6 @@ Meteor.methods({
                                 }
                             })
                     } else {
-                        console.log('not exist');
                         Lectures.insert({
                             lecture_name: value.lecture_name,
                             lecture_code: value.lecture_code,

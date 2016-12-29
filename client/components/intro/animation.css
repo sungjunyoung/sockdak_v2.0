@@ -1,14 +1,14 @@
 .start-button {
     animation-duration: 2s;
-    animation-name: fadein;
+    animation-name: fadeIn;
 }
 
 .logo {
     animation-duration: 2s;
-    animation-name: fadein;
+    animation-name: fadeIn;
 }
 
-@-webkit-keyframes fadein {
+@-webkit-keyframes fadeIn {
     from {
         opacity: 0;
         width: 100%

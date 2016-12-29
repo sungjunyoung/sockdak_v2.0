@@ -4,14 +4,12 @@
 import React, {Component} from 'react'; // React 임포트
 import {browserHistory} from 'react-router';
 
-import Alert from 'react-s-alert';
-import 'react-s-alert/dist/s-alert-default.css';
-import 'react-s-alert/dist/s-alert-css-effects/jelly.css';
+import AlertModule from '../../modules/alert';
 import {WindowResizeListener} from 'react-window-resize-listener';
 
 // import components, styles
 import Styles from './styles';
-import Header from '../../common/header/header'
+import Header from '../../common_components/header/header'
 
 // material ui import
 import SelectField from 'material-ui/SelectField';
@@ -20,24 +18,6 @@ import TextField from 'material-ui/TextField';
 import Toggle from 'material-ui/Toggle';
 import RaisedButton from 'material-ui/RaisedButton';
 import CircularProgress from 'material-ui/CircularProgress';
-
-
-// 알림창 모듈
-function alert(type, message) {
-    if (type == 'error') {
-        Alert.error(message, {
-            position: 'top',
-            effect: 'jelly',
-            timeout: 1500
-        })
-    } else if (type == 'success') {
-        Alert.success(message, {
-            position: 'top',
-            effect: 'jelly',
-            timeout: 1500
-        })
-    }
-}
 
 
 class Login extends Component {
@@ -82,24 +62,24 @@ class Login extends Component {
 
         // 로그인 예외처리
         if (this.state.school != '경희대학교') {
-            alert('error', '학교를 선택해 주세요!');
+            AlertModule.alert('error', '학교를 선택해 주세요!');
             this.setState({loadingVisibility: 'hidden'});
             return;
         }
 
         if (this.state.id.length != 10) {
-            alert('error', '학번을 정확히 입력해 주세요!');
+            AlertModule.alert('error', '학번을 정확히 입력해 주세요!');
             this.setState({loadingVisibility: 'hidden'});
             return;
         }
 
         if (this.state.pw.length == 0) {
-            alert('error', '비밀번호를 입력해 주세요!');
+            AlertModule.alert('error', '비밀번호를 입력해 주세요!');
             this.setState({loadingVisibility: 'hidden'});
             return;
         }
         if (this.state.approve == false) {
-            alert('error', '이용약관에 동의해 주세요!');
+            AlertModule.alert('error', '이용약관에 동의해 주세요!');
             this.setState({loadingVisibility: 'hidden'});
             return;
         }
@@ -117,13 +97,13 @@ class Login extends Component {
             this.setState({loadingVisibility: 'hidden'});
 
             if (loginResult == 'ERROR') {
-                alert('error', '종합정보시스템 서버에 문제가 있습니다.');
+                AlertModule.alert('error', '종합정보시스템 서버에 문제가 있습니다.');
             } else if (loginResult == 'INCORRECT') {
-                alert('error', '학번과 비밀번호를 다시 확인해주세요.');
+                AlertModule.alert('error', '학번과 비밀번호를 다시 확인해주세요.');
             } else if (loginResult == 'REST') {
-                alert('error', '혹시 휴학생이세요..?');
+                AlertModule.alert('error', '혹시 휴학생이세요..?');
             } else {
-                alert('success', '환영합니다! ' + loginResult.info.name + '님');
+                AlertModule.alert('success', '환영합니다! ' + loginResult.info.name + '님');
 
                 Meteor.call('findUserByUsername', id, function (err, findUserResult) {
 
@@ -137,7 +117,7 @@ class Login extends Component {
                     // 없으면 강의정보 및 회원정보 만들기
                     else {
                         console.log('INFO :: user not exist, create user');
-                        Accounts.createUser({username: id, password: pw, profile: {nickname: '테스트'}});
+                        Accounts.createUser({username: id, password: pw, profile: {nickname: '테스트', name: loginResult.info.name}});
 
                         Meteor.loginWithPassword(id, pw, function (err, res) {
                             console.log('INFO :: login complete username : ' + loginResult.info.name)
@@ -163,7 +143,6 @@ class Login extends Component {
                 }}/>
                 <CircularProgress style={Object.assign(Styles.loading, {visibility: this.state.loadingVisibility})}/>
 
-                <Alert stack={{limit: 3}}/>
                 <Header title="로그인"/>
                 <div className="formContainer" style={Styles.formContainer}>
                     <div style={Styles.subContainer}>

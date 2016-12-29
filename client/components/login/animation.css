@@ -1,9 +1,9 @@
 .additional-input {
     animation-duration: .5s;
-    animation-name: slidein;
+    animation-name: slideIn;
 }
 
-@-webkit-keyframes slidein {
+@-webkit-keyframes slideIn {
     from {
         margin-left: -100%;
         width: 100%;

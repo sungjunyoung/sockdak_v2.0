@@ -18,7 +18,7 @@ import Subheader from 'material-ui/Subheader';
 import {Lectures} from '../../../imports/collections/lectures';
 
 //component import
-import Header from '../../common/header/header'
+import Header from '../../common_components/header/header'
 import ColorCode from '../../../imports/constants/color_code';
 import CircularProgress from 'material-ui/CircularProgress';
 
@@ -69,8 +69,6 @@ export default createContainer((props) => {
 
     let lectureCode = props.params.lecture_code;
     var subscribeHandle = Meteor.subscribe('findLectureByCode', lectureCode);
-
-
 
     if (subscribeHandle.ready()) {
         let str = props.params.lecture_code;

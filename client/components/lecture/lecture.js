@@ -8,9 +8,11 @@ import React, {Component} from 'react'; // React 임포트
 // additional module import
 import {createContainer} from 'meteor/react-meteor-data';
 import {browserHistory} from 'react-router';
+import SwipeableViews from 'react-swipeable-views';
+import {WindowResizeListener} from 'react-window-resize-listener';
 
 // material-ui import
-import RaisedButton from 'material-ui/RaisedButton'; // material-ui 플랫버튼 임포트
+import FlatButton from 'material-ui/FlatButton'; // material-ui 플랫버튼 임포트
 import UserImage from 'material-ui/svg-icons/action/account-circle';
 import {List, ListItem} from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
@@ -25,6 +27,29 @@ import CircularProgress from 'material-ui/CircularProgress';
 // style import
 import Styles from './styles';
 
+// 탭바 서브헤더
+class SubHeader extends Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        return (
+            <div className="tab-bar"
+                 style={Object.assign(Styles.tab, {
+                     width: this.props.width,
+                     backgroundColor: this.props.backgroundColor
+                 })}>
+                <FlatButton onTouchTap={this.props.onPostsTap}
+                            style={Object.assign({width: this.props.width / 2}, Styles.postsTab)} label="게시판"/>
+                <FlatButton onTouchTap={this.props.onChatsTap}
+                            style={Object.assign({width: this.props.width / 2}, Styles.chatsTab)} label="대화방"/>
+            </div>
+        )
+    }
+}
+
+
 // 강좌 페이지
 class Lecture extends Component {
     constructor(props) {
@@ -36,16 +61,42 @@ class Lecture extends Component {
         this.state = {
             height: $(window).height(),
             width: $(window).width(),
+            swipeIndex: 0
         };
     }
 
+    onPostsTap(event) {
+        this.refs.bar.style.transform = "translateX(0px)";
+        this.refs.bar.style.transitionDuration = "0.5s";
+        this.setState({swipeIndex: 0});
+    }
+
+    onChatsTap(event) {
+        this.refs.bar.style.transform = "translateX(" + this.state.width / 2 + "px)";
+        this.refs.bar.style.transitionDuration = "0.5s";
+        this.setState({swipeIndex: 1});
+    }
+
+    onSwitch(index, type) {
+        if (index >= 0.5) {
+            this.refs.bar.style.transform = "translateX(" + this.state.width / 2 + "px)";
+            this.refs.bar.style.transitionDuration = "0.5s";
+            this.setState({swipeIndex: 1});
+        }
+
+        else if (index < 0.5) {
+            this.refs.bar.style.transform = "translateX(0px)";
+            this.refs.bar.style.transitionDuration = "0.5s";
+            this.setState({swipeIndex: 0});
+        }
+    }
 
     render() {
 
-        if(!this.props.lecture){
-            return(
+        if (!this.props.lecture) {
+            return (
                 <CircularProgress style={Object.assign(Styles.loading, {visibility: this.props.loadingVisibility})}/>
-                )
+            )
         }
 
         // 이름 잘라버리기
@@ -54,12 +105,32 @@ class Lecture extends Component {
         lectureName = tempArr[0];
 
         return (
-            <div className="container" style={Object.assign(Styles.container, {height: this.state.height - 80})}>
-                <Header title={lectureName} backButtonLabel="홈" headerColor={this.props.lectureColor}/>
+            <div className="container" style={Object.assign(Styles.container, {height: this.state.height - 120})}>
+                <WindowResizeListener onResize={windowSize => {
+                    this.setState({height: windowSize.windowHeight, width: windowSize.windowWidth});
+                }}/>
 
-                <List style={{marginLeft: -8, marginRight: -8}}>
-                    <Subheader>알림</Subheader>
-                </List>
+                <Header title={lectureName} backButtonLabel="홈" headerColor={this.props.lectureColor}/>
+                <SubHeader width={this.state.width}
+                           backgroundColor={this.props.lectureColor}
+                           onPostsTap={this.onPostsTap.bind(this)}
+                           onChatsTap={this.onChatsTap.bind(this)}
+                />
+                {/*서브헤더 밑에서 왓다갓다거리는 바*/}
+                <div ref="bar" style={Object.assign({width: this.state.width / 2 - 1}, Styles.bar)}/>
+
+                <SwipeableViews index={this.state.swipeIndex}
+                                onSwitching={this.onSwitch.bind(this)}>
+                    {/*<List style={{marginLeft: -8, marginRight: -8}}>*/}
+                    {/*<Subheader>알림</Subheader>*/}
+                    {/*</List>*/}
+                    <div style={{backgroundColor: '#aadddd', height: this.state.height-120}}>
+
+                    </div>
+                    <div style={{backgroundColor: '#ddaaaa', height: this.state.height-120}}>
+
+                    </div>
+                </SwipeableViews>
             </div>
         );
     }

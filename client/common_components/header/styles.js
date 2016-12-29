@@ -18,7 +18,8 @@ const styles = {
         position: 'fixed',
         fontSize: 18,
         top: 24,
-        textAlign: 'center'
+        textAlign: 'center',
+        color: '#ffffff'
     },
     backButton: {
         position: 'fixed',

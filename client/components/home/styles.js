@@ -27,7 +27,7 @@ const styles = {
         marginTop: '-10px',
         backgroundColor: 'lightgray'
     },
-    myPageButton:{
+    myPageButton: {
         position: 'fixed',
         right: 50,
         top: 10,

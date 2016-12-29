@@ -1,8 +1,9 @@
 
-.search-text-container {
+.tab-bar {
     animation-duration: .3s;
     animation-name: slideDown;
 }
+
 
 @-webkit-keyframes slideDown {
     from {

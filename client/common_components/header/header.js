@@ -45,8 +45,8 @@ class Header extends Component {
                     target="_blank"
                     label={this.props.backButtonLabel ? this.props.backButtonLabel : 'BACK' }
                     secondary={true}
-                    icon={<BackButtonIcon color="#555555"/>}
-                    labelStyle={{color: '#555555'}}
+                    icon={<BackButtonIcon color="#ffffff"/>}
+                    labelStyle={{color: '#ffffff'}}
                     primary={true}
                 />
 

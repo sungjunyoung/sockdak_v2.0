@@ -126,7 +126,7 @@ class Lecture extends Component {
                     {/*<Subheader>알림</Subheader>*/}
                     {/*</List>*/}
                     <div className="postsList" style={Object.assign(Styles.subComponent,{height: this.state.height-120})}>
-                        <PostsList floatingColor={this.props.lectureColor} lecture={this.props.lecture} />
+                        <PostsList lectureColor={this.props.lectureColor} lecture={this.props.lecture} />
                     </div>
                     <div className="chatsList" style={Object.assign(Styles.subComponent,{height: this.state.height-120})}>
 

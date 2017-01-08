@@ -6,6 +6,7 @@ const styles = {
 
     floatingButton:{
         position:'absolute',
+        zIndex: 999,
         bottom: 10,
         right: 10
     }

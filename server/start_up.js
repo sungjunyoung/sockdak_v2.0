@@ -7,6 +7,7 @@ import {Meteor} from 'meteor/meteor';
 
 // module to subscribe import
 import {Lectures} from '../imports/collections/lectures'
+import {Posts} from '../imports/collections/posts'
 
 Meteor.startup(() => {
 
@@ -28,8 +29,6 @@ Meteor.startup(() => {
 
 
 
-
-
     // 강좌 검색시 일치하는 강좌 리스트를 발행행
     Meteor.publish('findLectures', function (toFind) {
         if (!toFind) {
@@ -43,4 +42,9 @@ Meteor.startup(() => {
     Meteor.publish('findLectureByCode', function(lectureCode){
         return Lectures.find({lecture_code: lectureCode});
     });
+
+
+    Meteor.publish('findPostsByLectureCode', function(lectureCode){
+        return Posts.find({post_lecture_code : lectureCode});
+    })
 });

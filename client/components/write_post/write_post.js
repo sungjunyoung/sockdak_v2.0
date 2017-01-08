@@ -22,6 +22,7 @@ import TextField from 'material-ui/TextField';
 
 // additional module import
 import {WindowResizeListener} from 'react-window-resize-listener';
+import AlertModule from '../../modules/alert';
 
 //components import
 import Header from '../../common_components/header/header'
@@ -39,7 +40,9 @@ class WritePost extends Component {
         this.state = {
             height: $(window).height(),
             width: $(window).width(),
-            slide: 'slideIn',
+            title: '',
+            content: '',
+
         };
     }
 
@@ -56,6 +59,7 @@ class WritePost extends Component {
                 }}/>
                 <Header title="글쓰기" backButtonLabel="" headerColor={this.props.lectureColor}/>
                 <TextField
+                    onChange={this.onTitleChange.bind(this)}
                     fullWidth={true}
                     className="input-post-title"
                     hintText="제목을 입력하세요."
@@ -63,12 +67,13 @@ class WritePost extends Component {
                     underlineFocusStyle={{borderColor: this.props.lectureColor}}
                 />
                 <TextField
+                    onChange={this.onContentChange.bind(this)}
                     fullWidth={true}
                     className="input-post-content"
                     hintText="내용을 입력하세요."
                     hintStyle={{fontSize: '12px', color: '#999999', position: 'absolute', top: 12, left: 0}}
-                    rows={6}
-                    rowsMax={6}
+                    rows={8}
+                    rowsMax={8}
                     multiLine={true}
                     underlineFocusStyle={{borderColor: this.props.lectureColor}}
                 />
@@ -80,15 +85,48 @@ class WritePost extends Component {
                         label="파일선택"
                     />
                     <FlatButton
+                        onTouchTap={this.writePost.bind(this)}
                         style={Styles.inputPostConfirm}
                         className="input-post-confirm"
                         labelStyle={{color: 'white'}}
                         label="등록"/>
                 </div>
-
-
             </div>
         )
+    }
+
+    onTitleChange(event){
+        this.setState({title: event.target.value});
+    }
+
+    onContentChange(event){
+        this.setState({content: event.target.value});
+    }
+
+    writePost(){
+        var ok = confirm("게시물을 등록합니다.");
+        if(ok){
+            if(this.state.title.length < 4 || this.state.title.length > 30){
+                AlertModule.alert('error','게시물의 제목은 4자 이상, 30자 이하 입니다.');
+                return;
+            }
+            if(this.state.content.length < 5 || this.state.content.length > 200){
+                AlertModule.alert('error', '게시물의 내용은 5자 이상입니다.');
+                return;
+            }
+
+            var post = {};
+            post.post_lecture_code = this.props.lecture.lecture_code;
+            post.post_title = this.state.title;
+            post.post_content = this.state.content;
+
+            Meteor.call('postAdd', post, function(err, res){
+                browserHistory.goBack();
+            });
+        } else{
+            browserHistory.goBack();
+            return
+        }
     }
 }
 

@@ -10,6 +10,8 @@ const colorCode = {
     DC : '#F7B9D9',
     FD : '#BBD1E8',
     EE : '#DDDDFF',
+    B : '#BBF',
+    openclass : '#FBB'
 };
 
 export default colorCode;

@@ -18,8 +18,6 @@ const styles = {
         zIndex:999
     },
     uploadImageButton:{
-        position: 'absolute',
-        bottom:10
     }
 };
 

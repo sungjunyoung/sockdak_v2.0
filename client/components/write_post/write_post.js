@@ -40,25 +40,7 @@ class WritePost extends Component {
             height: $(window).height(),
             width: $(window).width(),
             slide: 'slideIn',
-            showContentInput: false,
-            showshowConfirm: false
         };
-    }
-
-    onPostTitleChange(event) {
-        if (event.target.value.length >= 5 && event.target.value.length < 30) {
-            this.setState({showContentInput: true});
-        } else {
-            this.setState({showContentInput: false, showConfirm: false});
-        }
-    }
-
-    onPostContentChange(event) {
-        if (event.target.value.length >= 5 && event.target.value.length < 30) {
-            this.setState({showConfirm: true});
-        } else {
-            this.setState({showConfirm: false});
-        }
     }
 
     render() {
@@ -75,45 +57,34 @@ class WritePost extends Component {
                 <Header title="글쓰기" backButtonLabel="" headerColor={this.props.lectureColor}/>
                 <TextField
                     fullWidth={true}
-                    onChange={this.onPostTitleChange.bind(this)}
                     className="input-post-title"
                     hintText="제목을 입력하세요."
                     hintStyle={{fontSize: '12px', color: '#999999'}}
                     underlineFocusStyle={{borderColor: this.props.lectureColor}}
                 />
-                {
-                    this.state.showContentInput ?
-                        <TextField
-                            fullWidth={true}
-                            onChange={this.onPostContentChange.bind(this)}
-                            className="input-post-content"
-                            hintText="내용을 입력하세요."
-                            hintStyle={{fontSize: '12px', color: '#999999', position: 'absolute', top: 12, left: 0}}
-                            rows={6}
-                            rowsMax={6}
-                            multiLine={true}
-                            underlineFocusStyle={{borderColor: this.props.lectureColor}}
-                        />
-                        : null
-                }
-
-                {
-                    this.state.showConfirm ?
-                        <div>
-                            <RaisedButton
-                                style={Styles.uploadImageButton}
-                                className="input-post-upload-images"
-                                fullWidth={true}
-                                label="파일선택"
-                            />
-                            <FlatButton
-                                style={Styles.inputPostConfirm}
-                                className="input-post-confirm"
-                                labelStyle={{color: 'white'}}
-                                label="등록"/>
-                        </div>
-                        : null
-                }
+                <TextField
+                    fullWidth={true}
+                    className="input-post-content"
+                    hintText="내용을 입력하세요."
+                    hintStyle={{fontSize: '12px', color: '#999999', position: 'absolute', top: 12, left: 0}}
+                    rows={6}
+                    rowsMax={6}
+                    multiLine={true}
+                    underlineFocusStyle={{borderColor: this.props.lectureColor}}
+                />
+                <div>
+                    <RaisedButton
+                        style={Styles.uploadImageButton}
+                        className="input-post-upload-images"
+                        fullWidth={true}
+                        label="파일선택"
+                    />
+                    <FlatButton
+                        style={Styles.inputPostConfirm}
+                        className="input-post-confirm"
+                        labelStyle={{color: 'white'}}
+                        label="등록"/>
+                </div>
 
 
             </div>

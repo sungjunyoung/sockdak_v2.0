@@ -67,7 +67,7 @@ var khuAuth = (function () {
     var getUserLecture = function (result) {
         return new Promise(function (resolve, reject) {
             request({
-                url: "http://klas.khu.ac.kr/classroom/viewClassroomCourseMoreList.do?courseType=ing",
+                url: "http://klas.khu.ac.kr/classroom/viewClassroomCourseMoreList.do?courseType=ed",
                 method: "GET"
             }, function (err, res, body) {
                 if(err){

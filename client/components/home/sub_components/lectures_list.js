@@ -47,7 +47,7 @@ class LecturesList extends Component {
     // 강의리스트 렌더링
     renderLectureList() {
 
-        var timer = 2;
+        var timer = -1;
         return this.props.lectures.map(lecture => {
 
             let str = lecture.lecture_code;

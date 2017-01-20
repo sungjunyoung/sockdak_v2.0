@@ -9,6 +9,7 @@ const styles = {
         height: 56,
         width: 10,
         float: 'left',
+        zIndex : 888
     },
     loading: {
         position: 'fixed',
@@ -17,6 +18,9 @@ const styles = {
         marginLeft: -20,
         marginTop: -20,
         zIndex:999
+    },
+    lectureItem: {
+        backgroundColor: "#ffffff"
     }
 
 };

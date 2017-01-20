@@ -37,6 +37,12 @@ class Header extends Component {
             headerColor = this.props.headerColor;
         }
 
+        var title = this.props.title;
+        if(this.props.title.length > 12){
+            title = title.substring(0, 12);
+            title += '...';
+        }
+
         return (
             <div style={Object.assign(Styles.container, {backgroundColor: headerColor})}>
                 <FlatButton
@@ -51,7 +57,7 @@ class Header extends Component {
                 />
 
                 <div style={Styles.title}>
-                    {this.props.title}
+                    {title}
                 </div>
 
             </div>

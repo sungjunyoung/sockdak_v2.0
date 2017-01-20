@@ -7,7 +7,8 @@ import {createContainer} from 'meteor/react-meteor-data';
 import {browserHistory} from 'react-router';
 
 import {Lectures} from '../../../../imports/collections/lectures';
-import ColorCode from '../../../../imports/constants/color_code'
+import ColorCode from '../../../../imports/constants/color_code';
+
 
 import CircularProgress from 'material-ui/CircularProgress';
 import {List, ListItem} from 'material-ui/List';
@@ -28,7 +29,7 @@ class Lecture extends Component {
             <div>
                 <div className="channel-color-box"
                      style={Object.assign(Styles.channelColorBox, {backgroundColor: this.props.lecture.lecture_color})}></div>
-                <ListItem leftAvatar={<Avatar src=""/>} onTouchTap={() => browserHistory.push(this.props.lecture.lecture_url)}>
+                <ListItem leftAvatar={<Avatar src=""/>} onTouchTap={() => browserHistory.push(this.props.lecture.lecture_url)} style={Styles.lectureItem}>
                     <div>
                         {this.props.lecture.lecture_name}
                     </div>
@@ -95,7 +96,7 @@ export default createContainer((props) => {
             return {lectures: [], loadingVisibility, listTitle: "검색 결과"};
         } else {
             loadingVisibility = 'hidden';
-            return {lectures: Lectures.find({}).fetch(), loadingVisibility, listTitle: "검색 결과"};
+            return {lectures: Lectures.find({}, {sort: {lecture_name: 1}}).fetch(), loadingVisibility, listTitle: "검색 결과"};
         }
 
 
@@ -110,7 +111,7 @@ export default createContainer((props) => {
             return {lectures: [], loadingVisibility, listTitle: "내 강의실"};
         } else {
             loadingVisibility = 'hidden';
-            return {lectures: Lectures.find({}).fetch(), loadingVisibility, listTitle: "내 강의실"};
+            return {lectures: Lectures.find({}, {sort: {lecture_name: 1}}).fetch(), loadingVisibility, listTitle: "내 강의실"};
         }
     }
 

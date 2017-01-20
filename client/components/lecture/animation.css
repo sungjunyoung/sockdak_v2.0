@@ -1,9 +1,8 @@
 
-.tab-bar {
+.tab-bar{
     animation-duration: .5s;
     animation-name: slideDown;
 }
-
 
 @-webkit-keyframes slideDown {
     from {

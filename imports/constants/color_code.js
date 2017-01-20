@@ -11,7 +11,9 @@ const colorCode = {
     FD : '#BBD1E8',
     EE : '#DDDDFF',
     B : '#BBF',
-    openclass : '#FBB'
+    openclassglo : '#FBB',
+    GEBG : '#DAD',
+    APHY : '#459'
 };
 
 export default colorCode;

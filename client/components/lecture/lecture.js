@@ -18,6 +18,7 @@ import {List, ListItem} from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
 import Subheader from 'material-ui/Subheader';
 import {Lectures} from '../../../imports/collections/lectures';
+import ListIcon from 'material-ui/svg-icons/action/list';
 
 //component import
 import Header from '../../common_components/header/header'
@@ -42,9 +43,13 @@ class SubHeader extends Component {
                      backgroundColor: this.props.backgroundColor
                  })}>
                 <FlatButton onTouchTap={this.props.onPostsTap}
-                            style={Object.assign({width: this.props.width / 2}, Styles.postsTab)} label="게시판"/>
+                            style={Object.assign({width: this.props.width / 2}, Styles.postsTab)}
+                            label="게시판"
+                            icon={<ListIcon/>}/>
                 <FlatButton onTouchTap={this.props.onChatsTap}
-                            style={Object.assign({width: this.props.width / 2 + 9}, Styles.chatsTab)} label="대화방"/>
+                            style={Object.assign({width: this.props.width / 2 + 9}, Styles.chatsTab)}
+                            label="대화방"
+                            icon={<ListIcon/>}/>
             </div>
         )
     }
@@ -96,7 +101,7 @@ class Lecture extends Component {
 
         if (!this.props.lecture) {
             return (
-                <CircularProgress style={Object.assign(Styles.loading, {})}/>
+                <Header title="LOGO" backButtonDisplay="none"/>
             )
         }
 
@@ -105,8 +110,13 @@ class Lecture extends Component {
         let tempArr = lectureName.split(':');
         lectureName = tempArr[0];
 
+        var containerWidth = this.state.width;
+        if(containerWidth >= 480){
+            containerWidth = 480;
+        }
+
         return (
-            <div className="container" style={Object.assign(Styles.container, {height: this.state.height - 120})}>
+            <div className="container" style={Object.assign(Styles.container, {height: this.state.height - 120, width: containerWidth})}>
                 <WindowResizeListener onResize={windowSize => {
                     this.setState({height: windowSize.windowHeight, width: windowSize.windowWidth});
                 }}/>
@@ -125,10 +135,10 @@ class Lecture extends Component {
                     {/*<List style={{marginLeft: -8, marginRight: -8}}>*/}
                     {/*<Subheader>알림</Subheader>*/}
                     {/*</List>*/}
-                    <div className="postsList" style={Object.assign(Styles.subComponent,{height: this.state.height-120})}>
+                    <div className="postsList" style={Object.assign(Styles.subComponent,{height: this.state.height-120, width: containerWidth+8})}>
                         <PostsList lectureColor={this.props.lectureColor} lecture={this.props.lecture} />
                     </div>
-                    <div className="chatsList" style={Object.assign(Styles.subComponent,{height: this.state.height-120})}>
+                    <div className="chatsList" style={Object.assign(Styles.subComponent,{height: this.state.height-120, width: containerWidth+8})}>
 
                     </div>
                 </SwipeableViews>

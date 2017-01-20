@@ -77,40 +77,50 @@ class WritePost extends Component {
                     multiLine={true}
                     underlineFocusStyle={{borderColor: this.props.lectureColor}}
                 />
-                <div>
-                    <RaisedButton
-                        style={Styles.uploadImageButton}
-                        className="input-post-upload-images"
-                        fullWidth={true}
-                        label="파일선택"
-                    />
-                    <FlatButton
-                        onTouchTap={this.writePost.bind(this)}
-                        style={Styles.inputPostConfirm}
-                        className="input-post-confirm"
-                        labelStyle={{color: 'white'}}
-                        label="등록"/>
-                </div>
+                <RaisedButton
+                    style={Styles.uploadImageButton}
+                    className="input-post-upload-images"
+                    fullWidth={true}
+                    label="파일선택"
+                    labelPosition="before"
+                >
+                    {/*<input type="file" style={{*/}
+                        {/*cursor: 'pointer',*/}
+                        {/*position: 'absolute',*/}
+                        {/*top: 0,*/}
+                        {/*bottom: 0,*/}
+                        {/*right: 0,*/}
+                        {/*left: 0,*/}
+                        {/*width: '100%',*/}
+                        {/*opacity: 0,*/}
+                    {/*}}/>*/}
+                </RaisedButton>
+                <FlatButton
+                    onClick={this.writePost.bind(this)}
+                    style={Styles.inputPostConfirm}
+                    className="input-post-confirm"
+                    labelStyle={{color: 'white'}}
+                    label="등록"/>
             </div>
         )
     }
 
-    onTitleChange(event){
+    onTitleChange(event) {
         this.setState({title: event.target.value});
     }
 
-    onContentChange(event){
+    onContentChange(event) {
         this.setState({content: event.target.value});
     }
 
-    writePost(){
+    writePost() {
         var ok = confirm("게시물을 등록합니다.");
-        if(ok){
-            if(this.state.title.length < 4 || this.state.title.length > 30){
-                AlertModule.alert('error','게시물의 제목은 4자 이상, 30자 이하 입니다.');
+        if (ok) {
+            if (this.state.title.length < 4 || this.state.title.length > 30) {
+                AlertModule.alert('error', '게시물의 제목은 4자 이상, 30자 이하 입니다.');
                 return;
             }
-            if(this.state.content.length < 5 || this.state.content.length > 200){
+            if (this.state.content.length < 5 || this.state.content.length > 200) {
                 AlertModule.alert('error', '게시물의 내용은 5자 이상입니다.');
                 return;
             }
@@ -120,10 +130,10 @@ class WritePost extends Component {
             post.post_title = this.state.title;
             post.post_content = this.state.content;
 
-            Meteor.call('postAdd', post, function(err, res){
+            Meteor.call('postAdd', post, function (err, res) {
                 browserHistory.goBack();
             });
-        } else{
+        } else {
             browserHistory.goBack();
             return
         }

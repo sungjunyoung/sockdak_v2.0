@@ -17,6 +17,10 @@ import {List, ListItem} from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import Avatar from 'material-ui/Avatar';
 import Subheader from 'material-ui/Subheader';
+import BookmarkIcon from 'material-ui/svg-icons/action/bookmark';
+import IconButton from 'material-ui/IconButton';
+import AccountCircleIcon from 'material-ui/svg-icons/action/account-circle';
+import SearchButtonIcon from 'material-ui/svg-icons/action/search'
 
 //components import
 
@@ -25,11 +29,17 @@ import Subheader from 'material-ui/Subheader';
 import Infinite from 'react-infinite';
 import Styles from './post_list_style';
 import {Posts} from '../../../../imports/collections/posts';
+import {WindowResizeListener} from 'react-window-resize-listener';
 
 
 class PostsList extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            height: $(window).height(),
+            width: $(window).width(),
+            writeButtonDisabled: true
+        };
     }
 
     onWritePost() {
@@ -37,35 +47,68 @@ class PostsList extends Component {
     }
 
     postForm(post) {
+
+        if (post.post_title.length > 20) {
+            post.post_title = post.post_title.substring(0, 20);
+            post.post_title += '...';
+        }
+
+        if (post.post_content.length > 40) {
+            post.post_content = post.post_content.substring(0, 40);
+            post.post_content += '...';
+        }
+
+        post.post_url = `/lecture/${post.post_lecture_code}/post/${post._id}`;
+
         return (
-            <div>
-                <div>{post.post_title}</div>
-                <div>{post.post_content}</div>
-                <div>{post.post_created_at.toString()}</div>
+            <div onClick={() => browserHistory.push(post.post_url)}>
+                <IconButton style={Styles.bookmarkButton}>
+                    <BookmarkIcon color="lightgray"/>
+                </IconButton>
+                <div style={Styles.postTitle}>{post.post_title}</div>
+                <div style={Styles.createdAt}>{post.post_created_at.toString()}</div>
+                <div style={Object.assign(Styles.postContent, {width: this.state.width - 40})}>{post.post_content}</div>
+
+                <div className="postFooter" style={Styles.postFooter}>
+                    <div className="user">
+                        <AccountCircleIcon style={Styles.userIcon} color="gray"/>
+                        <div style={Styles.userNickname}>{post.post_user_nickname}의 한마디</div>
+                    </div>
+                </div>
             </div>
         )
     }
 
     renderPostList() {
         return this.props.posts.map(post => {
-          return (
-              <ListItem key={post._id}>
-                  {this.postForm(post)}
-              </ListItem>
-          )
+            return (
+                <ListItem key={post._id} style={Styles.postItem}>
+                    {this.postForm(post)}
+                </ListItem>
+            )
         })
     }
 
+    componentDidMount(){
+
+        for(var i in this.props.lecture.lecture_users){
+            if(this.props.lecture.lecture_users[i].user_id == Meteor.user()._id){
+                this.setState({writeButtonDisabled: false})
+            }
+        }
+    }
+
     render() {
-
-        console.log(this.props);
-
         return (
             <div>
+                <WindowResizeListener onResize={windowSize => {
+                    this.setState({height: windowSize.windowHeight, width: windowSize.windowWidth});
+                }}/>
                 <FloatingActionButton
                     onTouchTap={this.onWritePost.bind(this)}
                     backgroundColor={this.props.lectureColor}
-                    style={Styles.floatingButton}>
+                    style={Styles.floatingButton}
+                    disabled={this.state.writeButtonDisabled}>
                     <ContentAdd/>
                 </FloatingActionButton>
 
@@ -80,12 +123,13 @@ class PostsList extends Component {
 // export default PostsList;
 
 export default createContainer((props) => {
-    var subscribeHandle = Meteor.subscribe('findPostsByLectureCode', props.lecture.lecture_code);
+    var postsSubscribeHandle = Meteor.subscribe('findPostsByLectureCode', props.lecture.lecture_code);
+    var lectureSubscribeHandle = Meteor.subscribe('findLectureByCode', props.lecture.lecture_code);
 
-    if (subscribeHandle.ready()) {
-        return {posts: Posts.find({}).fetch()};
+    if (postsSubscribeHandle.ready() && lectureSubscribeHandle.ready()) {
+        return {posts: Posts.find({}, {sort: {post_created_at: -1}}).fetch(), lecture: Lectures.findOne({})};
     } else {
-        return props;
+        return {posts: []};
     }
 
 

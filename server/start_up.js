@@ -8,6 +8,7 @@ import {Meteor} from 'meteor/meteor';
 // module to subscribe import
 import {Lectures} from '../imports/collections/lectures'
 import {Posts} from '../imports/collections/posts'
+import {Comments} from '../imports/collections/comments'
 
 Meteor.startup(() => {
 
@@ -27,24 +28,34 @@ Meteor.startup(() => {
     });
 
 
-
-
     // 강좌 검색시 일치하는 강좌 리스트를 발행행
     Meteor.publish('findLectures', function (toFind) {
         if (!toFind) {
             return undefined;
         }
         toFind = ".*" + toFind + ".*";
-        return Lectures.find({$or: [{lecture_name: {$regex: toFind}}, {lecture_professor: {$regex: toFind}}]}, {sort: {lecture_name: 1}});
+        return Lectures.find({$or: [{lecture_name: {$regex: toFind}}, {lecture_professor: {$regex: toFind}}]});
     });
 
 
-    Meteor.publish('findLectureByCode', function(lectureCode){
+    // 강좌 코드로 강좌를 찾음
+    Meteor.publish('findLectureByCode', function (lectureCode) {
         return Lectures.find({lecture_code: lectureCode});
     });
 
+    // 강좌 코드로 게시물들을 찾음
+    Meteor.publish('findPostsByLectureCode', function (lectureCode) {
+        return Posts.find({post_lecture_code: lectureCode});
+    });
 
-    Meteor.publish('findPostsByLectureCode', function(lectureCode){
-        return Posts.find({post_lecture_code : lectureCode});
-    })
+    // 게시물 아이디로 게시물을 찾음
+    Meteor.publish('findPostById', function (postId) {
+        return Posts.find({_id: postId});
+    });
+
+    // 게시물 아이디로 게시물을 찾음
+    Meteor.publish('findCommentsByPostId', function (postId) {
+        return Comments.find({post_id: postId});
+    });
+
 });

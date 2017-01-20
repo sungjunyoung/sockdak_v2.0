@@ -6,8 +6,7 @@ const styles = {
 
     container: {
         position: 'absolute',
-        width: '100%',
-        left: 0,
+        left: -8,
         top: 0,
         paddingTop: 100,
         // backgroundColor: 'red'
@@ -34,7 +33,7 @@ const styles = {
         left: 0,
         height: 3,
         zIndex:999,
-        backgroundColor: 'white'
+        backgroundColor: '#f7f7f7'
     },
     postsTab: {
         position: 'absolute',

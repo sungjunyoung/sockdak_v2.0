@@ -1,6 +1,9 @@
 html * {
     font-family: Arial !important;
+}
 
+body {
+    background-color: #f7f7f7;
 }
 
 .render-target {

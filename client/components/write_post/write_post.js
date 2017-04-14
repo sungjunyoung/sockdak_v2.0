@@ -28,6 +28,8 @@ import AlertModule from '../../modules/alert';
 import Header from '../../common_components/header/header'
 
 import Styles from './write_post_style';
+import SweetAlert from 'sweetalert-react'
+import '/node_modules/sweetalert/dist/sweetalert.css'
 
 
 class WritePost extends Component {
@@ -42,8 +44,8 @@ class WritePost extends Component {
             width: $(window).width(),
             title: '',
             content: '',
-            writeButtonDisabled: true
-
+            writeButtonDisabled: true,
+            writePostConfirm: false
         };
     }
 
@@ -59,6 +61,40 @@ class WritePost extends Component {
                     this.setState({height: windowSize.windowHeight, width: windowSize.windowWidth});
                 }}/>
                 <Header title="글쓰기" backButtonLabel="" headerColor={this.props.lectureColor}/>
+
+                <SweetAlert
+                    show={this.state.writePostConfirm}
+                    title='속닥'
+                    text='게시물을 등록하시겠어요?'
+                    showCancelButton
+                    onConfirm={() => {
+                        if (this.state.title.length < 4 || this.state.title.length > 30) {
+                            AlertModule.alert('error', '게시물의 제목은 4자 이상, 30자 이하 입니다.');
+                            this.setState({writePostConfirm: false});
+                            return;
+                        } else if (this.state.content.length < 5 || this.state.content.length > 1000000) {
+                            AlertModule.alert('error', '게시물의 내용은 5자 이상, 1000자 이내 입니다.');
+                            this.setState({writePostConfirm: false});
+                            return;
+                        }
+
+                        var post = {};
+                        // post.post_lecture_color = this.props.lectureColor;
+                        post.post_lecture_name = this.props.lecture.lecture_name;
+                        post.post_lecture_code = this.props.lecture.lecture_code;
+                        post.post_title = this.state.title;
+                        post.post_content = this.state.content;
+
+                        Meteor.call('postAdd', post, function (err, res) {
+                            browserHistory.goBack();
+                        });
+                        this.setState({writePostConfirm: false});
+                    }}
+                    onCancel={() =>
+                        this.setState({writePostConfirm: false})
+                    }
+                />
+
                 <TextField
                     onChange={this.onTitleChange.bind(this)}
                     fullWidth={true}
@@ -87,14 +123,14 @@ class WritePost extends Component {
                     labelPosition="before"
                 >
                     {/*<input type="file" style={{*/}
-                        {/*cursor: 'pointer',*/}
-                        {/*position: 'absolute',*/}
-                        {/*top: 0,*/}
-                        {/*bottom: 0,*/}
-                        {/*right: 0,*/}
-                        {/*left: 0,*/}
-                        {/*width: '100%',*/}
-                        {/*opacity: 0,*/}
+                    {/*cursor: 'pointer',*/}
+                    {/*position: 'absolute',*/}
+                    {/*top: 0,*/}
+                    {/*bottom: 0,*/}
+                    {/*right: 0,*/}
+                    {/*left: 0,*/}
+                    {/*width: '100%',*/}
+                    {/*opacity: 0,*/}
                     {/*}}/>*/}
                 </RaisedButton>
                 <FlatButton
@@ -116,31 +152,7 @@ class WritePost extends Component {
     }
 
     writePost() {
-        var ok = confirm("게시물을 등록합니다.");
-        if (ok) {
-            if (this.state.title.length < 4 || this.state.title.length > 30) {
-                AlertModule.alert('error', '게시물의 제목은 4자 이상, 30자 이하 입니다.');
-                return;
-            }
-            if (this.state.content.length < 5 || this.state.content.length > 1000000) {
-                AlertModule.alert('error', '게시물의 내용은 5자 이상, 1000자 이내 입니다.');
-                return;
-            }
-
-            var post = {};
-            // post.post_lecture_color = this.props.lectureColor;
-            post.post_lecture_name = this.props.lecture.lecture_name;
-            post.post_lecture_code = this.props.lecture.lecture_code;
-            post.post_title = this.state.title;
-            post.post_content = this.state.content;
-
-            Meteor.call('postAdd', post, function (err, res) {
-                browserHistory.goBack();
-            });
-        } else {
-            browserHistory.goBack();
-            return
-        }
+        this.setState({writePostConfirm: true});
     }
 }
 

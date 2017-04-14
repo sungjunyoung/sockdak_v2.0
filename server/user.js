@@ -54,7 +54,7 @@ Meteor.methods({
                 }
                 else if (result == 'INCORRECT') {
                     console.log('----LOGIN-----------------------------------------------------------------------');
-                    console.log('!! ERROR : USER INFOMATION IS NOT CORRECT (id : ' + id + ' / pw : ' + pw + ') !!');
+                    console.log('!! ERROR : USER INFORMATION IS NOT CORRECT (id : ' + id + ' / pw : ' + pw + ') !!');
                     console.log('--------------------------------------------------------------------------------');
                 }
                 return result;

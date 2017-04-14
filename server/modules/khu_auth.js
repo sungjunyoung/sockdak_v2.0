@@ -5,6 +5,7 @@ var request = require('request');
 var Promise = require('promise');
 import cheerio from 'cheerio';
 
+
 var khuAuth = (function () {
 
     // 유저 로그인
@@ -15,30 +16,32 @@ var khuAuth = (function () {
 
         return new Promise(function (resolve, reject) {
             request({
-                url: "http://klas.khu.ac.kr/user/loginUser.do",
+                url: "https://klas.khu.ac.kr/user/loginUser.do",
                 method: "POST",
                 form: {USER_ID: id, PASSWORD: pw}
             }, function (err, res, body) {
+
                 if (err) {
                     reject('ERROR');
                 } else {
-                    resolve(body);
+                    resolve('SUCCESS');
                 }
             })
         });
     };
 
     // 유저 정보 받아오기
-    var getUserInfo = function (body) {
+    var getUserInfo = function () {
 
-        var result = {};
+        var result= {};
 
         return new Promise(function (resolve, reject) {
             request({
                 url: "http://klas.khu.ac.kr/main/viewPopUserConfig.do",
                 method: "GET"
             }, function (err, res, body) {
-                if(err){
+
+                if (err) {
                     reject('ERROR');
                 } else {
                     var $ = cheerio.load(body);
@@ -63,14 +66,14 @@ var khuAuth = (function () {
             })
         })
     };
-    
+
     var getUserLecture = function (result) {
         return new Promise(function (resolve, reject) {
             request({
-                url: "http://klas.khu.ac.kr/classroom/viewClassroomCourseMoreList.do?courseType=ed",
+                url: "https://klas.khu.ac.kr/classroom/viewClassroomCourseMoreList.do?courseType=ing",
                 method: "GET"
             }, function (err, res, body) {
-                if(err){
+                if (err) {
                     reject('ERROR');
                 } else {
                     var $ = cheerio.load(body);
@@ -96,6 +99,7 @@ var khuAuth = (function () {
                         }
                         count++;
                     });
+                    // console.log(result.info);
 
                     if (result.info.class_number == ')') {
                         result.result = "incorrect";
@@ -118,7 +122,7 @@ var khuAuth = (function () {
     return {
         login: login,
         getUserInfo: getUserInfo,
-        getUserLecture:getUserLecture
+        getUserLecture: getUserLecture
     }
 }());
 

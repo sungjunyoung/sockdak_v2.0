@@ -4,6 +4,8 @@
 import React from 'react';
 import Alert from 'react-s-alert';
 
+require('../common_components/ga');
+
 const App = React.createClass({
     propTypes: {
         route: React.PropTypes.object,

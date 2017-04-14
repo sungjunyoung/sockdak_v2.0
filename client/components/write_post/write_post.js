@@ -127,7 +127,7 @@ class WritePost extends Component {
             }
 
             var post = {};
-            post.post_lecture_color = this.props.lectureColor;
+            // post.post_lecture_color = this.props.lectureColor;
             post.post_lecture_name = this.props.lecture.lecture_name;
             post.post_lecture_code = this.props.lecture.lecture_code;
             post.post_title = this.state.title;

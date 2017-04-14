@@ -10,7 +10,7 @@ Meteor.methods({
     'postAdd' : function(post){
         var user = Meteor.users.findOne({_id: this.userId});
         Posts.insert({
-            post_lecture_color: post.post_lecture_color,
+            // post_lecture_color: post.post_lecture_color,
             post_lecture_name: post.post_lecture_name,
             post_lecture_code: post.post_lecture_code,
             post_user_id : this.userId,

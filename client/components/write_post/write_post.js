@@ -115,7 +115,6 @@ class WritePost extends Component {
     }
 
     writePost() {
-        console.log(this.state.content.length);
         var ok = confirm("게시물을 등록합니다.");
         if (ok) {
             if (this.state.title.length < 4 || this.state.title.length > 30) {
@@ -128,6 +127,8 @@ class WritePost extends Component {
             }
 
             var post = {};
+            post.post_lecture_color = this.props.lectureColor;
+            post.post_lecture_name = this.props.lecture.lecture_name;
             post.post_lecture_code = this.props.lecture.lecture_code;
             post.post_title = this.state.title;
             post.post_content = this.state.content;

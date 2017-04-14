@@ -81,7 +81,8 @@ class WritePost extends Component {
                     style={Styles.uploadImageButton}
                     className="input-post-upload-images"
                     fullWidth={true}
-                    label="파일선택"
+                    disabled={true}
+                    label="파일업로드 기능은 업데이트 예정입니다."
                     labelPosition="before"
                 >
                     {/*<input type="file" style={{*/}

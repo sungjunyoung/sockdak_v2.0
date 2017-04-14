@@ -22,7 +22,7 @@ class Intro extends Component {
         if (Meteor.user()) {
             var loginUser = Meteor.user();
             console.log(loginUser);
-            AlertModule.alert('success', '환영합니다! ' + loginUser.profile.name + '님')
+            AlertModule.alert('success', '환영합니다! ' + loginUser.profile.name + '님');
             browserHistory.push('home');
         } else {
             browserHistory.push('login');

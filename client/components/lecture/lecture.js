@@ -42,11 +42,7 @@ class SubHeader extends Component {
                      width: this.props.width,
                      backgroundColor: this.props.backgroundColor
                  })}>
-                <FlatButton onTouchTap={
-                    (e) => {
-                        e.preventDefault();
-                        this.props.onPostsTap;
-                    }}
+                <FlatButton onTouchTap={this.props.onPostsTap}
                             style={Object.assign({width: this.props.width / 2}, Styles.postsTab)}
                             label="게시판"
                             icon={<ListIcon/>}/>

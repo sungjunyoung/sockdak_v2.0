@@ -85,7 +85,7 @@ export default createContainer((props) => {
     let postId = props.params.post_id;
     console.log(postId);
 
-    var lectureSubscribeHandle = Meteor.subscribe('findLectureByCode', lectureCode)
+    var lectureSubscribeHandle = Meteor.subscribe('findLectureByCode', lectureCode);
     var postSubscribeHandle = Meteor.subscribe('findPostById', postId);
     var commentsSubscribeHandle = Meteor.subscribe('findCommentsByPostId', postId);
 

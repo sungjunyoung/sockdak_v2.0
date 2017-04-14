@@ -38,7 +38,8 @@ class PostsList extends Component {
         this.state = {
             height: $(window).height(),
             width: $(window).width(),
-            writeButtonDisabled: true
+            writeButtonDisabled: true,
+            isInfiniteLoading: false
         };
     }
 
@@ -89,13 +90,34 @@ class PostsList extends Component {
         })
     }
 
-    componentDidMount(){
+    componentDidMount() {
 
-        for(var i in this.props.lecture.lecture_users){
-            if(this.props.lecture.lecture_users[i].user_id == Meteor.user()._id){
+        for (var i in this.props.lecture.lecture_users) {
+            if (this.props.lecture.lecture_users[i].user_id == Meteor.user()._id) {
                 this.setState({writeButtonDisabled: false})
             }
         }
+    }
+
+    handleInfiniteLoad() {
+        var that = this;
+        this.setState({
+            isInfiniteLoading: true
+        });
+        setTimeout(function () {
+            var elemLength = that.state.elements.length,
+                newElements = that.buildElements(elemLength, elemLength + 1000);
+            that.setState({
+                isInfiniteLoading: false,
+                elements: that.state.elements.concat(newElements)
+            });
+        }, 2500);
+    }
+
+    elementInfiniteLoad() {
+        return <div className="infinite-list-item">
+            Loading...
+        </div>;
     }
 
     render() {
@@ -112,9 +134,15 @@ class PostsList extends Component {
                     <ContentAdd/>
                 </FloatingActionButton>
 
-                <List>
+                <Infinite
+                    className="list"
+                    containerHeight={this.state.height - 113}
+                    elementHeight={140}
+                    onInfiniteLoad={this.handleInfiniteLoad}
+                    loadingSpinnerDelegate={this.elementInfiniteLoad()}
+                    isInfiniteLoading={this.state.isInfiniteLoading}>
                     {this.props.posts ? this.renderPostList() : null}
-                </List>
+                </Infinite>
             </div>
         )
     }

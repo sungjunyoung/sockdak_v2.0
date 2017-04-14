@@ -29,7 +29,7 @@ class Lecture extends Component {
             <div>
                 <div className="channel-color-box"
                      style={Object.assign(Styles.channelColorBox, {backgroundColor: this.props.lecture.lecture_color})}></div>
-                <ListItem leftAvatar={<Avatar src=""/>} onTouchTap={(e) => {e.preventDefault(); browserHistory.push(this.props.lecture.lecture_url)}} style={Styles.lectureItem}>
+                <ListItem leftAvatar={<Avatar src=""/>} onTouchTap={browserHistory.push(this.props.lecture.lecture_url)} style={Styles.lectureItem}>
                     <div>
                         {this.props.lecture.lecture_name}
                     </div>

@@ -42,9 +42,6 @@ class Post extends Component {
 
 
     render() {
-        console.log(this.props.post);
-        console.log(this.props.comments);
-        console.log(this.props.lecture);
 
         if (!this.props.lecture || !this.props.post || !this.props.comments) {
             return (
@@ -76,7 +73,7 @@ class Post extends Component {
                 </div>
 
                 <div style={Styles.commentInputWrapper}>
-                    <div style={Object.assign(Styles.commentInput, {width: this.state.width * 80 / 100})}>
+                    <div style={Object.assign(Styles.commentInput, {width: this.state.width * 72 / 100})}>
                         <TextField
                             fullWidth={true}
                             className="input-post-title"
@@ -87,8 +84,8 @@ class Post extends Component {
                     </div>
                     <div>
                         <RaisedButton
-                            style={Object.assign(Styles.commentInputButton, {width: this.state.width * 10 / 100})}
-                            className="input-post-upload-images"
+                            buttonStyle={Object.assign(Styles.commentInputButton, {width: this.state.width * 20 / 100})}
+                            className="commend-input-button"
                             label="작성"
                             labelPosition="before"
                         />
@@ -103,8 +100,6 @@ class Post extends Component {
 export default createContainer((props) => {
     let lectureCode = props.params.lecture_code;
     let postId = props.params.post_id;
-    console.log(postId);
-
     var lectureSubscribeHandle = Meteor.subscribe('findLectureByCode', lectureCode);
     var postSubscribeHandle = Meteor.subscribe('findPostById', postId);
     var commentsSubscribeHandle = Meteor.subscribe('findCommentsByPostId', postId);

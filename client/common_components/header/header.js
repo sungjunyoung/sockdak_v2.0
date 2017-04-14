@@ -46,10 +46,9 @@ class Header extends Component {
         return (
             <div style={Object.assign(Styles.container, {backgroundColor: headerColor})}>
                 <FlatButton
-                    onTouchTap={(e) => {
-                        e.preventDefault();
+                    onTouchTap={
                         this.onBack.bind(this)
-                    }}
+                    }
                     style={Object.assign(Styles.backButton, {display: this.props.backButtonDisplay})}
                     target="_blank"
                     label={this.props.backButtonLabel ? this.props.backButtonLabel : 'BACK' }

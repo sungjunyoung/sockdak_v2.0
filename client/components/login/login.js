@@ -119,7 +119,7 @@ class Login extends Component {
                     // 없으면 강의정보 및 회원정보 만들기
                     else {
                         console.log('INFO :: user not exist, create user');
-                        Accounts.createUser({username: id, password: pw, profile: {nickname: RandomNickname.getRandom(), name: loginResult.info.name}});
+                        Accounts.createUser({username: id, password: pw, profile: {nickname: RandomNickname.getRandom(), name: loginResult.info.name, bookmark: []}});
 
                         Meteor.loginWithPassword(id, pw, function (err, res) {
                             console.log('INFO :: login complete username : ' + loginResult.info.name)

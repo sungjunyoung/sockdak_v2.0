@@ -35,6 +35,7 @@ const styles = {
         marginBottom: 35
     },
     bookmarkButton:{
+        zIndex: 999,
         position: 'absolute',
         right: 5,
         top: 5

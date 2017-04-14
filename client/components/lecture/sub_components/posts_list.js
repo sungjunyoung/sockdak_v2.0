@@ -47,6 +47,28 @@ class PostsList extends Component {
         browserHistory.push('/lecture/' + this.props.lecture.lecture_code + '/write-post');
     }
 
+    onBookmark(post_id) {
+
+        var userBookmarks = Meteor.user().profile.bookmark;
+        for (var i = 0; i < userBookmarks.length; i++) {
+            if(post_id === userBookmarks[i]){
+                if(confirm('해당 게시물의 북마크를 해제하시겠습니까?')){
+                    Meteor.users.update({_id: Meteor.userId()}, {$pull: {"profile.bookmark": post_id}});
+                    this.forceUpdate();
+                    return;
+                }else {
+                    return;
+                }
+
+            }
+        }
+
+        if (confirm('해당 게시물을 북마크에 등록하시겠습니까?')) {
+            Meteor.users.update({_id: Meteor.userId()}, {$addToSet: {"profile.bookmark": post_id}});
+            this.forceUpdate();
+        }
+    }
+
     postForm(post) {
 
         if (post.post_title.length > 20) {
@@ -59,28 +81,43 @@ class PostsList extends Component {
             post.post_content = post.post_content.substring(0, 120);
             post.post_content += '...';
         } else {
-            if(this.state.width < 480){
-                contentWidth = this.state.width * 94/100;
+            if (this.state.width < 480) {
+                contentWidth = this.state.width * 94 / 100;
             } else {
                 contentWidth = 438
             }
         }
-
         post.post_url = `/lecture/${post.post_lecture_code}/post/${post._id}`;
 
-        return (
-            <div onClick={() => browserHistory.push(post.post_url)}>
-                <IconButton style={Styles.bookmarkButton}>
-                    <BookmarkIcon color="lightgray"/>
-                </IconButton>
-                <div style={Styles.postTitle}>{post.post_title}</div>
-                <div style={Styles.createdAt}>{post.post_created_at.toString()}</div>
-                <div style={Object.assign(Styles.postContent, {width: contentWidth})}>{post.post_content}</div>
+        var userBookmarks = Meteor.user().profile.bookmark;
+        var isBookmarked = false;
+        for (var i = 0; i < userBookmarks.length; i++) {
+            if(post._id === userBookmarks[i]){
+                isBookmarked = true;
+            }
+        }
 
-                <div className="postFooter" style={Styles.postFooter}>
-                    <div className="user">
-                        <AccountCircleIcon style={Styles.userIcon} color="gray"/>
-                        <div style={Styles.userNickname}>{post.post_user_nickname}의 한마디</div>
+        var bookmarkColor = isBookmarked ? "#f7e81f" : "lightgray";
+
+        return (
+            <div>
+                <IconButton style={Styles.bookmarkButton}
+                            onTouchTap={() => {
+                                this.onBookmark(post._id)
+                            }}>
+                    <BookmarkIcon color={bookmarkColor}/>
+                </IconButton>
+                <div onClick={() => browserHistory.push(post.post_url)}>
+
+                    <div style={Styles.postTitle}>{post.post_title}</div>
+                    <div style={Styles.createdAt}>{post.post_created_at.toString()}</div>
+                    <div style={Object.assign(Styles.postContent, {width: contentWidth})}>{post.post_content}</div>
+
+                    <div className="postFooter" style={Styles.postFooter}>
+                        <div className="user">
+                            <AccountCircleIcon style={Styles.userIcon} color="gray"/>
+                            <div style={Styles.userNickname}>{post.post_user_nickname}의 한마디</div>
+                        </div>
                     </div>
                 </div>
             </div>

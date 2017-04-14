@@ -136,7 +136,6 @@ class Login extends Component {
 
                 browserHistory.push('home');
             }
-            ㅣ
         }.bind(this));
     }
 
@@ -207,11 +206,7 @@ class Login extends Component {
                 </div>
 
                 <div style={Styles.subContainer}>
-                    <RaisedButton onTouchTap={
-                        (e) => {
-                            e.preventDefault();
-                            this.onLogin.bind(this)
-                        }} style={Styles.loginButton} label="로그인"/>
+                    <RaisedButton onTouchTap={this.onLogin.bind(this)} style={Styles.loginButton} label="로그인"/>
                 </div>
             </div>
         );

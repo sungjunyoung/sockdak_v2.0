@@ -26,19 +26,19 @@ class Header extends Component {
 
     render() {
 
-        if(!this.props){
-            return(<div>로딩중</div>)
+        if (!this.props) {
+            return (<div>로딩중</div>)
         }
 
         var headerColor;
-        if(!this.props.headerColor){
+        if (!this.props.headerColor) {
             headerColor = 'lightgray';
         } else {
             headerColor = this.props.headerColor;
         }
 
         var title = this.props.title;
-        if(this.props.title.length > 12){
+        if (this.props.title.length > 12) {
             title = title.substring(0, 12);
             title += '...';
         }
@@ -46,7 +46,10 @@ class Header extends Component {
         return (
             <div style={Object.assign(Styles.container, {backgroundColor: headerColor})}>
                 <FlatButton
-                    onTouchTap={this.onBack.bind(this)}
+                    onTouchTap={(e) => {
+                        e.preventDefault();
+                        this.onBack.bind(this)
+                    }}
                     style={Object.assign(Styles.backButton, {display: this.props.backButtonDisplay})}
                     target="_blank"
                     label={this.props.backButtonLabel ? this.props.backButtonLabel : 'BACK' }

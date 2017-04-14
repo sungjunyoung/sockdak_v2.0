@@ -102,8 +102,9 @@ class PostsList extends Component {
         return (
             <div>
                 <IconButton style={Styles.bookmarkButton}
-                            onTouchTap={() => {
-                                this.onBookmark(post._id)
+                            onTouchTap={(e) => {
+                                e.preventDefault();
+                                this.onBookmark(post._id);
                             }}>
                     <BookmarkIcon color={bookmarkColor}/>
                 </IconButton>
@@ -171,7 +172,7 @@ class PostsList extends Component {
                     this.setState({height: windowSize.windowHeight, width: windowSize.windowWidth});
                 }}/>
                 <FloatingActionButton
-                    onTouchTap={this.onWritePost.bind(this)}
+                    onTouchTap={(e) => {e.preventDefault(); this.onWritePost.bind(this);}}
                     backgroundColor={this.props.lectureColor}
                     style={Styles.floatingButton}
                     disabled={this.state.writeButtonDisabled}>

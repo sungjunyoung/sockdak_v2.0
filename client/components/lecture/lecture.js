@@ -42,11 +42,18 @@ class SubHeader extends Component {
                      width: this.props.width,
                      backgroundColor: this.props.backgroundColor
                  })}>
-                <FlatButton onTouchTap={this.props.onPostsTap}
+                <FlatButton onTouchTap={
+                    (e) => {
+                        e.preventDefault();
+                        this.props.onPostsTap;
+                    }}
                             style={Object.assign({width: this.props.width / 2}, Styles.postsTab)}
                             label="게시판"
                             icon={<ListIcon/>}/>
-                <FlatButton onTouchTap={this.props.onChatsTap}
+                <FlatButton onTouchTap={(e) => {
+                    e.preventDefault();
+                    this.props.onChatsTap;
+                }}
                             style={Object.assign({width: this.props.width / 2 + 9}, Styles.chatsTab)}
                             label="대화방"
                             icon={<ListIcon/>}/>
@@ -111,12 +118,13 @@ class Lecture extends Component {
         lectureName = tempArr[0];
 
         var containerWidth = this.state.width;
-        if(containerWidth >= 480){
+        if (containerWidth >= 480) {
             containerWidth = 480;
         }
 
         return (
-            <div className="container" style={Object.assign(Styles.container, {height: this.state.height - 120, width: containerWidth})}>
+            <div className="container"
+                 style={Object.assign(Styles.container, {height: this.state.height - 120, width: containerWidth})}>
                 <WindowResizeListener onResize={windowSize => {
                     this.setState({height: windowSize.windowHeight, width: windowSize.windowWidth});
                 }}/>
@@ -135,10 +143,16 @@ class Lecture extends Component {
                     {/*<List style={{marginLeft: -8, marginRight: -8}}>*/}
                     {/*<Subheader>알림</Subheader>*/}
                     {/*</List>*/}
-                    <div className="postsList" style={Object.assign(Styles.subComponent,{height: this.state.height-120, width: containerWidth+8})}>
-                        <PostsList lectureColor={this.props.lectureColor} lecture={this.props.lecture} />
+                    <div className="postsList" style={Object.assign(Styles.subComponent, {
+                        height: this.state.height - 120,
+                        width: containerWidth + 8
+                    })}>
+                        <PostsList lectureColor={this.props.lectureColor} lecture={this.props.lecture}/>
                     </div>
-                    <div className="chatsList" style={Object.assign(Styles.subComponent,{height: this.state.height-120, width: containerWidth+8})}>
+                    <div className="chatsList" style={Object.assign(Styles.subComponent, {
+                        height: this.state.height - 120,
+                        width: containerWidth + 8
+                    })}>
 
                     </div>
                 </SwipeableViews>

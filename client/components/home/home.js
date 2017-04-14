@@ -32,15 +32,15 @@ class SubHeader extends Component {
     render() {
         return (
             <div>
-                <IconButton onTouchTap={this.props.onSearchButton} style={Styles.searchButton}>
+                <IconButton onTouchTap={(e)=>{e.preventDefault(); this.props.onSearchButton;}} style={Styles.searchButton}>
                     {this.props.findState ? <QuitSearchButtonIcon/> : <SearchButtonIcon/>}
                 </IconButton>
 
-                <IconButton onTouchTap={this.props.onMyPageButton} style={Styles.myPageButton}>
+                <IconButton onTouchTap={(e)=>{e.preventDefault(); this.props.onMyPageButton;}} style={Styles.myPageButton}>
                     <MyPageButtonIcon color="gray"/>
                 </IconButton>
 
-                <IconButton onTouchTap={this.props.onNotificationButton} style={Styles.notificationButton}>
+                <IconButton onTouchTap={(e)=>{e.preventDefault(); this.props.onNotificationButton;}} style={Styles.notificationButton}>
                     <NotificationButtonIcon color="gray"/>
                 </IconButton>
 

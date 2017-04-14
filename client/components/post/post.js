@@ -37,9 +37,19 @@ class Post extends Component {
         this.state = {
             height: $(window).height(),
             width: $(window).width(),
+            writeButtonDisabled: true
         };
     }
 
+    componentWillReceiveProps(nextProps){
+        for (var i in nextProps.lecture.lecture_users) {
+            if (nextProps.lecture.lecture_users[i].user_id === Meteor.user()._id) {
+                this.setState({writeButtonDisabled: false});
+                break;
+            }
+        }
+
+    }
 
     render() {
 
@@ -75,6 +85,7 @@ class Post extends Component {
                 <div style={Styles.commentInputWrapper}>
                     <div style={Object.assign(Styles.commentInput, {width: this.state.width * 72 / 100})}>
                         <TextField
+                            disabled={this.state.writeButtonDisabled}
                             fullWidth={true}
                             className="input-post-title"
                             hintText="새 댓글을 남겨보세요."
@@ -84,6 +95,7 @@ class Post extends Component {
                     </div>
                     <div>
                         <RaisedButton
+                            disabled={this.state.writeButtonDisabled}
                             buttonStyle={Object.assign(Styles.commentInputButton, {width: this.state.width * 20 / 100})}
                             className="commend-input-button"
                             label="작성"

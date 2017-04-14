@@ -42,6 +42,7 @@ class WritePost extends Component {
             width: $(window).width(),
             title: '',
             content: '',
+            writeButtonDisabled: true
 
         };
     }

@@ -114,14 +114,15 @@ class WritePost extends Component {
     }
 
     writePost() {
+        console.log(this.state.content.length);
         var ok = confirm("게시물을 등록합니다.");
         if (ok) {
             if (this.state.title.length < 4 || this.state.title.length > 30) {
                 AlertModule.alert('error', '게시물의 제목은 4자 이상, 30자 이하 입니다.');
                 return;
             }
-            if (this.state.content.length < 5 || this.state.content.length > 200) {
-                AlertModule.alert('error', '게시물의 내용은 5자 이상입니다.');
+            if (this.state.content.length < 5 || this.state.content.length > 1000000) {
+                AlertModule.alert('error', '게시물의 내용은 5자 이상, 1000자 이내 입니다.');
                 return;
             }
 

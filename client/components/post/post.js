@@ -12,12 +12,13 @@ import UserImage from 'material-ui/svg-icons/action/account-circle';
 import {List, ListItem} from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
 import Subheader from 'material-ui/Subheader';
+import TextField from 'material-ui/TextField';
 
 //component import
 import Header from '../../common_components/header/header'
 
 // style import
-import Styles from './styles';
+import Styles from './post_style';
 
 // additional import
 import {WindowResizeListener} from 'react-window-resize-listener';
@@ -62,7 +63,7 @@ class Post extends Component {
                 <Header title={this.props.lecture.lecture_name} backButtonLabel="게시판"
                         headerColor={this.props.lectureColor}/>
 
-                <div style={Object.assign(Styles.subContainer, {width: this.state.width})}>
+                <div style={Styles.subContainer}>
                     <div>
                         {this.props.post.post_title}
                     </div>
@@ -74,8 +75,27 @@ class Post extends Component {
                     </div>
                 </div>
 
-
+                <div style={Styles.commentInputWrapper}>
+                    <div style={Object.assign(Styles.commentInput, {width: this.state.width * 80 / 100})}>
+                        <TextField
+                            fullWidth={true}
+                            className="input-post-title"
+                            hintText="새 댓글을 남겨보세요."
+                            hintStyle={{fontSize: '12px', color: '#999999'}}
+                            underlineFocusStyle={{borderColor: this.props.lectureColor}}
+                        />
+                    </div>
+                    <div>
+                        <RaisedButton
+                            style={Object.assign(Styles.commentInputButton, {width: this.state.width * 10 / 100})}
+                            className="input-post-upload-images"
+                            label="작성"
+                            labelPosition="before"
+                        />
+                    </div>
+                </div>
             </div>
+
         );
     }
 }

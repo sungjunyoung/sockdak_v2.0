@@ -54,9 +54,16 @@ class PostsList extends Component {
             post.post_title += '...';
         }
 
-        if (post.post_content.length > 40) {
-            post.post_content = post.post_content.substring(0, 40);
+        var contentWidth = 0;
+        if (post.post_content.length > 120) {
+            post.post_content = post.post_content.substring(0, 120);
             post.post_content += '...';
+        } else {
+            if(this.state.width < 480){
+                contentWidth = this.state.width * 94/100;
+            } else {
+                contentWidth = 438
+            }
         }
 
         post.post_url = `/lecture/${post.post_lecture_code}/post/${post._id}`;
@@ -68,7 +75,7 @@ class PostsList extends Component {
                 </IconButton>
                 <div style={Styles.postTitle}>{post.post_title}</div>
                 <div style={Styles.createdAt}>{post.post_created_at.toString()}</div>
-                <div style={Object.assign(Styles.postContent, {width: this.state.width - 40})}>{post.post_content}</div>
+                <div style={Object.assign(Styles.postContent, {width: contentWidth})}>{post.post_content}</div>
 
                 <div className="postFooter" style={Styles.postFooter}>
                     <div className="user">
@@ -136,7 +143,7 @@ class PostsList extends Component {
 
                 <Infinite
                     className="list"
-                    containerHeight={this.state.height - 113}
+                    containerHeight={this.state.height - 103}
                     elementHeight={140}
                     onInfiniteLoad={this.handleInfiniteLoad}
                     loadingSpinnerDelegate={this.elementInfiniteLoad()}

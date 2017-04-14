@@ -17,10 +17,11 @@ const styles = {
         fontWeight: 'bold'
     },
     postContent:{
-        marginLeft: 15,
+        marginLeft: '3%',
+        marginRight: '3%',
         marginBottom: 10,
-        wordBreak: 'break-all',
-        width: '100%',
+        wordBreak: 'break-word',
+        // width: '94%',
         color:"gray"
     },
     createdAt:{

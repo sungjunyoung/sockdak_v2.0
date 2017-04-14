@@ -30,6 +30,8 @@ import Infinite from 'react-infinite';
 import Styles from './post_list_style';
 import {Posts} from '../../../../imports/collections/posts';
 import {WindowResizeListener} from 'react-window-resize-listener';
+import SweetAlert from 'sweetalert-react'
+import '/node_modules/sweetalert/dist/sweetalert.css'
 
 
 class PostsList extends Component {
@@ -39,7 +41,11 @@ class PostsList extends Component {
             height: $(window).height(),
             width: $(window).width(),
             writeButtonDisabled: true,
-            isInfiniteLoading: false
+            isInfiniteLoading: false,
+            showBookmarkQuitConfirm: false,
+            quitBookmarkPostId: '',
+            showBookmarkConfirm: false,
+            bookmarkPostId: '',
         };
     }
 
@@ -47,26 +53,19 @@ class PostsList extends Component {
         browserHistory.push('/lecture/' + this.props.lecture.lecture_code + '/write-post');
     }
 
+
     onBookmark(post_id) {
-
         var userBookmarks = Meteor.user().profile.bookmark;
-        for (var i = 0; i < userBookmarks.length; i++) {
-            if(post_id === userBookmarks[i]){
-                if(confirm('해당 게시물의 북마크를 해제하시겠습니까?')){
-                    Meteor.users.update({_id: Meteor.userId()}, {$pull: {"profile.bookmark": post_id}});
-                    this.forceUpdate();
-                    return;
-                }else {
-                    return;
-                }
 
+        for (var i = 0; i < userBookmarks.length; i++) {
+            if (post_id === userBookmarks[i]) {
+                console.log(11);
+                this.setState({showBookmarkQuitConfirm: true, quitBookmarkPostId: post_id});
+                return;
             }
         }
 
-        if (confirm('해당 게시물을 북마크에 등록하시겠습니까?')) {
-            Meteor.users.update({_id: Meteor.userId()}, {$addToSet: {"profile.bookmark": post_id}});
-            this.forceUpdate();
-        }
+        this.setState({showBookmarkConfirm: true, bookmarkPostId: post_id});
     }
 
     postForm(post) {
@@ -84,7 +83,7 @@ class PostsList extends Component {
             if (this.state.width < 480) {
                 contentWidth = this.state.width * 94 / 100;
             } else {
-                contentWidth = 438
+                contentWidth = 456
             }
         }
         post.post_url = `/lecture/${post.post_lecture_code}/post/${post._id}`;
@@ -92,7 +91,7 @@ class PostsList extends Component {
         var userBookmarks = Meteor.user().profile.bookmark;
         var isBookmarked = false;
         for (var i = 0; i < userBookmarks.length; i++) {
-            if(post._id === userBookmarks[i]){
+            if (post._id === userBookmarks[i]) {
                 isBookmarked = true;
             }
         }
@@ -102,7 +101,10 @@ class PostsList extends Component {
         return (
             <div>
                 <IconButton style={Styles.bookmarkButton}
-                            onTouchTap={(e)=>{e.preventDefault(); this.onBookmark(post._id);}}>
+                            onTouchTap={(e) => {
+                                e.preventDefault();
+                                this.onBookmark(post._id);
+                            }}>
                     <BookmarkIcon color={bookmarkColor}/>
                 </IconButton>
                 <div onClick={() => browserHistory.push(post.post_url)}>
@@ -168,6 +170,36 @@ class PostsList extends Component {
                 <WindowResizeListener onResize={windowSize => {
                     this.setState({height: windowSize.windowHeight, width: windowSize.windowWidth});
                 }}/>
+
+                <SweetAlert
+                    show={this.state.showBookmarkQuitConfirm}
+                    title='속닥'
+                    text='북마크를 해제하시겠어요?'
+                    showCancelButton
+                    onConfirm={() => {
+                        Meteor.users.update({_id: Meteor.userId()}, {$pull: {"profile.bookmark": this.state.quitBookmarkPostId}});
+                        this.setState({showBookmarkQuitConfirm: false});
+                        this.forceUpdate();
+                    }}
+                    onCancel={() =>
+                        this.setState({showBookmarkQuitConfirm: false})
+                    }
+                />
+                <SweetAlert
+                    show={this.state.showBookmarkConfirm}
+                    title='속닥'
+                    text='북마크를 등록하시겠어요?'
+                    showCancelButton
+                    onConfirm={() => {
+                        Meteor.users.update({_id: Meteor.userId()}, {$addToSet: {"profile.bookmark": this.state.bookmarkPostId}});
+                        this.forceUpdate();
+                        this.setState({showBookmarkConfirm: false})
+                    }}
+                    onCancel={() =>
+                        this.setState({showBookmarkConfirm: false})
+                    }
+                />
+
                 <FloatingActionButton
                     onTouchTap={ this.onWritePost.bind(this)}
                     backgroundColor={this.props.lectureColor}

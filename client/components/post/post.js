@@ -41,14 +41,16 @@ class Post extends Component {
         };
     }
 
-    componentWillReceiveProps(nextProps){
-        for (var i in nextProps.lecture.lecture_users) {
-            if (nextProps.lecture.lecture_users[i].user_id === Meteor.user()._id) {
-                this.setState({writeButtonDisabled: false});
-                break;
+    componentWillReceiveProps(nextProps) {
+
+        if (nextProps.lecture !== undefined) {
+            for (var i in nextProps.lecture.lecture_users) {
+                if (nextProps.lecture.lecture_users[i].user_id === Meteor.user()._id) {
+                    this.setState({writeButtonDisabled: false});
+                    break;
+                }
             }
         }
-
     }
 
     render() {
@@ -87,7 +89,7 @@ class Post extends Component {
                         <TextField
                             disabled={this.state.writeButtonDisabled}
                             fullWidth={true}
-                            className="input-post-title"
+                            // className="input-post-title"
                             hintText="새 댓글을 남겨보세요."
                             hintStyle={{fontSize: '12px', color: '#999999'}}
                             underlineFocusStyle={{borderColor: this.props.lectureColor}}
@@ -97,7 +99,7 @@ class Post extends Component {
                         <RaisedButton
                             disabled={this.state.writeButtonDisabled}
                             buttonStyle={Object.assign(Styles.commentInputButton, {width: this.state.width * 20 / 100})}
-                            className="commend-input-button"
+                            // className="commend-input-button"
                             label="작성"
                             labelPosition="before"
                         />

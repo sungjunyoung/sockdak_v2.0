@@ -3,12 +3,12 @@
  */
 
 const colorCode = {
-    CSE : '#FFADC5', // Computer Science Engineering?
-    GEDG : '#B8F3B8',
-    VID : '#c1f0f4',
-    GED : '#9dabcc',
-    DC : '#F7B9D9',
-    FD : '#BBD1E8',
+    CSE : '#ffaff4', // Computer Science Engineering?
+    GEDG : '#2faf7c',
+    VID : '#127e99',
+    GED : '#343082',
+    DC : '#cc4fa8',
+    FD : '#84b7b7',
     EE : '#DDDDFF',
     B : '#BBF',
     openclassglo : '#FBB',

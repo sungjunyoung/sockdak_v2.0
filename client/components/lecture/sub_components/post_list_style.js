@@ -32,7 +32,7 @@ const styles = {
     },
     postItem: {
         backgroundColor: "#ffffff",
-        marginBottom: 35
+        marginBottom: 40
     },
     bookmarkButton:{
         zIndex: 999,

@@ -25,6 +25,7 @@ import Header from '../../common_components/header/header'
 import ColorCode from '../../../imports/constants/color_code';
 import CircularProgress from 'material-ui/CircularProgress';
 import PostsList from './sub_components/posts_list';
+import ChatList from './sub_components/chats_list';
 
 // style import
 import Styles from './styles';
@@ -98,7 +99,7 @@ class Lecture extends Component {
     }
 
     render() {
-        if(Meteor.user() === null){
+        if (Meteor.user() === null) {
             browserHistory.push('/login-please');
         }
 
@@ -138,20 +139,19 @@ class Lecture extends Component {
 
                 <SwipeableViews index={this.state.swipeIndex}
                                 onSwitching={this.onSwitch.bind(this)}>
-                    {/*<List style={{marginLeft: -8, marginRight: -8}}>*/}
-                    {/*<Subheader>알림</Subheader>*/}
-                    {/*</List>*/}
                     <div className="postsList" style={Object.assign(Styles.subComponent, {
                         height: this.state.height - 120,
                         width: containerWidth + 8
                     })}>
                         <PostsList lectureColor={this.props.lectureColor} lecture={this.props.lecture}/>
                     </div>
+
+
                     <div className="chatsList" style={Object.assign(Styles.subComponent, {
                         height: this.state.height - 120,
                         width: containerWidth + 8
                     })}>
-
+                        <ChatList lecture={this.props.lecture} lectureColor={this.props.lectureColor} />
                     </div>
                 </SwipeableViews>
             </div>

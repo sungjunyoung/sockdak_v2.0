@@ -9,6 +9,7 @@ import {Meteor} from 'meteor/meteor';
 import {Lectures} from '../imports/collections/lectures'
 import {Posts} from '../imports/collections/posts'
 import {Comments} from '../imports/collections/comments'
+import {Chats} from '../imports/collections/chats'
 
 Meteor.startup(() => {
 
@@ -81,4 +82,10 @@ Meteor.startup(() => {
         return Comments.find({comment_user_id: userId});
     });
 
+
+    //채팅
+    // 강좌 코드로 채팅을 읽음
+    Meteor.publish('findChatsByLectureCode', function (lectureCode) {
+        return Chats.find({chat_lecture_code: lectureCode});
+    });
 });

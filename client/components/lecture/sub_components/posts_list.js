@@ -88,7 +88,7 @@ class PostsList extends Component {
             if (this.state.width < 600) {
                 contentWidth = this.state.width * 94 / 100;
             } else {
-                contentWidth = 456
+                contentWidth = 586
             }
         }
         post.post_url = `/lecture/${post.post_lecture_code}/post/${post._id}`;
@@ -135,7 +135,7 @@ class PostsList extends Component {
             commentCount = '99+';
         }
 
-        //북마크 눌럿는
+        //북마크 눌럿는지
         var bookmarkColor = isBookmarked ? "#f7e81f" : "lightgray";
 
         return (

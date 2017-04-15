@@ -19,7 +19,7 @@ const styles = {
     },
     subContainer: {
         position: 'absolute',
-        marginBottom: '72px',
+        paddingBottom: 55,
         marginLeft: -8,
         marginRight: -8,
         backgroundColor: '#ffffff'

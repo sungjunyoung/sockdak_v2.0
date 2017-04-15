@@ -122,7 +122,10 @@ class Login extends Component {
                         Accounts.createUser({
                             username: id,
                             password: pw,
-                            profile: {nickname: RandomNickname.getRandom(), name: loginResult.info.name, bookmark: []}
+                            profile: {
+                                nickname: RandomNickname.getRandom(),
+                                name: loginResult.info.name, bookmark: [], like: []
+                            }
                         });
 
                         Meteor.loginWithPassword(id, pw, function (err, res) {

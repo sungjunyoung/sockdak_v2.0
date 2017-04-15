@@ -73,6 +73,7 @@ const styles = {
     likeIcon: {
         marginTop: 14,
         float: 'left',
+        zIndex: 999
     },
     likeText: {
         fontSize: 14,

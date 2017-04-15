@@ -55,7 +55,7 @@ class Post extends Component {
             showBookmarkConfirm: false,
             bookmarkPostId: '',
             isInfiniteLoading: false,
-            commentContent: ''
+            commentContent: '',
         };
     }
 
@@ -119,7 +119,7 @@ class Post extends Component {
                         {this.commentForm(comment)}
                     </ListItem>
 
-                    <div style={{borderBottom: '1px solid #f9f9f9', margin:'0 10px 0 10px'}}/>
+                    <div style={{borderBottom: '1px solid #f9f9f9', margin: '0 10px 0 10px'}}/>
                 </div>
             )
         })
@@ -160,6 +160,31 @@ class Post extends Component {
         }.bind(this));
     }
 
+    clickLikeButton(post_id) {
+
+        var userLikes = Meteor.user().profile.like;
+
+        var quit = false;
+
+        for (var i = 0; i < userLikes.length; i++) {
+            if (post_id === userLikes[i]) {
+                Meteor.users.update({_id: Meteor.userId()}, {$pull: {"profile.like": post_id}});
+                Meteor.call('postPullLike', post_id, function (err, res) {
+                    this.forceUpdate();
+                    quit = true;
+                }.bind(this));
+                quit = true;
+            }
+        }
+
+        if (!quit) {
+            Meteor.users.update({_id: Meteor.userId()}, {$addToSet: {"profile.like": post_id}});
+            Meteor.call('postAddLike', post_id, function (err, res) {
+                this.forceUpdate();
+            }.bind(this));
+        }
+    }
+
     render() {
 
         // props 로딩 안됬을때
@@ -169,6 +194,7 @@ class Post extends Component {
             )
         }
 
+        //북마크인지 아닌지
         var userBookmarks = Meteor.user().profile.bookmark;
         var isBookmarked = false;
         for (var i = 0; i < userBookmarks.length; i++) {
@@ -186,12 +212,35 @@ class Post extends Component {
             subContanierWidth = 496
         }
 
+
+        // // 좋아요 갯수 99개 이상이면 99+로 표시
+        var likeCount = '1';
+        if(this.props.post.post_likes.length > 99){
+            likeCount = '99+';
+        } else {
+            likeCount = this.props.post.post_likes.length;
+        }
+
         // 댓글 갯수 99개 이상이면 99+로 표시
         var commentCount;
         if (this.props.comments.length > 99) {
             commentCount = '99+';
         } else {
             commentCount = this.props.comments.length;
+        }
+
+        // 좋아요 누른 게시물인지 아닌지
+
+        var userLikes = Meteor.user().profile.like;
+        var isLiked = false;
+        for (var i = 0; i < userLikes.length; i++) {
+            if (this.props.post._id === userLikes[i]) {
+                isLiked = true;
+            }
+        }
+        var likeIconColor = '#d6d4d4';
+        if (isLiked) {
+            likeIconColor = '#fc8f8f';
         }
 
         return (
@@ -236,10 +285,7 @@ class Post extends Component {
                     <IconButton style={Styles.bookmarkButton}
                                 onTouchTap={(e) => {
                                     e.preventDefault();
-                                    this.onBookmark(this.props.post._id);
-                                }
-                                }
-                    >
+                                    this.onBookmark(this.props.post._id);}}>
                         <BookmarkIcon color={bookmarkColor}/>
                     </IconButton>
 
@@ -259,15 +305,16 @@ class Post extends Component {
                             <div style={{width: 45, float: 'left'}}>
                                 <AccountCircleIcon style={Styles.postUserIcon} color="#9e9e9e"/>
                             </div>
-                            <div style={Styles.userNickname}>행복한지렁이</div>
+                            <div style={Styles.userNickname}>{this.props.post.post_user_nickname}</div>
                         </div>
                         <div style={Styles.rightInfoWrapper}>
                             <div style={Styles.heartInfo}>
                                 <div>
-                                    <LikeIcon style={Styles.likeIcon} color="#9e9e9e"/>
+                                    <LikeIcon style={Styles.likeIcon} color={likeIconColor}
+                                              onTouchTap={() => this.clickLikeButton(this.props.post._id)}/>
                                 </div>
                                 <div style={Styles.likeText}>
-                                    99+
+                                    {likeCount}
                                 </div>
                             </div>
                             <div style={Styles.commentInfo}>

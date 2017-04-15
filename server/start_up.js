@@ -53,9 +53,9 @@ Meteor.startup(() => {
         return Posts.find({_id: postId});
     });
 
-    // 게시물 아이디로 게시물을 찾음
+    // 게시물 아이디로 댓글을 찾음
     Meteor.publish('findCommentsByPostId', function (postId) {
-        return Comments.find({post_id: postId});
+        return Comments.find({comment_post_id: postId});
     });
 
 });

@@ -70,30 +70,60 @@ const styles = {
         height: '100%',
     },
 
-    likeIcon:{
+    likeIcon: {
         marginTop: 14,
-        float:'left'
+        float: 'left',
     },
-    likeText:{
+    likeText: {
         fontSize: 14,
-        marginTop:19,
-        marginLeft: 32
+        marginTop: 19,
+        marginLeft: 32,
+        color: '#969696'
     },
-    commentIcon:{
+    commentIcon: {
         marginTop: 14,
-        float:'left'
+        float: 'left',
     },
-    commentText:{
+    commentText: {
         fontSize: 14,
-        marginTop:19,
-        marginLeft: 32
+        marginTop: 19,
+        marginLeft: 32,
+        color: '#969696'
     },
-
     commentInfo: {
         float: 'left',
         width: '50%',
         height: '100%',
     },
+    commentUserInfoWrapper: {
+        width: '100%'
+    },
+    commentUserIcon: {
+        width: 30,
+        float: 'left'
+    },
+    commentUserNickname: {
+        paddingTop: 5,
+        fontSize: 12,
+        color: '#969696'
+    },
+    commentContent: {
+        width: '100%',
+        fontSize: 16,
+        marginTop: 12,
+        marginLeft: 8,
+        wordBreak: 'break-word',
+        color: '#686a6b'
+    },
+    commentCreatedAt:{
+        position: 'absolute',
+        top: 8,
+        right: 10,
+        fontSize: 10,
+        marginTop: 10,
+        color: '#edeaea'
+    },
+
     commentInput: {
         position: 'fixed',
         bottom: 0,

@@ -3,6 +3,8 @@
  */
 // base import
 import React, {Component} from 'react'; // React 임포트
+import ReactDOM from 'react-dom';
+
 import {browserHistory} from 'react-router';
 import {createContainer} from 'meteor/react-meteor-data';
 
@@ -34,6 +36,7 @@ import {Lectures} from '../../../imports/collections/lectures';
 import ColorCode from '../../../imports/constants/color_code';
 import SweetAlert from 'sweetalert-react'
 import '/node_modules/sweetalert/dist/sweetalert.css'
+import AlertModule from '../../modules/alert';
 
 
 class Post extends Component {
@@ -51,6 +54,8 @@ class Post extends Component {
             quitBookmarkPostId: '',
             showBookmarkConfirm: false,
             bookmarkPostId: '',
+            isInfiniteLoading: false,
+            commentContent: ''
         };
     }
 
@@ -80,13 +85,87 @@ class Post extends Component {
         this.setState({showBookmarkConfirm: true, bookmarkPostId: post_id});
     }
 
+    commentForm(comment) {
+        return (
+            <div className="commentItem" style={{margin: "-6px 0 -6px 0"}}>
+
+                {/*닉네임*/}
+                <div style={Styles.commentUserInfoWrapper}>
+                    <div style={Styles.commentUserIcon}>
+                        <AccountCircleIcon color="#9e9e9e"/>
+                    </div>
+                    <div style={Styles.commentUserNickname}>
+                        {comment.comment_nickname}
+                    </div>
+                </div>
+
+                {/*내용*/}
+                <div style={Styles.commentContent}>
+                    {comment.comment_content}
+                </div>
+                {/*날짜*/}
+                <div style={Styles.commentCreatedAt}>
+                    {comment.comment_created_at.toString()}
+                </div>
+            </div>
+        )
+    }
+
+    renderCommentList() {
+        return this.props.comments.map(comment => {
+            return (
+                <div key={comment._id}>
+                    <ListItem key={comment._id} style={Styles.commentList}>
+                        {this.commentForm(comment)}
+                    </ListItem>
+
+                    <div style={{borderBottom: '1px solid #f9f9f9', margin:'0 10px 0 10px'}}/>
+                </div>
+            )
+        })
+    }
+
+    onCommentChange(event, value) {
+        this.setState({commentContent: value})
+    }
+
+    keyboardInput(e) {
+        if (e.charCode == 13) {
+            this.writeComment();
+        }
+    }
+
+    scrollToBottom() {
+        const node = ReactDOM.findDOMNode(this.commentEnd);
+        node.scrollIntoView({behavior: "smooth"});
+    }
+
+    writeComment() {
+
+        if (this.state.commentContent.length < 4) {
+            AlertModule.alert('error', '적어도 4자이상의 댓글을 작성해주세요.');
+            return;
+        }
+
+        var comment = {};
+
+        comment.comment_post_id = this.props.post._id;
+        comment.comment_nickname = Meteor.user().profile.nickname;
+        comment.comment_content = this.state.commentContent;
+
+
+        Meteor.call('commentAdd', comment, function (err, res) {
+            this.setState({commentContent: ''});
+            this.scrollToBottom();
+        }.bind(this));
+    }
+
     render() {
 
+        // props 로딩 안됬을때
         if (!this.props.lecture || !this.props.post || !this.props.comments) {
             return (
-                <div>
-
-                </div>
+                <div></div>
             )
         }
 
@@ -107,6 +186,13 @@ class Post extends Component {
             subContanierWidth = 496
         }
 
+        // 댓글 갯수 99개 이상이면 99+로 표시
+        var commentCount;
+        if (this.props.comments.length > 99) {
+            commentCount = '99+';
+        } else {
+            commentCount = this.props.comments.length;
+        }
 
         return (
             <div className="container" style={Object.assign(Styles.container, {height: this.state.height - 80})}>
@@ -167,6 +253,7 @@ class Post extends Component {
                         {this.props.post.post_content}
                     </div>
 
+                    {/*게시물과 댓글 사이 정보 바*/}
                     <div style={Styles.betweenBar}>
                         <div style={Styles.userInfoWrapper}>
                             <div style={{width: 45, float: 'left'}}>
@@ -188,22 +275,36 @@ class Post extends Component {
                                     <CommentIcon style={Styles.commentIcon} color="#9e9e9e"/>
                                 </div>
                                 <div style={Styles.commentText}>
-                                    99+
+                                    {commentCount}
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    {/*댓글*/}
+                    <div>
+                        <List>
+                            {this.props.comments ? this.renderCommentList() : null}
+                            <div
+                                ref={(el) => {
+                                    this.commentEnd = el;
+                                }}/>
+                        </List>
+                    </div>
                 </div>
 
+                {/*댓글달기*/}
                 <div style={Styles.commentInputWrapper}>
                     <div style={Object.assign(Styles.commentInput, {width: this.state.width * 72 / 100})}>
                         <TextField
+                            value={this.state.commentContent}
                             disabled={this.state.writeButtonDisabled}
                             fullWidth={true}
-                            // className="input-post-title"
+                            onChange={this.onCommentChange.bind(this)}
                             hintText="새 댓글을 남겨보세요."
                             hintStyle={{fontSize: '12px', color: '#999999'}}
                             underlineFocusStyle={{borderColor: this.props.lectureColor}}
+                            onKeyPress={this.keyboardInput.bind(this)}
                         />
                     </div>
                     <div>
@@ -213,6 +314,7 @@ class Post extends Component {
                                 width: this.state.width * 20 / 100,
                                 backgroundColor: '#f7f7f7'
                             })}
+                            onTouchTap={this.writeComment.bind(this)}
                             // className="commend-input-button"
                             label="작성"
                             labelPosition="before"

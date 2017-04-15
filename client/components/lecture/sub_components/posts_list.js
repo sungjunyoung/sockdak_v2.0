@@ -118,6 +118,7 @@ class PostsList extends Component {
                             <AccountCircleIcon style={Styles.userIcon} color="gray"/>
                             <div style={Styles.userNickname}>{post.post_user_nickname}의 한마디</div>
                         </div>
+
                     </div>
                 </div>
             </div>

@@ -115,7 +115,7 @@ class Post extends Component {
     renderCommentList() {
         return this.props.comments.map(comment => {
             return (
-                <ListItem key={comment._id} style={Styles.commentList}>
+                <ListItem key={comment._id} style={{backgroundColor: '#ffffff'}}>
                     {this.commentForm(comment)}
                 </ListItem>
             )
@@ -148,7 +148,8 @@ class Post extends Component {
 
         Meteor.call('commentAdd', comment, function (err, res) {
             this.setState({commentContent: ''});
-            AlertModule.alert('success','댓글을 등록했어요!');
+
+            AlertModule.alert('success', '댓글을 등록했어요!');
         }.bind(this));
     }
 
@@ -236,7 +237,7 @@ class Post extends Component {
         }
 
         return (
-            <div className="container" style={Object.assign(Styles.container, {height: this.state.height - 80})}>
+            <div className="container" style={Object.assign(Styles.container)}>
                 <WindowResizeListener onResize={windowSize => {
                     this.setState({height: windowSize.windowHeight, width: windowSize.windowWidth});
                 }}/>
@@ -274,24 +275,25 @@ class Post extends Component {
                 />
 
                 <div style={Object.assign(Styles.subContainer, {width: subContanierWidth})}>
-                    <IconButton style={Styles.bookmarkButton}
-                                onTouchTap={(e) => {
-                                    e.preventDefault();
-                                    this.onBookmark(this.props.post._id);
-                                }}>
-                        <BookmarkIcon color={bookmarkColor}/>
-                    </IconButton>
+                    <div style={{display:'inline-block', width: subContanierWidth, backgroundColor: '#ffffff'}}>
+                        <IconButton style={Styles.bookmarkButton}
+                                    onTouchTap={(e) => {
+                                        e.preventDefault();
+                                        this.onBookmark(this.props.post._id);
+                                    }}>
+                            <BookmarkIcon color={bookmarkColor}/>
+                        </IconButton>
 
-                    <div style={Styles.postTitle}>
-                        {this.props.post.post_title}
+                        <div style={Styles.postTitle}>
+                            {this.props.post.post_title}
+                        </div>
+                        <div style={Styles.postCreatedAt}>
+                            {this.props.post.post_created_at.toString()}
+                        </div>
+                        <div style={Styles.postContent}>
+                            {this.props.post.post_content}
+                        </div>
                     </div>
-                    <div style={Styles.postCreatedAt}>
-                        {this.props.post.post_created_at.toString()}
-                    </div>
-                    <div style={Styles.postContent}>
-                        {this.props.post.post_content}
-                    </div>
-
                     {/*게시물과 댓글 사이 정보 바*/}
                     <div style={Styles.betweenBar}>
                         <div style={Styles.userInfoWrapper}>

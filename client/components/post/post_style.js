@@ -22,7 +22,7 @@ const styles = {
         paddingBottom: 55,
         marginLeft: -8,
         marginRight: -8,
-        backgroundColor: '#ffffff'
+        backgroundColor: '#f7f7f7'
     },
     postTitle: {
         margin: "30px 30px 5px 30px",

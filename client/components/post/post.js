@@ -76,7 +76,6 @@ class Post extends Component {
 
         for (var i = 0; i < userBookmarks.length; i++) {
             if (post_id === userBookmarks[i]) {
-                console.log(11);
                 this.setState({showBookmarkQuitConfirm: true, quitBookmarkPostId: post_id});
                 return;
             }
@@ -181,7 +180,7 @@ class Post extends Component {
 
     render() {
         if(Meteor.user() === null){
-            browserHistory.push('/');
+            browserHistory.push('/login-please');
         }
 
         // props 로딩 안됬을때

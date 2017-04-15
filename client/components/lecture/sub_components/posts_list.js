@@ -64,7 +64,6 @@ class PostsList extends Component {
 
         for (var i = 0; i < userBookmarks.length; i++) {
             if (post_id === userBookmarks[i]) {
-                console.log(11);
                 this.setState({showBookmarkQuitConfirm: true, quitBookmarkPostId: post_id});
                 return;
             }
@@ -87,9 +86,9 @@ class PostsList extends Component {
             post.post_content += '...';
         } else {
             if (this.state.width < 600) {
-                contentWidth = this.state.width * 96 / 100;
+                contentWidth = this.state.width * 94 / 100;
             } else {
-                contentWidth = 580
+                contentWidth = 456
             }
         }
         post.post_url = `/lecture/${post.post_lecture_code}/post/${post._id}`;
@@ -289,7 +288,6 @@ export default createContainer((props) => {
     var commentsSubscribeHandle = Meteor.subscribe('findCommentsByLectureCode', props.lecture.lecture_code);
 
     if (postsSubscribeHandle.ready() && lectureSubscribeHandle.ready() && commentsSubscribeHandle.ready()) {
-        console.log(Comments.find({}).fetch());
 
         return {
             posts: Posts.find({},

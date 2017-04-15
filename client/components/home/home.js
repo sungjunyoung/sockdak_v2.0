@@ -105,6 +105,12 @@ class Home extends Component {
 
     render() {
 
+        setTimeout(function () {
+            if (Meteor.user() === null) {
+                browserHistory.push('/login-please');
+
+            }
+        }, 500);
 
         return (
             <div className="container" style={Object.assign(Styles.container, {height: this.state.height - 80})}>

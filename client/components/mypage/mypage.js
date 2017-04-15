@@ -12,12 +12,19 @@ import RaisedButton from 'material-ui/RaisedButton'; // material-ui 플랫버튼
 import UserImage from 'material-ui/svg-icons/action/account-circle';
 import {List, ListItem} from 'material-ui/List';
 import FlatButton from 'material-ui/FlatButton';
+import Subheader from 'material-ui/Subheader';
+import LockIcon from 'material-ui/svg-icons/action/lock-outline';
+import AlarmIcon from 'material-ui/svg-icons/action/alarm';
+import NoticeIcon from 'material-ui/svg-icons/av/volume-down';
+import DeveloperSayIcon from 'material-ui/svg-icons/image/tag-faces';
+import BugReportIcon from 'material-ui/svg-icons/action/bug-report';
+import TermsIcon from 'material-ui/svg-icons/action/report-problem';
+import ShareIcon from 'material-ui/svg-icons/social/share';
+import LogoutIcon from 'material-ui/svg-icons/action/highlight-off';
 
 //component import
 import Header from '../../common_components/header/header'
 import Avatar from 'material-ui/Avatar';
-import SweetAlert from 'sweetalert-react'
-import '/node_modules/sweetalert/dist/sweetalert.css'
 import AccountCircleIcon from 'material-ui/svg-icons/action/account-circle';
 
 //data import
@@ -30,6 +37,9 @@ import Styles from './styles';
 //additional module
 import {WindowResizeListener} from 'react-window-resize-listener';
 import AlertModule from '../../modules/alert';
+import RandomNickname from '../../../imports/constants/user_nickname';
+import SweetAlert from 'sweetalert-react'
+import '/node_modules/sweetalert/dist/sweetalert.css'
 
 class MyPage extends Component {
     constructor(props) {
@@ -41,8 +51,26 @@ class MyPage extends Component {
         this.state = {
             height: $(window).height(),
             width: $(window).width(),
-            showLogoutConfirm: false
+            showLogoutConfirm: false,
+            showChangeNicknameConfirm: false,
         };
+    }
+
+    changeNickname() {
+        // 닉네임 업데이트는 세번 제한
+        if (Meteor.user().profile.changeNicknameCount >= 3) {
+            // 컨펌창
+            this.setState({showChangeNicknameConfirm: true});
+            return;
+        } else if (Meteor.user().profile.changeNicknameCount === 0) {
+            AlertModule.alert('error', '닉네임 변경 횟수가 초과되었어요!');
+            return;
+        } else {
+            var randomNickname = RandomNickname.getRandom();
+            Meteor.users.update({_id: Meteor.userId()}, {$set: {"profile.nickname": randomNickname}});
+            Meteor.users.update({_id: Meteor.userId()}, {$inc: {"profile.changeNicknameCount": -1}});
+        }
+
     }
 
     onLogout() {
@@ -50,8 +78,8 @@ class MyPage extends Component {
     }
 
     render() {
-        if(Meteor.user() === null){
-            browserHistory.push('/');
+        if (Meteor.user() === null) {
+            browserHistory.push('/login-please');
         }
 
         if (!this.props.user) {
@@ -76,20 +104,28 @@ class MyPage extends Component {
         for (var i = 0; i < commentsCounter; i++) {
             var flag = false;
             for (var j = 0; j < commentedPosts.length; j++) {
-                if(this.props.userComments[i].comment_post_id === commentedPosts[j]){
+                if (this.props.userComments[i].comment_post_id === commentedPosts[j]) {
                     flag = true;
                     break;
                 }
             }
-            if(!flag){
+            if (!flag) {
                 commentedPosts.push(this.props.userComments[i].comment_post_id);
             }
         }
 
+        // 화면조정
         var userInfoWidth = this.state.width;
         if (this.state.width > 600) {
             userInfoWidth = 600;
         }
+
+        // 닉네임 바꾸기 멘트
+        var changeNicknameInfo = "닉네임 바꿀래요? " + this.props.user.profile.changeNicknameCount + "번 남았어요!";
+        if (this.props.user.profile.changeNicknameCount === 0) {
+            changeNicknameInfo = "닉네임 변경기회 세번을 다 써버렷네요.."
+        }
+
         return (
             <div className="container" style={Object.assign(Styles.container, {height: this.state.height - 80})}>
                 <WindowResizeListener onResize={windowSize => {
@@ -111,6 +147,23 @@ class MyPage extends Component {
                         this.setState({showLogoutConfirm: false})
                     }
                 />
+
+                <SweetAlert
+                    show={this.state.showChangeNicknameConfirm}
+                    title='속닥'
+                    text='닉네임은 계정당 3회 변경가능합니다! 정말 변경하시겠어요?'
+                    showCancelButton
+                    onConfirm={() => {
+                        var randomNickname = RandomNickname.getRandom();
+                        Meteor.users.update({_id: Meteor.userId()}, {$set: {"profile.nickname": randomNickname}});
+                        Meteor.users.update({_id: Meteor.userId()}, {$inc: {"profile.changeNicknameCount": -1}});
+                        this.setState({showChangeNicknameConfirm: false});
+                    }}
+                    onCancel={() =>
+                        this.setState({showChangeNicknameConfirm: false})
+                    }
+                />
+
                 <div className="userInfo" style={Object.assign(Styles.userInfo, {width: userInfoWidth})}>
                     <div className="userImageWrapper">
                         <AccountCircleIcon style={Styles.userImage} color="lightgray"/>
@@ -119,7 +172,7 @@ class MyPage extends Component {
                         {userNickname}
                     </div>
                     <div className="changeNickname" style={Styles.changeNickname}>
-                        <a style={Styles.changeNicknameButton}>닉네임 바꿀래?</a>
+                        <a style={Styles.changeNicknameButton} onClick={this.changeNickname.bind(this)}>{changeNicknameInfo}</a>
                     </div>
                     <div className="userWroteCounter" style={Styles.userWroteCounter}>
                         <div className="postCounter" style={Styles.postCounter}>
@@ -134,12 +187,20 @@ class MyPage extends Component {
                 </div>
 
                 <div className="userSettings" style={Styles.userSettings}>
-                    <List style={{marginLeft: -8, marginRight: -8}}>
-                        <ListItem leftAvatar={<Avatar src=""/>} onClick={this.onLogout.bind(this)}>
-                            <div>
-                                로그아웃
-                            </div>
-                        </ListItem>
+                    <Subheader>설정</Subheader>
+                    <List style={{marginLeft: -8, marginRight: -8, marginBottom: 10, backgroundColor: '#ffffff'}}>
+                        <ListItem primaryText="잠금설정" leftIcon={<LockIcon style={Styles.listIcons}/>}/>
+                        <ListItem primaryText="알림설정" leftIcon={<AlarmIcon style={Styles.listIcons}/>}/>
+                    </List>
+                    <Subheader>고객지원</Subheader>
+                    <List style={{marginLeft: -8, marginRight: -8, backgroundColor: '#ffffff'}}>
+                        <ListItem primaryText="공지사항" leftIcon={<NoticeIcon style={Styles.listIcons}/>}/>
+                        <ListItem primaryText="제작자 한마디" leftIcon={<DeveloperSayIcon style={Styles.listIcons}/>}/>
+                        <ListItem primaryText="문의 / 버그신고" leftIcon={<BugReportIcon style={Styles.listIcons}/>}/>
+                        <ListItem primaryText="이용약관" leftAvatar={<TermsIcon style={Styles.listIcons}/>}/>
+                        <ListItem primaryText="친구에게 소문내기" leftIcon={<ShareIcon style={Styles.listIcons}/>}/>
+                        <ListItem primaryText="로그아웃" leftIcon={<LogoutIcon style={Styles.listIcons}/>}
+                                  onClick={this.onLogout.bind(this)}/>
                     </List>
                 </div>
             </div>

@@ -124,7 +124,7 @@ class Login extends Component {
                             password: pw,
                             profile: {
                                 nickname: RandomNickname.getRandom(),
-                                name: loginResult.info.name, bookmark: [], like: []
+                                name: loginResult.info.name, bookmark: [], like: [], changeNicknameCount: 3
                             }
                         });
 

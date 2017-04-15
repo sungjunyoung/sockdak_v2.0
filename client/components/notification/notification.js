@@ -35,7 +35,7 @@ class Notification extends Component {
 
     render() {
         if(Meteor.user() === null){
-            browserHistory.push('/');
+            browserHistory.push('/login-please');
         }
         return (
             <div className="container" style={Object.assign(Styles.container, {height: this.state.height - 80})}>

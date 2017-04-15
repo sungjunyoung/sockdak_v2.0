@@ -99,7 +99,6 @@ var khuAuth = (function () {
                         }
                         count++;
                     });
-                    // console.log(result.info);
 
                     if (result.info.class_number == ')') {
                         result.result = "incorrect";

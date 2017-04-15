@@ -15,6 +15,9 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import App from './components/app';
 
 // additional component import
+import NotFound from './common_components/notFound/notFound';
+import LoginPlease from './common_components/loginPlease/loginPlease';
+
 import Intro from './components/intro/intro';
 import Login from './components/login/login';
 import Home from './components/home/home';
@@ -24,8 +27,14 @@ import Lecture from './components/lecture/lecture';
 import WritePost from './components/write_post/write_post';
 import Post from './components/post/post';
 
+Meteor.startup(() => {
+    ReactDOM.render(routes, document.querySelector('.render-target'));
+});
+
+
 const routes = (
     <MuiThemeProvider>
+
         <Router history={browserHistory}>
             <Route path="/" component={App}>
                 <IndexRoute component={Intro}/>
@@ -36,12 +45,9 @@ const routes = (
                 <Route path="lecture/:lecture_code" component={Lecture}/>
                 <Route path="lecture/:lecture_code/post/:post_id" component={Post}/>
                 <Route path="lecture/:lecture_code/write-post" component={WritePost}/>
+                <Route path="login-please" component={LoginPlease}/>
+                <Route path="*" component={NotFound}/>
             </Route>
         </Router>
     </MuiThemeProvider>
 );
-
-
-Meteor.startup(() => {
-    ReactDOM.render(routes, document.querySelector('.render-target'));
-});

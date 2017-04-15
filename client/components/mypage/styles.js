@@ -87,6 +87,10 @@ const styles = {
         position: 'absolute',
         width: '100%',
         top: 300
+    },
+
+    listIcons:{
+        
     }
 };
 

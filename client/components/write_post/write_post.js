@@ -51,7 +51,7 @@ class WritePost extends Component {
 
     render() {
         if(Meteor.user() === null){
-            browserHistory.push('/');
+            browserHistory.push('/login-please');
         }
 
         if (!this.props.lecture) {

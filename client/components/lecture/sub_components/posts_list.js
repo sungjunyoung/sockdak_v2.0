@@ -86,10 +86,10 @@ class PostsList extends Component {
             post.post_content = post.post_content.substring(0, 120);
             post.post_content += '...';
         } else {
-            if (this.state.width < 480) {
-                contentWidth = this.state.width * 94 / 100;
+            if (this.state.width < 600) {
+                contentWidth = this.state.width * 96 / 100;
             } else {
-                contentWidth = 456
+                contentWidth = 580
             }
         }
         post.post_url = `/lecture/${post.post_lecture_code}/post/${post._id}`;

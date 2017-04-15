@@ -200,10 +200,10 @@ class Post extends Component {
 
 
         var subContanierWidth = 0;
-        if (this.state.width < 480) {
+        if (this.state.width < 600) {
             subContanierWidth = this.state.width;
         } else {
-            subContanierWidth = 496
+            subContanierWidth = 616
         }
 
 

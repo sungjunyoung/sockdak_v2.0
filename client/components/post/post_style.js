@@ -12,28 +12,108 @@ const styles = {
         paddingTop: 66,
         // backgroundColor: 'red'
     },
+    bookmarkButton: {
+        position: 'absolute',
+        top: 10,
+        right: 10
+    },
     subContainer: {
+        position: 'absolute',
+        marginBottom: '72px',
         marginLeft: -8,
+        marginRight: -8,
         backgroundColor: '#ffffff'
     },
-    commentInput:{
+    postTitle: {
+        margin: "30px 30px 5px 30px",
+        wordBreak: 'break-word',
+        fontWeight: 'bold'
+    },
+    postCreatedAt: {
+        margin: "0 30px 20px 30px",
+        color: "#bfc0c1",
+        fontSize: '12px',
+    },
+    postContent: {
+        margin: "0 30px 20px 30px",
+        color: "#686a6b",
+    },
+    betweenBar: {
+        width: '100%',
+        height: 50,
+        backgroundColor: '#f1f1f1'
+    },
+    userInfoWrapper: {
+        float: 'left',
+        width: '60%',
+        height: '100%',
+    },
+    postUserIcon: {
+        marginTop: 14,
+        marginLeft: 15
+    },
+    userNickname: {
+        float: 'left',
+        width: 120,
+        marginTop: 19,
+        fontSize: 13,
+        color: '#969696'
+    },
+    rightInfoWrapper: {
+        float: 'left',
+        width: '40%',
+        height: '100%'
+    },
+    heartInfo: {
+        float: 'left',
+        width: '50%',
+        height: '100%',
+    },
+
+    likeIcon:{
+        marginTop: 14,
+        float:'left'
+    },
+    likeText:{
+        fontSize: 14,
+        marginTop:19,
+        marginLeft: 32
+    },
+    commentIcon:{
+        marginTop: 14,
+        float:'left'
+    },
+    commentText:{
+        fontSize: 14,
+        marginTop:19,
+        marginLeft: 32
+    },
+
+    commentInfo: {
+        float: 'left',
+        width: '50%',
+        height: '100%',
+    },
+    commentInput: {
         position: 'fixed',
         bottom: 0,
         left: 0,
-        margin: "10px 2% 10px 2%"
+        margin: "10px 2% 5px 2%"
     },
-    commentInputButton :{
+    commentInputButton: {
         position: 'fixed',
         right: '2%',
-        bottom: 20
+        bottom: 10
     },
-    commentInputWrapper :{
-        position:'fixed',
+    commentInputWrapper: {
+        borderTop: '1px solid #e5e9ea',
+        position: 'fixed',
         bottom: 0,
         left: 0,
         width: '100%',
         height: 60,
-        backgroundColor:'#f7f7f7'
+        backgroundColor: '#f7f7f7'
+        // backgroundColor:'#131231'
     }
 };
 

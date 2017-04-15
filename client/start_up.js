@@ -5,11 +5,8 @@ import {Router, Route, IndexRoute, browserHistory} from 'react-router'; // 리�
 
 // 시작시 onTouchTap init
 import injectTapEventPlugin from 'react-tap-event-plugin'; // 버튼 탭 이벤트
-injectTapEventPlugin({
-    shouldRejectClick: function (lastTouchEventTimestamp, clickEventTimestamp) {
-        return true;
-    }
-});
+
+injectTapEventPlugin();
 
 // material-ui theme import
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';

@@ -14,6 +14,10 @@ import {List, ListItem} from 'material-ui/List';
 //component import
 import Header from '../../common_components/header/header'
 import Avatar from 'material-ui/Avatar';
+import SweetAlert from 'sweetalert-react'
+import '/node_modules/sweetalert/dist/sweetalert.css'
+
+
 
 
 // style import
@@ -29,17 +33,12 @@ class MyPage extends Component {
         this.state = {
             height: $(window).height(),
             width: $(window).width(),
+            showLogoutConfirm: false
         };
     }
 
     onLogout(){
-        var logout = confirm("정말 로그아웃 하겠어요?");
-        if(logout){
-            Meteor.logout();
-            browserHistory.push('/')
-        } else{
-
-        }
+        this.setState({showLogoutConfirm: true})
     }
 
 
@@ -47,6 +46,22 @@ class MyPage extends Component {
         return (
             <div className="container" style={Object.assign(Styles.container, {height: this.state.height - 80})}>
                 <Header title="마이페이지" backButtonLabel="홈"/>
+
+                <SweetAlert
+                    show={this.state.showLogoutConfirm}
+                    title='속닥'
+                    text='정말 로그아웃 하시겠어요?'
+                    showCancelButton
+                    onConfirm={() => {
+                        Meteor.logout();
+                        this.setState({showLogoutConfirm: false});
+                        browserHistory.push('/');
+                    }}
+                    onCancel={() =>
+                        this.setState({showLogoutConfirm: false})
+                    }
+                />
+
 
                 <List style={{marginLeft: -8, marginRight: -8}}>
                     <ListItem leftAvatar={<Avatar src=""/>} onClick={this.onLogout.bind(this)}>

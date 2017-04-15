@@ -38,24 +38,30 @@ Meteor.startup(() => {
     });
 
 
+    //강좌
     // 강좌 코드로 강좌를 찾음
     Meteor.publish('findLectureByCode', function (lectureCode) {
         return Lectures.find({lecture_code: lectureCode});
     });
 
+    //게시물
     // 강좌 코드로 게시물들을 찾음
     Meteor.publish('findPostsByLectureCode', function (lectureCode) {
         return Posts.find({post_lecture_code: lectureCode});
     });
-
     // 게시물 아이디로 게시물을 찾음
     Meteor.publish('findPostById', function (postId) {
         return Posts.find({_id: postId});
     });
 
+    //댓글
     // 게시물 아이디로 댓글을 찾음
     Meteor.publish('findCommentsByPostId', function (postId) {
         return Comments.find({comment_post_id: postId});
     });
+    // 강좌 코드로 댓글을 찾음
+    Meteor.publish('findCommentsByLectureCode', function(lectureCode){
+        return Comments.find({comment_lecture_code: lectureCode});
+    })
 
 });

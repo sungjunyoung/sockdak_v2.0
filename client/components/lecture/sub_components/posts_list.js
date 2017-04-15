@@ -7,6 +7,7 @@ import {createContainer} from 'meteor/react-meteor-data';
 import {browserHistory} from 'react-router';
 
 import {Lectures} from '../../../../imports/collections/lectures';
+import {Comments} from '../../../../imports/collections/comments';
 import ColorCode from '../../../../imports/constants/color_code'
 
 // material-ui
@@ -21,6 +22,9 @@ import BookmarkIcon from 'material-ui/svg-icons/action/bookmark';
 import IconButton from 'material-ui/IconButton';
 import AccountCircleIcon from 'material-ui/svg-icons/action/account-circle';
 import SearchButtonIcon from 'material-ui/svg-icons/action/search'
+
+import LikeIcon from 'material-ui/svg-icons/action/favorite';
+import CommentIcon from 'material-ui/svg-icons/communication/comment';
 
 //components import
 
@@ -46,6 +50,7 @@ class PostsList extends Component {
             quitBookmarkPostId: '',
             showBookmarkConfirm: false,
             bookmarkPostId: '',
+            isLiked: false,
         };
     }
 
@@ -75,6 +80,7 @@ class PostsList extends Component {
             post.post_title += '...';
         }
 
+        // 각 포스트별 width 결정
         var contentWidth = 0;
         if (post.post_content.length > 120) {
             post.post_content = post.post_content.substring(0, 120);
@@ -96,6 +102,41 @@ class PostsList extends Component {
             }
         }
 
+        // 좋아요 누른 게시물인지 아닌지
+        var userLikes = Meteor.user().profile.like;
+        var isLiked = false;
+        for (var i = 0; i < userLikes.length; i++) {
+            if (post._id === userLikes[i]) {
+                isLiked = true;
+            }
+        }
+        var likeIconColor = '#d6d4d4';
+        if (isLiked) {
+            likeIconColor = '#fc8f8f';
+        }
+
+        //좋아요 갯수 99개 이상이면 99+로 표시
+        var likeCount = '1';
+        if (post.post_likes.length > 99) {
+            likeCount = '99+';
+        } else {
+            likeCount = post.post_likes.length;
+        }
+
+        // 전체 댓글 중에서 해당 게시물에 해당하는 댓글 수 구하기
+        var commentCount = 0;
+        for (var i = 0; i < this.props.comments.length; i++) {
+            if(this.props.comments[i].comment_post_id === post._id){
+                commentCount ++;
+            }
+        }
+
+        // 댓글 갯수 99개 이상이면 99+로 표시
+        if (commentCount > 99) {
+            commentCount = '99+';
+        }
+
+        //북마크 눌럿는
         var bookmarkColor = isBookmarked ? "#f7e81f" : "lightgray";
 
         return (
@@ -114,11 +155,29 @@ class PostsList extends Component {
                     <div style={Object.assign(Styles.postContent, {width: contentWidth})}>{post.post_content}</div>
 
                     <div className="postFooter" style={Styles.postFooter}>
-                        <div className="user">
+                        <div className="user" style={{float: 'left', width: '60%', height: '100%'}}>
                             <AccountCircleIcon style={Styles.userIcon} color="gray"/>
                             <div style={Styles.userNickname}>{post.post_user_nickname}의 한마디</div>
                         </div>
 
+                        <div style={Styles.rightInfoWrapper}>
+                            <div style={Styles.heartInfo}>
+                                <div>
+                                    <LikeIcon style={Styles.likeIcon} color={likeIconColor}/>
+                                </div>
+                                <div style={Styles.likeText}>
+                                    {likeCount}
+                                </div>
+                            </div>
+                            <div style={Styles.commentInfo}>
+                                <div>
+                                    <CommentIcon style={Styles.commentIcon} color="#9e9e9e"/>
+                                </div>
+                                <div style={Styles.commentText}>
+                                    {commentCount}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -223,14 +282,21 @@ class PostsList extends Component {
     }
 }
 
-// export default PostsList;
 
 export default createContainer((props) => {
     var postsSubscribeHandle = Meteor.subscribe('findPostsByLectureCode', props.lecture.lecture_code);
     var lectureSubscribeHandle = Meteor.subscribe('findLectureByCode', props.lecture.lecture_code);
+    var commentsSubscribeHandle = Meteor.subscribe('findCommentsByLectureCode', props.lecture.lecture_code);
 
-    if (postsSubscribeHandle.ready() && lectureSubscribeHandle.ready()) {
-        return {posts: Posts.find({}, {sort: {post_created_at: -1}}).fetch(), lecture: Lectures.findOne({})};
+    if (postsSubscribeHandle.ready() && lectureSubscribeHandle.ready() && commentsSubscribeHandle.ready()) {
+        console.log(Comments.find({}).fetch());
+
+        return {
+            posts: Posts.find({},
+                {sort: {post_created_at: -1}}).fetch(),
+            lecture: Lectures.findOne({}),
+            comments: Comments.find({}).fetch()
+        };
     } else {
         return {posts: []};
     }

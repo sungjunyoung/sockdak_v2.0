@@ -16,6 +16,7 @@ Meteor.methods({
             comment_user_id : this.userId,
             comment_content : comment.comment_content,
             comment_created_at : new Date(),
+            comment_lecture_code : comment.comment_lecture_code
         })
     }
 

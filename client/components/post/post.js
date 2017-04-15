@@ -144,6 +144,7 @@ class Post extends Component {
         comment.comment_post_id = this.props.post._id;
         comment.comment_nickname = Meteor.user().profile.nickname;
         comment.comment_content = this.state.commentContent;
+        comment.comment_lecture_code = this.props.post.post_lecture_code;
 
 
         Meteor.call('commentAdd', comment, function (err, res) {
@@ -223,7 +224,6 @@ class Post extends Component {
         }
 
         // 좋아요 누른 게시물인지 아닌지
-
         var userLikes = Meteor.user().profile.like;
         var isLiked = false;
         for (var i = 0; i < userLikes.length; i++) {

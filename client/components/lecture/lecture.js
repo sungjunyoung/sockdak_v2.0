@@ -110,9 +110,11 @@ class Lecture extends Component {
         let tempArr = lectureName.split(':');
         lectureName = tempArr[0];
 
-        var containerWidth = this.state.width;
-        if (containerWidth >= 480) {
+        var containerWidth;
+        if (this.state.width >= 480) {
             containerWidth = 480;
+        } else {
+            containerWidth = this.state.width;
         }
 
         return (

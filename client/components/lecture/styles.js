@@ -6,7 +6,7 @@ const styles = {
 
     container: {
         position: 'absolute',
-        left: -8,
+        right: -8,
         top: 0,
         paddingTop: 100,
         // backgroundColor: 'red'
@@ -52,7 +52,7 @@ const styles = {
     },
     subComponent: {
         marginLeft: -8,
-        marginRight: -8
+        marginRight: -8,
     }
 
 };

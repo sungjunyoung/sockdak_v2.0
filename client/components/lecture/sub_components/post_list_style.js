@@ -60,8 +60,44 @@ const styles = {
         color: 'gray',
         top: 12,
         left: 45
-    }
+    },
+    rightInfoWrapper: {
+        float: 'left',
+        width: '40%',
+        height: '100%'
+    },
+    heartInfo: {
+        float: 'left',
+        width: '50%',
+        height: '100%',
+    },
 
+    likeIcon: {
+        marginTop: 10,
+        float: 'left',
+        zIndex: 999
+    },
+    likeText: {
+        fontSize: 14,
+        marginTop: 15,
+        marginLeft: 32,
+        color: '#969696'
+    },
+    commentIcon: {
+        marginTop: 10,
+        float: 'left',
+    },
+    commentText: {
+        fontSize: 14,
+        marginTop: 14,
+        marginLeft: 32,
+        color: '#969696'
+    },
+    commentInfo: {
+        float: 'left',
+        width: '50%',
+        height: '100%',
+    },
 };
 
 export default styles;

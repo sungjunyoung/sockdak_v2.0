@@ -50,6 +50,10 @@ class WritePost extends Component {
     }
 
     render() {
+        if(Meteor.user() === null){
+            browserHistory.push('/');
+        }
+
         if (!this.props.lecture) {
             return (<div></div>)
         }

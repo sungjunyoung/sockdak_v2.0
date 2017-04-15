@@ -98,6 +98,9 @@ class Lecture extends Component {
     }
 
     render() {
+        if(Meteor.user() === null){
+            browserHistory.push('/');
+        }
 
         if (!this.props.lecture) {
             return (

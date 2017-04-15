@@ -180,6 +180,9 @@ class Post extends Component {
     }
 
     render() {
+        if(Meteor.user() === null){
+            browserHistory.push('/');
+        }
 
         // props 로딩 안됬을때
         if (!this.props.lecture || !this.props.post || !this.props.comments) {

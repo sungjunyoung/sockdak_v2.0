@@ -29,6 +29,7 @@ import Styles from './styles';
 
 //additional module
 import {WindowResizeListener} from 'react-window-resize-listener';
+import AlertModule from '../../modules/alert';
 
 class MyPage extends Component {
     constructor(props) {
@@ -48,8 +49,11 @@ class MyPage extends Component {
         this.setState({showLogoutConfirm: true})
     }
 
-
     render() {
+        if(Meteor.user() === null){
+            browserHistory.push('/');
+        }
+
         if (!this.props.user) {
             return <div></div>
         }

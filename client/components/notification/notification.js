@@ -34,6 +34,9 @@ class Notification extends Component {
 
 
     render() {
+        if(Meteor.user() === null){
+            browserHistory.push('/');
+        }
         return (
             <div className="container" style={Object.assign(Styles.container, {height: this.state.height - 80})}>
                 <Header title="알림" backButtonLabel="홈"/>

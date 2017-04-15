@@ -107,6 +107,7 @@ class Post extends Component {
                 <div style={Styles.commentCreatedAt}>
                     {comment.comment_created_at.toString()}
                 </div>
+                <div style={{borderBottom: '1px solid #f9f9f9', margin: '10px 10px 0 10px'}}/>
             </div>
         )
     }
@@ -114,13 +115,9 @@ class Post extends Component {
     renderCommentList() {
         return this.props.comments.map(comment => {
             return (
-                <div key={comment._id}>
-                    <ListItem key={comment._id} style={Styles.commentList}>
-                        {this.commentForm(comment)}
-                    </ListItem>
-
-                    <div style={{borderBottom: '1px solid #f9f9f9', margin: '0 10px 0 10px'}}/>
-                </div>
+                <ListItem key={comment._id} style={Styles.commentList}>
+                    {this.commentForm(comment)}
+                </ListItem>
             )
         })
     }
@@ -133,11 +130,6 @@ class Post extends Component {
         if (e.charCode == 13) {
             this.writeComment();
         }
-    }
-
-    scrollToBottom() {
-        const node = ReactDOM.findDOMNode(this.commentEnd);
-        node.scrollIntoView({behavior: "smooth"});
     }
 
     writeComment() {
@@ -156,7 +148,7 @@ class Post extends Component {
 
         Meteor.call('commentAdd', comment, function (err, res) {
             this.setState({commentContent: ''});
-            this.scrollToBottom();
+            AlertModule.alert('success','댓글을 등록했어요!');
         }.bind(this));
     }
 
@@ -215,7 +207,7 @@ class Post extends Component {
 
         // // 좋아요 갯수 99개 이상이면 99+로 표시
         var likeCount = '1';
-        if(this.props.post.post_likes.length > 99){
+        if (this.props.post.post_likes.length > 99) {
             likeCount = '99+';
         } else {
             likeCount = this.props.post.post_likes.length;
@@ -285,7 +277,8 @@ class Post extends Component {
                     <IconButton style={Styles.bookmarkButton}
                                 onTouchTap={(e) => {
                                     e.preventDefault();
-                                    this.onBookmark(this.props.post._id);}}>
+                                    this.onBookmark(this.props.post._id);
+                                }}>
                         <BookmarkIcon color={bookmarkColor}/>
                     </IconButton>
 
@@ -332,10 +325,6 @@ class Post extends Component {
                     <div>
                         <List>
                             {this.props.comments ? this.renderCommentList() : null}
-                            <div
-                                ref={(el) => {
-                                    this.commentEnd = el;
-                                }}/>
                         </List>
                     </div>
                 </div>

@@ -104,7 +104,7 @@ class Home extends Component {
     }
 
     componentWillMount() {
-        if (BrowserDetect.browser === 'IE') {
+        if (BrowserDetect.browser === 'Explorer') {
             alert('속닥은 IE 는 지원하지 않아요 ㅠㅠ');
             browserHistory.push('/');
         }

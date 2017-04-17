@@ -178,6 +178,14 @@ class Post extends Component {
         }
     }
 
+    componentWillMount() {
+        if (BrowserDetect.browser === 'IE') {
+            alert('속닥은 IE 는 지원하지 않아요 ㅠㅠ');
+            browserHistory.push('/');
+        }
+    }
+
+
     render() {
         if(Meteor.user() === null){
             browserHistory.push('/login-please');

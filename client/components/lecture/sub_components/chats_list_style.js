@@ -9,8 +9,9 @@ const styles={
         bottom: 0,
         left: 0,
         width: '100%',
-        height: 40,
-        backgroundColor: '#f7f7f7'
+        height: 50,
+        backgroundColor: '#f7f7f7',
+        zIndex: 999
     },
 
     inputChat:{

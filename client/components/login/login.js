@@ -54,8 +54,12 @@ class Login extends Component {
         this.setState({approve: value})
     }
 
-    // END
-
+    componentWillMount() {
+        if (BrowserDetect.browser === 'IE') {
+            alert('속닥은 IE 는 지원하지 않아요 ㅠㅠ');
+            browserHistory.push('/');
+        }
+    }
 
     // 로그인시 호출
     onLogin(event, value) {

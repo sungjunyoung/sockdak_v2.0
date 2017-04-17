@@ -103,13 +103,24 @@ class Home extends Component {
         this.setState({toFind: event.target.value})
     }
 
+    componentWillMount() {
+        if (BrowserDetect.browser === 'IE') {
+            alert('속닥은 IE 는 지원하지 않아요 ㅠㅠ');
+            browserHistory.push('/');
+        }
+    }
+
     render() {
 
         setTimeout(function () {
             if (Meteor.user() === null) {
                 browserHistory.push('/login-please');
-
             }
+
+            // var browserName = parser.setUA(ua).getBrowser().name;
+            // console.log(browserName);
+
+
         }, 500);
 
         return (

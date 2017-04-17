@@ -34,7 +34,6 @@ Meteor.startup(() => {
 
 const routes = (
     <MuiThemeProvider>
-
         <Router history={browserHistory}>
             <Route path="/" component={App}>
                 <IndexRoute component={Intro}/>

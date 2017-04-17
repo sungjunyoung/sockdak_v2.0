@@ -64,9 +64,20 @@ class ChatList extends Component {
         )
     }
 
+
+    componentWillUpdate(nextProps, nextStates) {
+
+        if (nextProps.chats && this.props.chats) {
+            if (nextProps.chats.length > this.props.chats.length) {
+                this.refs.scrollThis.scrollable.scrollTop = nextProps.chats.length * 48 + 48;
+            }
+        }
+    }
+
     componentDidUpdate() {
-        var scrollHeight = this.props.chats.length * 30;
-        this.refs.scrollThis.scrollable.scrollTop = scrollHeight;
+        if (this.props.chats) {
+            this.refs.scrollThis.scrollable.scrollTop = this.props.chats.length * 48;
+        }
     }
 
     renderChatList() {
@@ -80,18 +91,41 @@ class ChatList extends Component {
         })
     }
 
-    onChatChange(event) {
-        this.setState({chatContent: event.target.value});
+    getRealHeight() {    // Note viewport sizing broken in Android 2.x see http://stackoverflow.com/questions/6601881/problem-with-meta-viewport-and-android
+        var viewport = {
+            left: window.pageXOffset,   // http://www.quirksmode.org/mobile/tableViewport.html
+            top: window.pageYOffset,
+            width: window.innerWidth || documentElement.clientWidth,
+            height: window.innerHeight || documentElement.clientHeight
+        };
+        return viewport.height;
+    }
+
+    // // ios 키보드가 올라왔을때 (미구현)
+    // onInputFocus(e) {
+    //     setTimeout(function () {
+    //         console.log(this.getRealHeight())
+    //     }.bind(this), 500);
+    // }
+
+    onChatChange(e) {
+        this.setState({chatContent: e.target.value});
     }
 
     keyboardInput(e) {
-
         if (e.charCode == 13) {
-            this.writeChat();
+            this.writeChat(e);
         }
     }
 
-    writeChat() {
+    writeChat(e) {
+        setTimeout(function () {
+            this.inputChat.focus();
+        }.bind(this), 500);
+
+
+        e.preventDefault();
+        e.stopPropagation();
 
         var chat = {};
 
@@ -101,13 +135,29 @@ class ChatList extends Component {
 
         Meteor.call('chatAdd', chat, function (err, res) {
             this.setState({chatContent: ''});
+
+
         }.bind(this))
     }
 
     render() {
+
+        var containerWidth = 0;
+        if (this.state.width < 600) {
+            containerWidth = this.state.width * 94 / 100;
+        } else {
+            containerWidth = 600;
+        }
+
         return (
             <div className="chatListContainer"
-                 style={{padding: 8, position: 'absolute', width: '100%', height: this.state.height - 140}}>
+                 style={{
+                     padding: '8px 8px 0 8px',
+                     position: 'absolute',
+                     width: '100%',
+                     height: this.state.height - 120
+                 }}>
+
                 <WindowResizeListener onResize={windowSize => {
                     this.setState({height: windowSize.windowHeight, width: windowSize.windowWidth});
                 }}/>
@@ -116,9 +166,7 @@ class ChatList extends Component {
                     <Infinite
                         className="chattingInfinitList"
                         containerHeight={this.state.height - 180}
-                        elementHeight={30}
-                        infiniteLoadBeginEdgeOffset={300}
-                        timeScrollStateLastsForAfterUserScrolls={1000}
+                        elementHeight={48}
                         displayBottomUpwards
                         ref="scrollThis">
                         {this.props.chats ? this.renderChatList() : null}
@@ -127,16 +175,21 @@ class ChatList extends Component {
 
                 <div className="sendChatWrapper" style={Styles.sendChatWrapper}>
                     <input className="inputChat"
+                        // onFocus={this.onInputFocus.bind(this)}
                            onKeyPress={this.keyboardInput.bind(this)}
                            onChange={this.onChatChange.bind(this)}
-                           style={{width: this.state.width - 129}}
-                           value={this.state.chatContent}/>
+                           style={{width: containerWidth - 120}}
+                           value={this.state.chatContent}
+                           ref={(input) => {
+                               this.inputChat = input;
+                           }}/>
                     <FlatButton
                         className="sendChatButton"
                         style={{
                             position: 'absolute', right: 18, top: 8, color: '#ffffff',
-                            border: '1px solid #b7b7b7', borderRadius: '0 5px 5px 0'
+                            borderRadius: '5px'
                         }}
+                        hoverColor={this.props.lectureColor}
                         backgroundColor={this.props.lectureColor}
                         onTouchTap={this.writeChat.bind(this)}
                         label="전송"/>

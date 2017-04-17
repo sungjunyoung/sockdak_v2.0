@@ -98,6 +98,14 @@ class Lecture extends Component {
         }
     }
 
+    componentWillMount() {
+        if (BrowserDetect.browser === 'IE') {
+            alert('속닥은 IE 는 지원하지 않아요 ㅠㅠ');
+            browserHistory.push('/');
+        }
+    }
+
+
     render() {
         if (Meteor.user() === null) {
             browserHistory.push('/login-please');
@@ -116,14 +124,14 @@ class Lecture extends Component {
 
         var containerWidth;
         if (this.state.width >= 600) {
-            containerWidth = 600;
+            containerWidth = 620;
         } else {
             containerWidth = this.state.width;
         }
 
         return (
             <div className="container"
-                 style={Object.assign(Styles.container, {height: this.state.height - 120, width: containerWidth})}>
+                 style={Object.assign(Styles.container, {height: this.state.height - 110, width: containerWidth})}>
                 <WindowResizeListener onResize={windowSize => {
                     this.setState({height: windowSize.windowHeight, width: windowSize.windowWidth});
                 }}/>
@@ -137,10 +145,11 @@ class Lecture extends Component {
                 {/*서브헤더 밑에서 왓다갓다거리는 바*/}
                 <div ref="bar" style={Object.assign({width: this.state.width / 2 - 1}, Styles.bar)}/>
 
-                <SwipeableViews index={this.state.swipeIndex}
+                <SwipeableViews className="swipeableViews"
+                                index={this.state.swipeIndex}
                                 onSwitching={this.onSwitch.bind(this)}>
                     <div className="postsList" style={Object.assign(Styles.subComponent, {
-                        height: this.state.height - 120,
+                        height: this.state.height - 110,
                         width: containerWidth + 8
                     })}>
                         <PostsList lectureColor={this.props.lectureColor} lecture={this.props.lecture}/>
@@ -148,10 +157,10 @@ class Lecture extends Component {
 
 
                     <div className="chatsList" style={Object.assign(Styles.subComponent, {
-                        height: this.state.height - 120,
+                        height: this.state.height - 110,
                         width: containerWidth + 8
                     })}>
-                        <ChatList lecture={this.props.lecture} lectureColor={this.props.lectureColor} />
+                        <ChatList lecture={this.props.lecture} lectureColor={this.props.lectureColor}/>
                     </div>
                 </SwipeableViews>
             </div>

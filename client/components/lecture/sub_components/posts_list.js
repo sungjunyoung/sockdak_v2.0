@@ -86,7 +86,7 @@ class PostsList extends Component {
             post.post_content += '...';
         } else {
             if (this.state.width < 600) {
-                contentWidth = this.state.width * 94 / 100;
+                contentWidth = this.state.width - 24;
             } else {
                 contentWidth = 586
             }
@@ -125,8 +125,8 @@ class PostsList extends Component {
         // 전체 댓글 중에서 해당 게시물에 해당하는 댓글 수 구하기
         var commentCount = 0;
         for (var i = 0; i < this.props.comments.length; i++) {
-            if(this.props.comments[i].comment_post_id === post._id){
-                commentCount ++;
+            if (this.props.comments[i].comment_post_id === post._id) {
+                commentCount++;
             }
         }
 

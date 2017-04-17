@@ -117,7 +117,7 @@ class MyPage extends Component {
         // 화면조정
         var userInfoWidth = this.state.width;
         if (this.state.width > 600) {
-            userInfoWidth = 600;
+            userInfoWidth = 616;
         }
 
         // 닉네임 바꾸기 멘트
@@ -172,7 +172,8 @@ class MyPage extends Component {
                         {userNickname}
                     </div>
                     <div className="changeNickname" style={Styles.changeNickname}>
-                        <a style={Styles.changeNicknameButton} onClick={this.changeNickname.bind(this)}>{changeNicknameInfo}</a>
+                        <a style={Styles.changeNicknameButton}
+                           onClick={this.changeNickname.bind(this)}>{changeNicknameInfo}</a>
                     </div>
                     <div className="userWroteCounter" style={Styles.userWroteCounter}>
                         <div className="postCounter" style={Styles.postCounter}>

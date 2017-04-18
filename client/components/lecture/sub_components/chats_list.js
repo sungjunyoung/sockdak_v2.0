@@ -55,9 +55,14 @@ class ChatList extends Component {
             chatWidth = 600
         }
 
+        var chatAlign = "left";
+        if (Meteor.userId() === chat.chat_user_id) {
+            chatAlign = "right";
+        }
+
         return (
             <div style={{width: chatWidth}}>
-                <div>
+                <div className="chatWrapper" style={Object.assign(Styles.chatWrapper, {float: chatAlign})}>
                     {chat.chat_content}
                 </div>
             </div>
@@ -75,6 +80,7 @@ class ChatList extends Component {
     }
 
     componentDidUpdate() {
+
         if (this.props.chats) {
             this.refs.scrollThis.scrollable.scrollTop = this.props.chats.length * 48;
         }
@@ -113,7 +119,7 @@ class ChatList extends Component {
     }
 
     keyboardInput(e) {
-        if (e.charCode == 13) {
+        if (e.charCode === 13) {
             this.writeChat(e);
         }
     }
@@ -138,6 +144,12 @@ class ChatList extends Component {
 
 
         }.bind(this))
+    }
+
+    onScroll(){
+        if(this.refs.scrollThis.scrollable.scrollTop === 0){
+
+        }
     }
 
     render() {
@@ -166,8 +178,9 @@ class ChatList extends Component {
                     <Infinite
                         className="chattingInfinitList"
                         containerHeight={this.state.height - 180}
-                        elementHeight={48}
+                        elementHeight={32}
                         displayBottomUpwards
+                        handleScroll={this.onScroll.bind(this)}
                         ref="scrollThis">
                         {this.props.chats ? this.renderChatList() : null}
                     </Infinite>
@@ -197,12 +210,17 @@ class ChatList extends Component {
             </div>
         )
     }
-
 }
 
+const RECORD_PER_PAGE = 20;
+const pageNumber = new ReactiveVar(1);
+
 export default createContainer((props) => {
-    var chatsSubscribHandle = Meteor.subscribe('findChatsByLectureCode', props.lecture.lecture_code);
+    var chatsSubscribHandle = Meteor.subscribe('findChatsByLectureCode', props.lecture.lecture_code, RECORD_PER_PAGE * pageNumber.get());
+
     if (chatsSubscribHandle.ready()) {
+        console.log(props);
+        // console.log(Chats.find({}).fetch());
         return {
             chats: Chats.find({}).fetch()
         }

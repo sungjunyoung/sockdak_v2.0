@@ -14,7 +14,7 @@ const styles={
         zIndex: 999
     },
 
-    inputChat:{
+    chatWrapper:{
 
     }
 };

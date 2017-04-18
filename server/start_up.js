@@ -85,7 +85,7 @@ Meteor.startup(() => {
 
     //채팅
     // 강좌 코드로 채팅을 읽음
-    Meteor.publish('findChatsByLectureCode', function (lectureCode, limit) {
-        return Chats.find({chat_lecture_code: lectureCode}, {sort: {chat_created_at:-1}, limit: limit});
+    Meteor.publish('findChatsByLectureCode', function (lectureCode) {
+        return Chats.find({chat_lecture_code: lectureCode});
     });
 });

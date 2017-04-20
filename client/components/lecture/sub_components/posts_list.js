@@ -193,11 +193,13 @@ class PostsList extends Component {
         })
     }
 
-    componentWillMount() {
+    componentWillReceiveProps(nextProps) {
+        console.log(11);
+        console.log(nextProps);
 
-        for (var i in this.props.lecture.lecture_users) {
-            if (this.props.lecture.lecture_users[i].user_id === Meteor.user()._id) {
-                this.setState({writeButtonDisabled: false})
+        for (var i in nextProps.lecture.lecture_users) {
+            if (nextProps.lecture.lecture_users[i].user_id === Meteor.user()._id) {
+                this.setState({writeButtonDisabled: false});
             }
         }
     }
@@ -296,7 +298,7 @@ export default createContainer((props) => {
             comments: Comments.find({}).fetch()
         };
     } else {
-        return {posts: []};
+        return {posts: [], lecture: {}};
     }
 
 

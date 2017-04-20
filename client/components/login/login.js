@@ -133,8 +133,6 @@ class Login extends Component {
 
                         // 없으면 강의정보 및 회원정보 만들기
                         else {
-
-                            console.log(res);
                             if(loginResult === 'REST_BUT_ADMIN'){
                                 res.lectures = [];
                             }

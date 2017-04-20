@@ -33,7 +33,7 @@ class Lecture extends Component {
                           onTouchTap={() => browserHistory.push(this.props.lecture.lecture_url)}
                           style={Styles.lectureItem}>
                     <div>
-                        {this.props.lecture.lecture_name}
+                        {this.props.lecture.lecture_name} / {this.props.lecture.lecture_professor} 교수님
                     </div>
                 </ListItem>
             </div>

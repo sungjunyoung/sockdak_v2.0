@@ -193,10 +193,10 @@ class PostsList extends Component {
         })
     }
 
-    componentDidMount() {
+    componentWillMount() {
 
         for (var i in this.props.lecture.lecture_users) {
-            if (this.props.lecture.lecture_users[i].user_id == Meteor.user()._id) {
+            if (this.props.lecture.lecture_users[i].user_id === Meteor.user()._id) {
                 this.setState({writeButtonDisabled: false})
             }
         }

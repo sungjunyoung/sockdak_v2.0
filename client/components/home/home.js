@@ -43,7 +43,7 @@ class SubHeader extends Component {
         return (
             <div>
                 <IconButton onTouchTap={this.props.onSearchButton} style={Styles.searchButton}>
-                    {this.props.findState ? <QuitSearchButtonIcon/> : <SearchButtonIcon/>}
+                    {this.props.findState ? <QuitSearchButtonIcon color="gray"/> : <SearchButtonIcon color="gray"/>}
                 </IconButton>
 
                 <IconButton onTouchTap={this.props.onMyPageButton} style={Styles.myPageButton}>

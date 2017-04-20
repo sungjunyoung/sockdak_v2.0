@@ -127,7 +127,7 @@ class MyPage extends Component {
         }
 
         return (
-            <div className="container" style={Object.assign(Styles.container, {height: this.state.height - 80})}>
+            <div className="container" style={Object.assign(Styles.container, {height: this.state.height - 80, webkitOverflowScrolling: 'touch'})}>
                 <WindowResizeListener onResize={windowSize => {
                     this.setState({height: windowSize.windowHeight, width: windowSize.windowWidth});
                 }}/>

@@ -3,18 +3,18 @@
  */
 
 const colorCode = {
-    CSE :'#343082', // Computer Science Engineering?
-    GEDG : '#2faf7c',
-    VID : '#127e99',
-    GED : '#343082',
-    DC : '#cc4fa8',
-    FD : '#84b7b7',
-    EE : '#DDDDFF',
-    B : '#BBF',
-    openclassglo : '#FBB',
-    GEBG : '#DAD',
-    APHY : '#459',
-    GECG : '#459',
+    CSE :'#34495e', // Computer Science Engineering?
+    GEDG : '#16a085',
+    VID : '#27ae60',
+    GED : '#2980b9',
+    DC : '#8e44ad',
+    FD : '#2c3e50',
+    EE : '#f1c40f',
+    B : '#e67e22',
+    openclassglo : '#e74c3c',
+    GEBG : '#2ecc71',
+    APHY : '#3498db',
+    GECG : '#3498db',
 };
 
 export default colorCode;

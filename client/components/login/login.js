@@ -55,9 +55,8 @@ class Login extends Component {
     }
 
     componentWillMount() {
-        console.log(BrowserDetect.browser);
-        if (BrowserDetect.browser === 'Explorer' && BrowserDetect.browser === 'Mozilla') {
-            alert('속닥은 크롬만 지원한답니다.. ㅠㅠ');
+        if (BrowserDetect.browser === 'Explorer' || BrowserDetect.browser === 'Mozilla') {
+            alert('속닥은 크롬과 사파리만 지원해요 ㅠㅠ');
             browserHistory.push('/');
         }
     }
@@ -95,55 +94,78 @@ class Login extends Component {
         var id = this.state.id;
         var pw = this.state.pw;
 
+
+        //TODO 어드민 로그인
+
         // 결과 promise 로 리턴
         var resultPromise = Meteor.callPromise('loginToKhu', this.state.id, this.state.pw);
 
         // 로그인 결과 받기
-        resultPromise.then(function (loginResult) {
+        resultPromise.then(function (res) {
 
             this.setState({loadingVisibility: 'hidden'});
 
-            if (loginResult == 'ERROR') {
-                AlertModule.alert('error', '종합정보시스템 서버에 문제가 있습니다.');
-            } else if (loginResult == 'INCORRECT') {
-                AlertModule.alert('error', '학번과 비밀번호를 다시 확인해주세요.');
-            } else if (loginResult == 'REST') {
-                AlertModule.alert('error', '혹시 휴학생이세요..?');
-            } else {
-                AlertModule.alert('success', '환영합니다! ' + loginResult.info.name + '님');
+            loginResult = res.result;
 
-                Meteor.call('findUserByUsername', id, function (err, findUserResult) {
+            Meteor.call('isAdmin', id, function (err, isAdmin) {
+                if (isAdmin === true) {
+                    if (loginResult === 'REST')
+                        loginResult = 'REST_BUT_ADMIN';
+                }
 
-                    // 유저를 찾고 있으면 바로 로그인
-                    if (findUserResult) {
-                        Meteor.loginWithPassword(id, pw, function (err, res) {
-                            console.log('INFO :: login complete username : ' + loginResult.info.name)
-                        });
-                    }
+                if (loginResult === 'ERROR') {
+                    AlertModule.alert('error', '종합정보시스템 서버에 문제가 있습니다.');
+                } else if (loginResult === 'INCORRECT') {
+                    AlertModule.alert('error', '학번과 비밀번호를 다시 확인해주세요.');
+                } else if (loginResult === 'REST') {
+                    AlertModule.alert('error', '혹시 휴학생이세요..?');
+                } else {
+                    AlertModule.alert('success', '환영합니다! ' + res.info.name + '님');
 
-                    // 없으면 강의정보 및 회원정보 만들기
-                    else {
-                        console.log('INFO :: user not exist, create user');
-                        Accounts.createUser({
-                            username: id,
-                            password: pw,
-                            profile: {
-                                nickname: RandomNickname.getRandom(),
-                                name: loginResult.info.name, bookmark: [], like: [], changeNicknameCount: 3
+                    Meteor.call('findUserByUsername', id, function (err, findUserResult) {
+
+                        // 유저를 찾고 있으면 바로 로그인
+                        if (findUserResult) {
+                            Meteor.loginWithPassword(id, pw, function (err, res) {
+                                browserHistory.push('home');
+                            });
+                        }
+
+                        // 없으면 강의정보 및 회원정보 만들기
+                        else {
+
+                            console.log(res);
+                            if(loginResult === 'REST_BUT_ADMIN'){
+                                res.lectures = [];
                             }
-                        });
 
-                        Meteor.loginWithPassword(id, pw, function (err, res) {
-                            console.log('INFO :: login complete username : ' + loginResult.info.name)
-                        });
+                            console.log('INFO :: user not exist, create user');
+                            Accounts.createUser({
+                                username: id,
+                                password: pw,
+                                profile: {
+                                    nickname: RandomNickname.getRandom(),
+                                    name: res.info.name,
+                                    bookmark: [],
+                                    like: [],
+                                    changeNicknameCount: 3,
+                                    isAdmin: isAdmin
+                                }
+                            });
 
-                        Meteor.call('lectureUpdate', loginResult.lectures);
-                    }
-                });
+                            Meteor.loginWithPassword(id, pw, function (err, res) {
+                                browserHistory.push('home');
+                            });
+
+                            Meteor.call('lectureUpdate', res.lectures);
+                        }
 
 
-                browserHistory.push('home');
-            }
+                    });
+
+
+                }
+            });
         }.bind(this));
     }
 

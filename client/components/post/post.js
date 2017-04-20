@@ -179,8 +179,8 @@ class Post extends Component {
     }
 
     componentWillMount() {
-        if (BrowserDetect.browser === 'Explorer' && BrowserDetect.browser === 'Mozilla') {
-            alert('속닥은 크롬만 지원한답니다.. ㅠㅠ');
+        if (BrowserDetect.browser === 'Explorer' || BrowserDetect.browser === 'Mozilla') {
+            alert('속닥은 크롬과 사파리만 지원해요 ㅠㅠ');
             browserHistory.push('/');
         }
     }

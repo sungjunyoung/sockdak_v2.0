@@ -42,7 +42,8 @@ class ChatList extends Component {
         this.state = {
             height: $(window).height(),
             width: $(window).width(),
-            chatContent: ''
+            chatContent: '',
+            isInfiniteLoading: false
         }
     }
 
@@ -63,7 +64,6 @@ class ChatList extends Component {
             </div>
         )
     }
-
 
     componentWillUpdate(nextProps, nextStates) {
 
@@ -87,7 +87,6 @@ class ChatList extends Component {
                     {this.chatForm(chat)}
                 </ListItem>
             )
-
         })
     }
 
@@ -202,6 +201,7 @@ class ChatList extends Component {
 }
 
 export default createContainer((props) => {
+
     var chatsSubscribHandle = Meteor.subscribe('findChatsByLectureCode', props.lecture.lecture_code);
     if (chatsSubscribHandle.ready()) {
         return {
@@ -210,4 +210,6 @@ export default createContainer((props) => {
     } else {
         return props;
     }
+
+    return props;
 }, ChatList);

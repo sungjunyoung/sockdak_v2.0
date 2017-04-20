@@ -100,14 +100,14 @@ var khuAuth = (function () {
                         count++;
                     });
 
-                    if (result.info.class_number == ')') {
-                        result.result = "incorrect";
-                        reject("INCORRECT");
-                    } else if (result.lectures[0].lecture_name == '') {
-                        result.result = "rest";
-                        reject("REST");
+                    if (result.info.class_number === ')') {
+                        result.result = "INCORRECT";
+                        reject(result);
+                    } else if (result.lectures[0].lecture_name === '') {
+                        result.result = "REST";
+                        reject(result);
                     } else {
-                        result.result = "success";
+                        result.result = "SUCCESS";
                         resolve(result);
                     }
 

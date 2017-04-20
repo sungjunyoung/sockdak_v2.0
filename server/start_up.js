@@ -10,6 +10,7 @@ import {Lectures} from '../imports/collections/lectures'
 import {Posts} from '../imports/collections/posts'
 import {Comments} from '../imports/collections/comments'
 import {Chats} from '../imports/collections/chats'
+import {Admins} from '../imports/collections/admins'
 
 Meteor.startup(() => {
 
@@ -19,22 +20,26 @@ Meteor.startup(() => {
     });
 
 
-
     //유저
-    Meteor.publish('userInfo', function(userId){
+    Meteor.publish('userInfo', function (userId) {
         return Meteor.users.find({_id: userId});
     });
-
 
 
     //강좌
     // 유저의 강좌 리스트를 발행
     Meteor.publish('userLectures', function () {
-        return ReactiveAggregate(this, Lectures, [
-            {$match: {"lecture_users.user_id": this.userId}},
-            {$sort: {"lecture_name": 1}}
-        ]);
 
+        if (Meteor.users.findOne({_id: this.userId}).profile.isAdmin) {
+            return ReactiveAggregate(this, Lectures, [
+                {$sort: {"lecture_name": 1}}
+            ]);
+        } else {
+            return ReactiveAggregate(this, Lectures, [
+                {$match: {"lecture_users.user_id": this.userId}},
+                {$sort: {"lecture_name": 1}}
+            ]);
+        }
         // return Lectures.find({});
     });
     // 강좌 검색시 일치하는 강좌 리스트를 발행행
@@ -49,7 +54,6 @@ Meteor.startup(() => {
     Meteor.publish('findLectureByCode', function (lectureCode) {
         return Lectures.find({lecture_code: lectureCode});
     });
-
 
 
     //게시물
@@ -67,14 +71,13 @@ Meteor.startup(() => {
     });
 
 
-
     //댓글
     // 게시물 아이디로 댓글을 찾음
     Meteor.publish('findCommentsByPostId', function (postId) {
         return Comments.find({comment_post_id: postId});
     });
     // 강좌 코드로 댓글을 찾음
-    Meteor.publish('findCommentsByLectureCode', function(lectureCode){
+    Meteor.publish('findCommentsByLectureCode', function (lectureCode) {
         return Comments.find({comment_lecture_code: lectureCode});
     });
     // 유저 아이디로 댓글을 찾음

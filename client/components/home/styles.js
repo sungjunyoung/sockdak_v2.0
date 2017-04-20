@@ -11,7 +11,7 @@ const styles = {
         top: 0,
         paddingTop: 66,
     },
-    searchButton: {
+    myPageButton: {
         position: 'fixed',
         left: 10,
         top: 10,
@@ -27,13 +27,13 @@ const styles = {
         marginTop: '-10px',
         backgroundColor: 'lightgray'
     },
-    notificationButton: {
+    searchButton: {
         position: 'fixed',
         right: 50,
         top: 10,
         zIndex: 999
     },
-    myPageButton: {
+    notificationButton: {
         position: 'fixed',
         right: 10,
         top: 10,

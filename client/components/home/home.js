@@ -115,7 +115,7 @@ class Home extends Component {
     }
 
     componentWillMount() {
-        if (BrowserDetect.browser === 'Explorer' || BrowserDetect.browser === 'Mozilla') {
+        if (BrowserDetect.browser !== 'Chrome' && BrowserDetect.browser !== 'Safari') {
             alert('속닥은 크롬과 사파리만 지원해요 ㅠㅠ');
             browserHistory.push('/');
         }

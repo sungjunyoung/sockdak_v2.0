@@ -40,6 +40,7 @@ import AlertModule from '../../modules/alert';
 import RandomNickname from '../../../imports/constants/user_nickname';
 import SweetAlert from 'sweetalert-react'
 import '/node_modules/sweetalert/dist/sweetalert.css'
+import './animation.css'
 
 class MyPage extends Component {
     constructor(props) {
@@ -127,7 +128,7 @@ class MyPage extends Component {
         }
 
         return (
-            <div className="container" style={Object.assign(Styles.container, {height: this.state.height - 80, webkitOverflowScrolling: 'touch'})}>
+            <div className="container" style={Object.assign(Styles.container, {height: this.state.height - 80})}>
                 <WindowResizeListener onResize={windowSize => {
                     this.setState({height: windowSize.windowHeight, width: windowSize.windowWidth});
                 }}/>

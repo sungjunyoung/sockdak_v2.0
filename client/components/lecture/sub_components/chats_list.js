@@ -66,19 +66,6 @@ class ChatList extends Component {
         )
     }
 
-    componentWillUpdate(nextProps, nextStates) {
-
-        if (nextProps.chats && this.props.chats) {
-            if (nextProps.chats.length > this.props.chats.length) {
-                this.refs.scrollThis.scrollable.scrollTop = nextProps.chats.length * 48 + 48;
-            }
-        }
-    }
-
-    componentDidUpdate() {
-
-    }
-
     renderChatList() {
         return this.props.chats.map((chat, idx) => {
             return (
@@ -122,7 +109,7 @@ class ChatList extends Component {
         }.bind(this), 500);
 
         if (this.state.chatContent === '') {
-            AlertModule.alert('error','빈 채팅은 할수 없어요!')
+            AlertModule.alert('error','빈 채팅은 할수 없어요!');
             return;
         }
 

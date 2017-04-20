@@ -165,7 +165,7 @@ class Post extends Component {
             notification.noti_lecture_code = this.props.lecture.lecture_code;
             notification.noti_lecture_color = this.props.lectureColor;
 
-            if(this.props.post.post_user_id !== Meteor.user()._id){
+            if (this.props.post.post_user_id !== Meteor.user()._id) {
                 notification.noti_to_user_id_list.push(this.props.post.post_user_id);
             }
 
@@ -216,7 +216,7 @@ class Post extends Component {
     }
 
     componentWillMount() {
-        if (BrowserDetect.browser === 'Explorer' || BrowserDetect.browser === 'Mozilla') {
+        if (BrowserDetect.browser !== 'Chrome' && BrowserDetect.browser !== 'Safari') {
             alert('속닥은 크롬과 사파리만 지원해요 ㅠㅠ');
             browserHistory.push('/');
         }
@@ -352,8 +352,10 @@ class Post extends Component {
                         <div style={Styles.rightInfoWrapper}>
                             <div style={Styles.heartInfo}>
                                 <div>
-                                    <LikeIcon style={Styles.likeIcon} color={likeIconColor}
-                                              onTouchTap={() => this.clickLikeButton(this.props.post._id)}/>
+                                    <LikeIcon
+                                        className="likeIcon"
+                                        style={Styles.likeIcon} color={likeIconColor}
+                                        onTouchTap={() => this.clickLikeButton(this.props.post._id)}/>
                                 </div>
                                 <div style={Styles.likeText}>
                                     {likeCount}

@@ -190,11 +190,13 @@ class PostsList extends Component {
                         <div style={Styles.rightInfoWrapper}>
                             <div style={Styles.heartInfo}>
                                 <div>
-                                    <LikeIcon style={Styles.likeIcon} color={likeIconColor}
-                                              onTouchTap={(e) => {
-                                                  e.preventDefault();
-                                                  this.clickLikeButton(post._id)
-                                              }}/>
+                                    <LikeIcon
+                                        class=".likeIcon"
+                                        style={Styles.likeIcon} color={likeIconColor}
+                                        onTouchTap={(e) => {
+                                            e.preventDefault();
+                                            this.clickLikeButton(post._id)
+                                        }}/>
                                 </div>
                                 <div style={Styles.likeText}>
                                     {likeCount}

@@ -198,7 +198,7 @@ class MyPage extends Component {
                         <ListItem primaryText="공지사항" leftIcon={<NoticeIcon style={Styles.listIcons}/>}/>
                         <ListItem primaryText="제작자 한마디" leftIcon={<DeveloperSayIcon style={Styles.listIcons}/>}/>
                         <ListItem primaryText="문의 / 버그신고" leftIcon={<BugReportIcon style={Styles.listIcons}/>}/>
-                        <ListItem primaryText="이용약관" leftAvatar={<TermsIcon style={Styles.listIcons}/>}/>
+                        <ListItem primaryText="이용약관" leftIcon={<TermsIcon style={Styles.listIcons}/>}/>
                         <ListItem primaryText="친구에게 소문내기" leftIcon={<ShareIcon style={Styles.listIcons}/>}/>
                         <ListItem primaryText="로그아웃" leftIcon={<LogoutIcon style={Styles.listIcons}/>}
                                   onClick={this.onLogout.bind(this)}/>

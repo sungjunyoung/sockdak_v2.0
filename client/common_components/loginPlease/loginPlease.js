@@ -16,7 +16,7 @@ import RaisedButton from 'material-ui/RaisedButton'; // material-ui 플랫버튼
 class LoginPlease extends Component {
 
     goToLogin(){
-        browserHistory.push('/');
+        browserHistory.push('/login');
     }
 
     render() {

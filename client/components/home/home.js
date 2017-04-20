@@ -4,6 +4,7 @@
 
 //base moduel import
 import React, {Component} from 'react'; // React 임포트
+import {createContainer} from 'meteor/react-meteor-data';
 
 // additional module import
 import {WindowResizeListener} from 'react-window-resize-listener';
@@ -17,7 +18,9 @@ import SearchButtonIcon from 'material-ui/svg-icons/action/search'
 import QuitSearchButtonIcon from 'material-ui/svg-icons/navigation/close'
 import TextField from 'material-ui/TextField';
 import MyPageButtonIcon from 'material-ui/svg-icons/action/account-circle';
+
 import NotificationButtonIcon from 'material-ui/svg-icons/social/notifications';
+import NotificationExistButtonIcon from 'material-ui/svg-icons/notification/priority-high';
 
 // component import
 import LectureList from './sub_components/lectures_list';
@@ -30,6 +33,13 @@ import Styles from './styles';
 // 홈 화면에 필요한 부가적인 헤더
 class SubHeader extends Component {
     render() {
+        var isNoti = false;
+        if (Meteor.user()) {
+            if (Meteor.user().profile.notifications.length > 0) {
+                isNoti = true;
+            }
+        }
+
         return (
             <div>
                 <IconButton onTouchTap={this.props.onSearchButton} style={Styles.searchButton}>
@@ -41,7 +51,8 @@ class SubHeader extends Component {
                 </IconButton>
 
                 <IconButton onTouchTap={this.props.onNotificationButton} style={Styles.notificationButton}>
-                    <NotificationButtonIcon color="gray"/>
+                    {!isNoti ? <NotificationButtonIcon color="gray"/> :
+                        <NotificationExistButtonIcon color="red"/>}
                 </IconButton>
 
 
@@ -120,8 +131,8 @@ class Home extends Component {
             // var browserName = parser.setUA(ua).getBrowser().name;
             // console.log(browserName);
 
-
         }, 500);
+
 
         return (
             <div className="container" style={Object.assign(Styles.container, {height: this.state.height - 80})}>
@@ -153,4 +164,12 @@ class Home extends Component {
     }
 }
 
-export default Home;
+export default createContainer((props) => {
+    var userSubHandler = Meteor.subscribe('userInfo');
+    if (userSubHandler.ready()) {
+        return {
+            user: Meteor.user()
+        };
+    }
+    return props;
+}, Home);

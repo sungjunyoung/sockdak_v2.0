@@ -146,6 +146,7 @@ class Login extends Component {
                                     name: res.info.name,
                                     bookmark: [],
                                     like: [],
+                                    notifications:[],
                                     changeNicknameCount: 3,
                                     isAdmin: isAdmin
                                 }
@@ -157,11 +158,7 @@ class Login extends Component {
 
                             Meteor.call('lectureUpdate', res.lectures);
                         }
-
-
                     });
-
-
                 }
             });
         }.bind(this));

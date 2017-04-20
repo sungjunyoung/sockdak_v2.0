@@ -3,7 +3,7 @@
  */
 
 const colorCode = {
-    CSE : '#ffaff4', // Computer Science Engineering?
+    CSE :'#343082', // Computer Science Engineering?
     GEDG : '#2faf7c',
     VID : '#127e99',
     GED : '#343082',

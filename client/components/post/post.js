@@ -137,8 +137,8 @@ class Post extends Component {
 
     writeComment() {
 
-        if (this.state.commentContent.length < 4) {
-            AlertModule.alert('error', '적어도 4자이상의 댓글을 작성해주세요.');
+        if (this.state.commentContent.length < 2) {
+            AlertModule.alert('error', '적어도 2자이상의 댓글을 작성해주세요.');
             return;
         }
 
@@ -151,9 +151,42 @@ class Post extends Component {
 
 
         Meteor.call('commentAdd', comment, function (err, res) {
-            this.setState({commentContent: ''});
+            // 알림 등록
+            var notification = {};
+            notification.noti_post_id = this.props.post._id;
+            // 알림을 일으킨 사람
+            notification.noti_from_user_id = Meteor.user()._id;
+            notification.noti_from_user_nickname = Meteor.user().profile.nickname;
+            notification.noti_content = this.state.commentContent;
+            notification.noti_type = 'COMMENT';
+            notification.noti_to_user_id_list = [];
+            notification.noti_url = '/lecture/' + this.props.post.post_lecture_code +
+                '/post/' + this.props.post._id;
+            notification.noti_lecture_code = this.props.lecture.lecture_code;
+            notification.noti_lecture_color = this.props.lectureColor;
 
-            AlertModule.alert('success', '댓글을 등록했어요!');
+            if(this.props.post.post_user_id !== Meteor.user()._id){
+                notification.noti_to_user_id_list.push(this.props.post.post_user_id);
+            }
+
+            for (var i in this.props.comments) {
+
+                if (this.props.comments[i].comment_user_id === Meteor.user()._id) {
+                    // 현재 유저라면 알림 X
+                    continue;
+                } else if (notification.noti_to_user_id_list.indexOf(this.props.comments[i].comment_user_id) !== -1) {
+                    // 알림 중복 제거
+                    continue;
+                }
+                else {
+                    notification.noti_to_user_id_list.push(this.props.comments[i].comment_user_id);
+                }
+            }
+
+            Meteor.call('addNotification', notification, function (err, res) {
+                AlertModule.alert('success', '댓글을 등록했어요!');
+                this.setState({commentContent: ''});
+            }.bind(this));
         }.bind(this));
     }
 
@@ -191,7 +224,7 @@ class Post extends Component {
 
 
     render() {
-        if(Meteor.user() === null){
+        if (Meteor.user() === null) {
             browserHistory.push('/login-please');
         }
 
@@ -289,7 +322,7 @@ class Post extends Component {
                 />
 
                 <div style={Object.assign(Styles.subContainer, {width: subContanierWidth})}>
-                    <div style={{display:'inline-block', width: subContanierWidth, backgroundColor: '#ffffff'}}>
+                    <div style={{display: 'inline-block', width: subContanierWidth, backgroundColor: '#ffffff'}}>
                         <IconButton style={Styles.bookmarkButton}
                                     onTouchTap={(e) => {
                                         e.preventDefault();

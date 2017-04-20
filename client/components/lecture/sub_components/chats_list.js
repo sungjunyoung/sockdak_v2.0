@@ -35,6 +35,7 @@ import {Chats} from '../../../../imports/collections/chats';
 import {WindowResizeListener} from 'react-window-resize-listener';
 import SweetAlert from 'sweetalert-react'
 import '/node_modules/sweetalert/dist/sweetalert.css'
+import AlertModule from '../../../modules/alert';
 
 class ChatList extends Component {
     constructor(props) {
@@ -75,9 +76,7 @@ class ChatList extends Component {
     }
 
     componentDidUpdate() {
-        if (this.props.chats) {
-            this.refs.scrollThis.scrollable.scrollTop = this.props.chats.length * 48;
-        }
+
     }
 
     renderChatList() {
@@ -122,6 +121,10 @@ class ChatList extends Component {
             this.inputChat.focus();
         }.bind(this), 500);
 
+        if (this.state.chatContent === '') {
+            AlertModule.alert('error','빈 채팅은 할수 없어요!')
+            return;
+        }
 
         e.preventDefault();
         e.stopPropagation();
@@ -134,7 +137,10 @@ class ChatList extends Component {
 
         Meteor.call('chatAdd', chat, function (err, res) {
             this.setState({chatContent: ''});
-
+            this.forceUpdate();
+            setTimeout(function () {
+                this.refs.scrollThis.scrollable.scrollTop = this.props.chats.length * 48;
+            }.bind(this), 100);
 
         }.bind(this))
     }
@@ -201,7 +207,6 @@ class ChatList extends Component {
 }
 
 export default createContainer((props) => {
-
     var chatsSubscribHandle = Meteor.subscribe('findChatsByLectureCode', props.lecture.lecture_code);
     if (chatsSubscribHandle.ready()) {
         return {

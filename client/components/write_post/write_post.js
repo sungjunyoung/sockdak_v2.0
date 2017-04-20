@@ -56,6 +56,9 @@ class WritePost extends Component {
         }
     }
 
+    componentDidMount(){
+    }
+
     render() {
         if (Meteor.user() === null) {
             browserHistory.push('/login-please');
@@ -107,6 +110,7 @@ class WritePost extends Component {
                 />
 
                 <TextField
+                    autoFocus
                     onChange={this.onTitleChange.bind(this)}
                     fullWidth={true}
                     className="input-post-title"

@@ -72,6 +72,33 @@ class PostsList extends Component {
         this.setState({showBookmarkConfirm: true, bookmarkPostId: post_id});
     }
 
+
+    // 라이크 버튼 눌렀을때
+    clickLikeButton(post_id) {
+
+        var userLikes = Meteor.user().profile.like;
+
+        var quit = false;
+
+        for (var i = 0; i < userLikes.length; i++) {
+            if (post_id === userLikes[i]) {
+                Meteor.users.update({_id: Meteor.userId()}, {$pull: {"profile.like": post_id}});
+                Meteor.call('postPullLike', post_id, function (err, res) {
+                    this.forceUpdate();
+                    quit = true;
+                }.bind(this));
+                quit = true;
+            }
+        }
+
+        if (!quit) {
+            Meteor.users.update({_id: Meteor.userId()}, {$addToSet: {"profile.like": post_id}});
+            Meteor.call('postAddLike', post_id, function (err, res) {
+                this.forceUpdate();
+            }.bind(this));
+        }
+    }
+
     postForm(post) {
 
         if (post.post_title.length > 20) {
@@ -147,11 +174,12 @@ class PostsList extends Component {
                             }}>
                     <BookmarkIcon color={bookmarkColor}/>
                 </IconButton>
-                <div onClick={() => browserHistory.push(post.post_url)}>
-
-                    <div style={Styles.postTitle}>{post.post_title}</div>
-                    <div style={Styles.createdAt}>{post.post_created_at.toString()}</div>
-                    <div style={Object.assign(Styles.postContent, {width: contentWidth})}>{post.post_content}</div>
+                <div>
+                    <div className="postMain" onClick={() => browserHistory.push(post.post_url)}>
+                        <div style={Styles.postTitle}>{post.post_title}</div>
+                        <div style={Styles.createdAt}>{post.post_created_at.toString()}</div>
+                        <div style={Object.assign(Styles.postContent, {width: contentWidth})}>{post.post_content}</div>
+                    </div>
 
                     <div className="postFooter" style={Styles.postFooter}>
                         <div className="user" style={{float: 'left', width: '60%', height: '100%'}}>
@@ -162,7 +190,11 @@ class PostsList extends Component {
                         <div style={Styles.rightInfoWrapper}>
                             <div style={Styles.heartInfo}>
                                 <div>
-                                    <LikeIcon style={Styles.likeIcon} color={likeIconColor}/>
+                                    <LikeIcon style={Styles.likeIcon} color={likeIconColor}
+                                              onTouchTap={(e) => {
+                                                  e.preventDefault();
+                                                  this.clickLikeButton(post._id)
+                                              }}/>
                                 </div>
                                 <div style={Styles.likeText}>
                                     {likeCount}
@@ -194,8 +226,9 @@ class PostsList extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log(11);
-        console.log(nextProps);
+        if (Meteor.user().profile.isAdmin) {
+            this.setState({writeButtonDisabled: false});
+        }
 
         for (var i in nextProps.lecture.lecture_users) {
             if (nextProps.lecture.lecture_users[i].user_id === Meteor.user()._id) {

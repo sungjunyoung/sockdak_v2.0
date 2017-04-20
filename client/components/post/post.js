@@ -61,6 +61,10 @@ class Post extends Component {
 
     componentWillReceiveProps(nextProps) {
 
+        if (Meteor.user().profile.isAdmin) {
+            this.setState({writeButtonDisabled: false});
+        }
+
         if (nextProps.lecture !== undefined) {
             for (var i in nextProps.lecture.lecture_users) {
                 if (nextProps.lecture.lecture_users[i].user_id === Meteor.user()._id) {

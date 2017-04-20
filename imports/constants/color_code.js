@@ -13,7 +13,8 @@ const colorCode = {
     B : '#BBF',
     openclassglo : '#FBB',
     GEBG : '#DAD',
-    APHY : '#459'
+    APHY : '#459',
+    GECG : '#459',
 };
 
 export default colorCode;

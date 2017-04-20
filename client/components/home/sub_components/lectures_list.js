@@ -29,7 +29,9 @@ class Lecture extends Component {
             <div>
                 <div className="channel-color-box"
                      style={Object.assign(Styles.channelColorBox, {backgroundColor: this.props.lecture.lecture_color})}/>
-                <ListItem leftAvatar={<Avatar src=""/>} onTouchTap={() => browserHistory.push(this.props.lecture.lecture_url)} style={Styles.lectureItem}>
+                <ListItem leftAvatar={<Avatar src=""/>}
+                          onTouchTap={() => browserHistory.push(this.props.lecture.lecture_url)}
+                          style={Styles.lectureItem}>
                     <div>
                         {this.props.lecture.lecture_name}
                     </div>
@@ -48,7 +50,7 @@ class LecturesList extends Component {
     // 강의리스트 렌더링
     renderLectureList() {
 
-        var timer = -1;
+        var timer = -0.1;
         return this.props.lectures.map(lecture => {
 
             let str = lecture.lecture_code;
@@ -57,11 +59,12 @@ class LecturesList extends Component {
             lecture.lecture_color = ColorCode[str];
             lecture.lecture_url = `/lecture/${lecture.lecture_code}`;
 
-            timer += 1;
+            timer += 0.1;
 
             return (
-                <div style={{animationDuration: '.' + timer + 's', animationName: 'slideIn', marginBottom: 2}}
-                     key={lecture.lecture_code}>
+                <div
+                    style={{animationDuration: timer + 's', animationName: 'slideIn', marginBottom: 2}}
+                    key={lecture.lecture_code}>
                     <Lecture lecture={lecture}/>
                 </div>
             )
@@ -70,7 +73,6 @@ class LecturesList extends Component {
 
     render() {
 
-            console.log(this.props.lectures);
         return (
             <div style={{marginLeft: -8, marginRight: -8, marginTop: this.props.lectureListMargin}}>
                 <CircularProgress style={Object.assign(Styles.loading, {visibility: this.props.loadingVisibility})}/>
@@ -97,7 +99,11 @@ export default createContainer((props) => {
             return {lectures: [], loadingVisibility, listTitle: "검색 결과"};
         } else {
             loadingVisibility = 'hidden';
-            return {lectures: Lectures.find({}, {sort: {lecture_name: 1}}).fetch(), loadingVisibility, listTitle: "검색 결과"};
+            return {
+                lectures: Lectures.find({}, {sort: {lecture_name: 1}}).fetch(),
+                loadingVisibility,
+                listTitle: "검색 결과"
+            };
         }
 
 
@@ -112,7 +118,11 @@ export default createContainer((props) => {
             return {lectures: [], loadingVisibility, listTitle: "내 강의실"};
         } else {
             loadingVisibility = 'hidden';
-            return {lectures: Lectures.find({}, {sort: {lecture_name: 1}}).fetch(), loadingVisibility, listTitle: "내 강의실"};
+            return {
+                lectures: Lectures.find({}, {sort: {lecture_name: 1}}).fetch(),
+                loadingVisibility,
+                listTitle: "내 강의실"
+            };
         }
     }
 

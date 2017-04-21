@@ -118,7 +118,7 @@ class MyPage extends Component {
         // 화면조정
         var userInfoWidth = this.state.width;
         if (this.state.width > 600) {
-            userInfoWidth = 616;
+            userInfoWidth = 600;
         }
 
         // 닉네임 바꾸기 멘트

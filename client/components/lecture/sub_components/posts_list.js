@@ -113,7 +113,7 @@ class PostsList extends Component {
             post.post_content += '...';
         } else {
             if (this.state.width < 600) {
-                contentWidth = this.state.width - 24;
+                contentWidth = this.state.width;
             } else {
                 contentWidth = 600
             }

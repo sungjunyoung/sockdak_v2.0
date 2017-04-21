@@ -14,7 +14,6 @@ const styles = {
     },
     userInfo: {
         width: '100%',
-        left: -8,
         position: 'absolute',
         top: 50,
         backgroundColor: '#ffffff',

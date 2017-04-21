@@ -7,8 +7,8 @@ const styles = {
     container: {
         position: 'absolute',
         top: 0,
-        left: -8,
-        paddingTop: 100,
+        left: 0,
+        paddingTop: 120,
         // backgroundColor: 'red'
     },
     loading: {
@@ -49,10 +49,7 @@ const styles = {
         right: 0,
         height: 37,
         color: 'white'
-    },
-    subComponent: {
     }
-
 };
 
 export default styles;

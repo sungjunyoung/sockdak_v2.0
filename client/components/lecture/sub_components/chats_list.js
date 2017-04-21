@@ -144,7 +144,6 @@ class ChatList extends Component {
         return (
             <div className="chatListContainer"
                  style={{
-                     padding: '8px 8px 0 8px',
                      position: 'absolute',
                      width: '100%',
                      height: this.state.height - 120
@@ -171,7 +170,7 @@ class ChatList extends Component {
                         // onFocus={this.onInputFocus.bind(this)}
                            onKeyPress={this.keyboardInput.bind(this)}
                            onChange={this.onChatChange.bind(this)}
-                           style={{width: containerWidth - 120}}
+                           style={{width: containerWidth - 160}}
                            value={this.state.chatContent}
                            ref={(input) => {
                                this.inputChat = input;

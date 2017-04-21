@@ -24,7 +24,7 @@ const styles = {
         position: 'fixed',
         width: '100%',
         left: 0,
-        marginTop: '-10px',
+        marginTop: '-2px',
         backgroundColor: 'lightgray'
     },
     searchButton: {

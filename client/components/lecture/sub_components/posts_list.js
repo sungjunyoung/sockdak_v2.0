@@ -178,7 +178,7 @@ class PostsList extends Component {
                     <div className="postMain">
                         <div style={Styles.postTitle}>{post.post_title}</div>
                         <div style={Styles.createdAt}>{post.post_created_at.toString()}</div>
-                        <div style={Object.assign(Styles.postContent, {width: contentWidth})}>{post.post_content}</div>
+                        <div style={Styles.postContent}>{post.post_content}</div>
                     </div>
 
                     <div className="postFooter" style={Styles.postFooter}>

@@ -68,10 +68,17 @@ class WritePost extends Component {
             return (<div></div>)
         }
 
+        var containerWidth = 0;
+        if(this.state.width >= 600){
+            containerWidth = 584;
+        } else{
+            containerWidth = this.state.width - 16;
+        }
+
         return (
 
             <div className="container" style={Object.assign(Styles.container, {
-                width: this.state.width - 16,
+                width: containerWidth,
                 height: this.state.height - 70
             })}>
                 <WindowResizeListener onResize={windowSize => {

@@ -31,7 +31,7 @@ class Intro extends Component {
     render() {
         return (
             <div className="container" style={Styles.container}>
-                <div style={Styles.subContainer}>
+                <div className="subContainer" style={Styles.subContainer}>
                     <div className="logo" style={Styles.logo}>SOCKDAK</div>
                     <RaisedButton className="start-button" onTouchTap={this.onStart} style={Styles.startButton}
                                   label="시작하기"/>

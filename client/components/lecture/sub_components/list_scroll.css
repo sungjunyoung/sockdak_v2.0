@@ -1,4 +1,4 @@
 .list {
-    position: fixed;
+    position: absolute;
     overflow-y:scroll;
 }

@@ -31,11 +31,11 @@ const styles = {
         color: "lightgray"
     },
     postItem: {
+        borderRadius: 10,
         backgroundColor: "#ffffff",
-        marginBottom: 40
+        marginBottom: 45
     },
     bookmarkButton:{
-        zIndex: 999,
         position: 'absolute',
         right: 5,
         top: 5
@@ -46,7 +46,8 @@ const styles = {
         height: 40,
         width: '100%',
         left : 0,
-        marginTop: 5
+        marginTop: 5,
+        borderRadius: "0 0 10px 10px"
     },
     userIcon: {
         position: 'absolute',

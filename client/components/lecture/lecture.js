@@ -124,9 +124,9 @@ class Lecture extends Component {
 
         var containerWidth;
         if (this.state.width >= 600) {
-            containerWidth = 620;
+            containerWidth = 600;
         } else {
-            containerWidth = this.state.width;
+            containerWidth = this.state.width - 8;
         }
 
         return (
@@ -149,16 +149,14 @@ class Lecture extends Component {
                                 index={this.state.swipeIndex}
                                 onSwitching={this.onSwitch.bind(this)}>
                     <div className="postsList" style={Object.assign(Styles.subComponent, {
-                        height: this.state.height - 110,
-                        width: containerWidth + 8
+                        height: this.state.height - 110
                     })}>
                         <PostsList lectureColor={this.props.lectureColor} lecture={this.props.lecture}/>
                     </div>
 
 
                     <div className="chatsList" style={Object.assign(Styles.subComponent, {
-                        height: this.state.height - 110,
-                        width: containerWidth + 8
+                        height: this.state.height - 110
                     })}>
                         <ChatList lecture={this.props.lecture} lectureColor={this.props.lectureColor}/>
                     </div>

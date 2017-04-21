@@ -115,7 +115,7 @@ class PostsList extends Component {
             if (this.state.width < 600) {
                 contentWidth = this.state.width - 24;
             } else {
-                contentWidth = 596
+                contentWidth = 600
             }
         }
         post.post_url = `/lecture/${post.post_lecture_code}/post/${post._id}`;
@@ -166,16 +166,16 @@ class PostsList extends Component {
         var bookmarkColor = isBookmarked ? "#f7e81f" : "lightgray";
 
         return (
-            <div>
+            <div className="onePost">
                 <IconButton style={Styles.bookmarkButton}
                             onTouchTap={(e) => {
-                                e.preventDefault();
                                 this.onBookmark(post._id);
+                                e.stopPropagation();
                             }}>
                     <BookmarkIcon color={bookmarkColor}/>
                 </IconButton>
                 <div>
-                    <div className="postMain" onClick={() => browserHistory.push(post.post_url)}>
+                    <div className="postMain">
                         <div style={Styles.postTitle}>{post.post_title}</div>
                         <div style={Styles.createdAt}>{post.post_created_at.toString()}</div>
                         <div style={Object.assign(Styles.postContent, {width: contentWidth})}>{post.post_content}</div>
@@ -191,11 +191,11 @@ class PostsList extends Component {
                             <div style={Styles.heartInfo}>
                                 <div>
                                     <LikeIcon
-                                        class=".likeIcon"
+                                        className="likeIcon"
                                         style={Styles.likeIcon} color={likeIconColor}
                                         onTouchTap={(e) => {
-                                            e.preventDefault();
-                                            this.clickLikeButton(post._id)
+                                            this.clickLikeButton(post._id);
+                                            e.stopPropagation();
                                         }}/>
                                 </div>
                                 <div style={Styles.likeText}>
@@ -220,7 +220,13 @@ class PostsList extends Component {
     renderPostList() {
         return this.props.posts.map(post => {
             return (
-                <ListItem key={post._id} style={Styles.postItem}>
+                <ListItem
+                    onTouchTap={(e) => {
+                        browserHistory.push(post.post_url)
+                    }}
+                    className="postListItem"
+                    key={post._id}
+                    style={Styles.postItem}>
                     {this.postForm(post)}
                 </ListItem>
             )
@@ -305,7 +311,7 @@ class PostsList extends Component {
                 </FloatingActionButton>
 
                 <Infinite
-                    className="list"
+                    style={{width: 600}}
                     containerHeight={this.state.height - 103}
                     elementHeight={140}
                     onInfiniteLoad={this.handleInfiniteLoad}

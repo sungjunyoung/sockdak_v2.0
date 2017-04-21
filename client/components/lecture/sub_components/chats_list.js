@@ -170,7 +170,6 @@ class ChatList extends Component {
 
                 <div className="sendChatWrapper" style={Styles.sendChatWrapper}>
                     <input className="inputChat"
-                        // onFocus={this.onInputFocus.bind(this)}
                            onKeyPress={this.keyboardInput.bind(this)}
                            onChange={this.onChatChange.bind(this)}
                            style={{width: inputWidth}}

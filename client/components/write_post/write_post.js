@@ -56,7 +56,7 @@ class WritePost extends Component {
         }
     }
 
-    componentDidMount(){
+    componentDidMount() {
     }
 
     render() {
@@ -70,7 +70,10 @@ class WritePost extends Component {
 
         return (
 
-            <div className="container" style={Object.assign(Styles.container, {height: this.state.height - 70})}>
+            <div className="container" style={Object.assign(Styles.container, {
+                width: this.state.width - 16,
+                height: this.state.height - 70
+            })}>
                 <WindowResizeListener onResize={windowSize => {
                     this.setState({height: windowSize.windowHeight, width: windowSize.windowWidth});
                 }}/>

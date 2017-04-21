@@ -135,10 +135,13 @@ class ChatList extends Component {
     render() {
 
         var containerWidth = 0;
+        var inputWidth = 0;
         if (this.state.width < 600) {
             containerWidth = this.state.width * 94 / 100;
+            inputWidth = containerWidth - 140;
         } else {
             containerWidth = 600;
+            inputWidth = containerWidth - 160;
         }
 
         return (
@@ -170,7 +173,7 @@ class ChatList extends Component {
                         // onFocus={this.onInputFocus.bind(this)}
                            onKeyPress={this.keyboardInput.bind(this)}
                            onChange={this.onChatChange.bind(this)}
-                           style={{width: containerWidth - 160}}
+                           style={{width: inputWidth}}
                            value={this.state.chatContent}
                            ref={(input) => {
                                this.inputChat = input;
@@ -178,7 +181,7 @@ class ChatList extends Component {
                     <FlatButton
                         className="sendChatButton"
                         style={{
-                            position: 'absolute', right: 18, top: 8, color: '#ffffff',
+                            position: 'absolute', right: 18, top: 7, color: '#ffffff',
                             borderRadius: '5px'
                         }}
                         hoverColor={this.props.lectureColor}

@@ -113,7 +113,7 @@ class PostsList extends Component {
             post.post_content += '...';
         } else {
             if (this.state.width < 600) {
-                contentWidth = this.state.width;
+                contentWidth = this.state.width -4;
             } else {
                 contentWidth = 600
             }
@@ -222,7 +222,8 @@ class PostsList extends Component {
             return (
                 <ListItem
                     onTouchTap={(e) => {
-                        browserHistory.push(post.post_url)
+                        browserHistory.push(post.post_url);
+                        e.stopPropagation();
                     }}
                     className="postListItem"
                     key={post._id}

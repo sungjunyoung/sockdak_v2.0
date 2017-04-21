@@ -5,10 +5,10 @@
 const styles = {
     container: {
         position: 'absolute',
-        width: '100%',
         left: 0,
         top: 0,
         paddingTop: 60,
+        margin: 8
         // backgroundColor: 'red'
     },
     inputPostConfirm:{

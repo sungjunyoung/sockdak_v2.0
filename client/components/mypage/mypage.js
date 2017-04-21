@@ -190,12 +190,12 @@ class MyPage extends Component {
 
                 <div className="userSettings" style={Styles.userSettings}>
                     <Subheader>설정</Subheader>
-                    <List style={{marginLeft: -8, marginRight: -8, marginBottom: 10, backgroundColor: '#ffffff'}}>
+                    <List style={{marginBottom: 10, backgroundColor: '#ffffff'}}>
                         <ListItem primaryText="잠금설정" leftIcon={<LockIcon style={Styles.listIcons}/>}/>
                         <ListItem primaryText="알림설정" leftIcon={<AlarmIcon style={Styles.listIcons}/>}/>
                     </List>
                     <Subheader>고객지원</Subheader>
-                    <List style={{marginLeft: -8, marginRight: -8, backgroundColor: '#ffffff'}}>
+                    <List style={{backgroundColor: '#ffffff'}}>
                         <ListItem primaryText="공지사항" leftIcon={<NoticeIcon style={Styles.listIcons}/>}/>
                         <ListItem primaryText="제작자 한마디" leftIcon={<DeveloperSayIcon style={Styles.listIcons}/>}/>
                         <ListItem primaryText="문의 / 버그신고" leftIcon={<BugReportIcon style={Styles.listIcons}/>}/>

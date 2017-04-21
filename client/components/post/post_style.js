@@ -20,8 +20,6 @@ const styles = {
     subContainer: {
         position: 'absolute',
         paddingBottom: 55,
-        marginLeft: -8,
-        marginRight: -8,
         backgroundColor: '#f7f7f'
     },
     postTitle: {

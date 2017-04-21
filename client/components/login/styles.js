@@ -26,7 +26,6 @@ const styles = {
         fontSize: 15
     },
     schoolSelectField: {
-        marginTop: -8,
         width: '100%'
     },
     userIdField: {

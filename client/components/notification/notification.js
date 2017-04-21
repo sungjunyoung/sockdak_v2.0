@@ -97,8 +97,7 @@ class Notification extends Component {
 
                 <Infinite
                     containerHeight={this.state.height - 100}
-                    elementHeight={48}
-                    style={{marginLeft: -8, marginRight: -8}}>
+                    elementHeight={48}>
                     <Subheader>알림</Subheader>
                     {Meteor.user().profile.notifications ? this.renderNotiList() : null}
                 </Infinite>

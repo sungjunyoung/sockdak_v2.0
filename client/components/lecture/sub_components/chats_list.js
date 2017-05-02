@@ -161,7 +161,7 @@ class ChatList extends Component {
                         className="chattingInfinitList"
                         containerHeight={this.state.height - 180}
                         elementHeight={48}
-                        displayBottomUpwards
+                        displayBottomUpwaras
                         infiniteLoadBeginEdgeOffset={200}
                         ref="scrollThis">
                         {this.props.chats ? this.renderChatList() : null}

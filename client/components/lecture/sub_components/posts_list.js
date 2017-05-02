@@ -80,7 +80,7 @@ class PostsList extends Component {
 
     // 라이크 버튼 눌렀을때
     clickLikeButton(post_id) {
-        
+
         if(Meteor.user().username === 'guest'){
             AlertModule.alert('error', '게스트 계정은 좋아요를 하실 수 없어요!');
             return;
@@ -323,7 +323,7 @@ class PostsList extends Component {
 
                 <Infinite
                     style={{width: 600}}
-                    containerHeight={this.state.height - 103}
+                    containerHeight={this.state.height - 120}
                     elementHeight={140}
                     onInfiniteLoad={this.handleInfiniteLoad}
                     loadingSpinnerDelegate={this.elementInfiniteLoad()}

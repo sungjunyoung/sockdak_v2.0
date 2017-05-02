@@ -38,6 +38,19 @@ const styles = {
         right: 10,
         top: 10,
         zIndex: 999
+    },
+    guestInfo:{
+        position: 'fixed',
+        left: 0,
+        bottom: 0,
+        width: '100%',
+        height: 'auto',
+        padding: 10,
+        backgroundColor: 'gray'
+    },
+    guestInfoText: {
+        fontSize: 12,
+        color: '#ffffff'
     }
 };
 

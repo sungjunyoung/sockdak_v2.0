@@ -12,6 +12,7 @@ import {Comments} from '../imports/collections/comments'
 import {Chats} from '../imports/collections/chats'
 import {Admins} from '../imports/collections/admins'
 
+
 Meteor.startup(() => {
 
     WebApp.connectHandlers.use(function (req, res, next) {
@@ -29,11 +30,13 @@ Meteor.startup(() => {
     //강좌
     // 유저의 강좌 리스트를 발행
     Meteor.publish('userLectures', function () {
-
+        // 일반계정, 어드민 계정, 게스트 계정
         if (Meteor.users.findOne({_id: this.userId}).profile.isAdmin) {
             return ReactiveAggregate(this, Lectures, [
                 {$sort: {"lecture_name": 1}}
             ]);
+        } else if (Meteor.users.findOne({_id: this.userId}).username === 'guest') {
+            return Lectures.find();
         } else {
             return ReactiveAggregate(this, Lectures, [
                 {$match: {"lecture_users.user_id": this.userId}},

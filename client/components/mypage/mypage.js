@@ -59,7 +59,10 @@ class MyPage extends Component {
 
     changeNickname() {
         // 닉네임 업데이트는 세번 제한
-        if (Meteor.user().profile.changeNicknameCount >= 3) {
+        if(Meteor.user().username === 'guest'){
+            AlertModule.alert('error', '게스트 계정은 닉네임을 변경할 수 없어요!');
+            return
+        } else if (Meteor.user().profile.changeNicknameCount >= 3) {
             // 컨펌창
             this.setState({showChangeNicknameConfirm: true});
             return;
@@ -123,7 +126,9 @@ class MyPage extends Component {
 
         // 닉네임 바꾸기 멘트
         var changeNicknameInfo = "닉네임 바꿀래요? " + this.props.user.profile.changeNicknameCount + "번 남았어요!";
-        if (this.props.user.profile.changeNicknameCount === 0) {
+        if(Meteor.user().username === 'guest'){
+            changeNicknameInfo = "게스트 계정은 랜덤 닉네임 변경을 할 수 없어요!"
+        } else if (this.props.user.profile.changeNicknameCount === 0) {
             changeNicknameInfo = "닉네임 변경기회 세번을 다 써버렷네요.."
         }
 

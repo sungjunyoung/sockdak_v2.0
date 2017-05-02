@@ -76,6 +76,10 @@ class Post extends Component {
     }
 
     onBookmark(post_id) {
+        if(Meteor.user().username === 'guest'){
+            AlertModule.alert('error', '게스트 계정은 북마크를 하실 수 없어요!');
+            return;
+        }
         var userBookmarks = Meteor.user().profile.bookmark;
 
         for (var i = 0; i < userBookmarks.length; i++) {
@@ -191,6 +195,10 @@ class Post extends Component {
     }
 
     clickLikeButton(post_id) {
+        if(Meteor.user().username === 'guest'){
+            AlertModule.alert('error', '게스트 계정은 좋아요를 하실 수 없어요!');
+            return;
+        }
 
         var userLikes = Meteor.user().profile.like;
 

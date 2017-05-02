@@ -61,30 +61,63 @@ class Login extends Component {
         }
     }
 
+    onGuestLogin(event, value) {
+
+        //게스트 계정이 있는지 확인
+        //있으면 로그인
+        //없으면 계정생성 후 로그인
+
+        Meteor.call('findUserByUsername', 'guest', function (res) {
+            if (res === undefined) {
+                Accounts.createUser({
+                    username: 'guest',
+                    password: 'none',
+                    profile: {
+                        nickname: '게스트 계정이에요',
+                        name: '게스트',
+                        bookmark: [],
+                        like: [],
+                        notifications: [],
+                        changeNicknameCount: -1,
+                        isAdmin: false
+                    }
+                });
+
+                Meteor.loginWithPassword('guest', 'none', function (err, res) {
+                    browserHistory.push('home');
+                });
+            } else {
+                Meteor.loginWithPassword('guest', 'none', function (err, res) {
+                    browserHistory.push('home');
+                });
+            }
+        })
+    }
+
     // 로그인시 호출
     onLogin(event, value) {
         event.preventDefault();
         this.setState({loadingVisibility: 'visible'});
 
         // 로그인 예외처리
-        if (this.state.school != '경희대학교') {
+        if (this.state.school !== '경희대학교') {
             AlertModule.alert('error', '학교를 선택해 주세요!');
             this.setState({loadingVisibility: 'hidden'});
             return;
         }
 
-        if (this.state.id.length != 10) {
+        if (this.state.id.length !== 10) {
             AlertModule.alert('error', '학번을 정확히 입력해 주세요!');
             this.setState({loadingVisibility: 'hidden'});
             return;
         }
 
-        if (this.state.pw.length == 0) {
+        if (this.state.pw.length === 0) {
             AlertModule.alert('error', '비밀번호를 입력해 주세요!');
             this.setState({loadingVisibility: 'hidden'});
             return;
         }
-        if (this.state.approve == false) {
+        if (this.state.approve === false) {
             AlertModule.alert('error', '이용약관에 동의해 주세요!');
             this.setState({loadingVisibility: 'hidden'});
             return;
@@ -94,8 +127,6 @@ class Login extends Component {
         var id = this.state.id;
         var pw = this.state.pw;
 
-
-        //TODO 어드민 로그인
 
         // 결과 promise 로 리턴
         var resultPromise = Meteor.callPromise('loginToKhu', this.state.id, this.state.pw);
@@ -133,7 +164,7 @@ class Login extends Component {
 
                         // 없으면 강의정보 및 회원정보 만들기
                         else {
-                            if(loginResult === 'REST_BUT_ADMIN'){
+                            if (loginResult === 'REST_BUT_ADMIN') {
                                 res.lectures = [];
                             }
 
@@ -146,7 +177,7 @@ class Login extends Component {
                                     name: res.info.name,
                                     bookmark: [],
                                     like: [],
-                                    notifications:[],
+                                    notifications: [],
                                     changeNicknameCount: 3,
                                     isAdmin: isAdmin
                                 }
@@ -232,6 +263,8 @@ class Login extends Component {
 
                 <div style={Styles.subContainer}>
                     <RaisedButton onTouchTap={this.onLogin.bind(this)} style={Styles.loginButton} label="로그인"/>
+                    <RaisedButton onTouchTap={this.onGuestLogin.bind(this)} style={Styles.guestLoginButton}
+                                  label="게스트로 둘러보기"/>
                 </div>
             </div>
         );

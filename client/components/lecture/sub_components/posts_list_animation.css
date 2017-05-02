@@ -1,12 +1,17 @@
 
-@-webkit-keyframes slideIn {
+.onePost{
+    animation-duration: 1s;
+    animation-name: fadeIn;
+}
+
+@-webkit-keyframes fadeIn {
     from {
-        margin-left: -100%;
-        width: 100%;
+        opacity: 0;
+        width: 100%
     }
 
     to {
-        margin-left: 0;
+        opacity: 1;
         width: 100%;
     }
 }

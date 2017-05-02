@@ -41,6 +41,7 @@ class Lecture extends Component {
     }
 }
 
+
 class LecturesList extends Component {
     constructor(props) {
         super(props);
@@ -116,6 +117,17 @@ export default createContainer((props) => {
         if (!subscribeHandle.ready()) {
             loadingVisibility = 'visible';
             return {lectures: [], loadingVisibility, listTitle: "내 강의실"};
+        } else if (Meteor.user().username === 'guest') {
+            loadingVisibility = 'hidden';
+            var allLectures = Lectures.find({}, {sort: {lecture_name: 1}}).fetch();
+            var randomLectures = [];
+            for (var i = 0; i < 5; i++) {
+                var count = allLectures.length;
+                var randomNum = Math.floor(Math.random() * count);
+                randomLectures.push(allLectures[randomNum]);
+                allLectures.splice(randomNum, 1);
+            }
+            return {lectures: randomLectures, loadingVisibility, listTitle: "내 강의실"}
         } else {
             loadingVisibility = 'hidden';
             return {

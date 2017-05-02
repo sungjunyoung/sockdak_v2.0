@@ -74,6 +74,26 @@ class SubHeader extends Component {
     }
 }
 
+
+class GuestInfo extends Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        return (
+            <div className="guestInfo" style={Styles.guestInfo}>
+                <div className="guestInfoTexts">
+                    <div className="guestInfoText" style={Styles.guestInfoText}>게스트 계정으로 로그인하셧어요.</div>
+                    <br/>
+                    <div className="guestInfoText" style={Styles.guestInfoText}>개설된 강의방의 랜덤 5개만 보이고</div>
+                    <div className="guestInfoText" style={Styles.guestInfoText}>게시판 및 채팅에 참여하실 수 없어요.</div>
+                </div>
+            </div>
+        )
+    }
+}
+
 class Home extends Component {
     constructor(props) {
         super(props);
@@ -89,7 +109,8 @@ class Home extends Component {
             width: $(window).width(),
             findState: false,
             toFind: '',
-            lectureListMargin: 0
+            lectureListMargin: 0,
+            isGuest: false
         };
     }
 
@@ -121,18 +142,19 @@ class Home extends Component {
         }
     }
 
-    render() {
+    componentDidMount() {
+        setTimeout(function () {
+            if (Meteor.user().username === 'guest')
+                this.setState({isGuest: true})
+        }.bind(this), 600);
+    }
 
+    render() {
         setTimeout(function () {
             if (Meteor.user() === null) {
                 browserHistory.push('/login-please');
             }
-
-            // var browserName = parser.setUA(ua).getBrowser().name;
-            // console.log(browserName);
-
         }, 500);
-
 
         return (
             <div className="container" style={Object.assign(Styles.container, {height: this.state.height - 80})}>
@@ -159,6 +181,9 @@ class Home extends Component {
 
                 <div style={Styles.subContainer}>
                 </div>
+
+                {this.state.isGuest ? <GuestInfo/> : null}
+
             </div>
         );
     }

@@ -10,7 +10,6 @@ Meteor.methods({
 
     // 경희대학교 종정시에 로그인
     'loginToKhu': function (id, pw) {
-
         return khuAuth.login(id, pw)
             .catch(function (err) {
                 if (err == 'ERROR') {
@@ -49,12 +48,12 @@ Meteor.methods({
                 }
                 else if (result == 'REST') {
                     console.log('----LOGIN--------------------------------------------------------');
-                    console.log('!! ERROR : USER IS IN REST (id : ' + id + ' / pw : ' + pw + ') !!');
+                    console.log('!! ERROR : USER IS IN REST (id : ' + id  + ') !!');
                     console.log('-----------------------------------------------------------------');
                 }
                 else if (result == 'INCORRECT') {
                     console.log('----LOGIN-----------------------------------------------------------------------');
-                    console.log('!! ERROR : USER INFORMATION IS NOT CORRECT (id : ' + id + ' / pw : ' + pw + ') !!');
+                    console.log('!! ERROR : USER INFORMATION IS NOT CORRECT (id : ' + id + ') !!');
                     console.log('--------------------------------------------------------------------------------');
                 }
                 return result;

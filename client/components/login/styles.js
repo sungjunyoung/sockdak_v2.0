@@ -48,6 +48,15 @@ const styles = {
         maxWidth: '500px',
         zIndex: 999
     },
+    guestLoginButton:{
+        position: 'fixed',
+        margin: '0 auto',
+        left: 10,
+        right: 10,
+        bottom : 55,
+        maxWidth: '500px',
+        zIndex: 999
+    },
     loading: {
         position: 'fixed',
         top: '50%',

@@ -4,8 +4,8 @@
 
 const styles = {
 
-    floatingButton:{
-        position:'fixed',
+    floatingButton: {
+        position: 'fixed',
         zIndex: 999,
         bottom: 10,
         right: 10
@@ -16,15 +16,15 @@ const styles = {
         marginBottom: 5,
         fontWeight: 'bold'
     },
-    postContent:{
+    postContent: {
         marginLeft: '3%',
         marginRight: '3%',
         marginBottom: 10,
         wordBreak: 'break-word',
         // width: '94%',
-        color:"gray"
+        color: "gray"
     },
-    createdAt:{
+    createdAt: {
         marginBottom: 10,
         fontSize: 10,
         marginLeft: 10,
@@ -35,17 +35,17 @@ const styles = {
         backgroundColor: "#ffffff",
         marginBottom: 45
     },
-    bookmarkButton:{
+    bookmarkButton: {
         position: 'absolute',
         right: 5,
         top: 5
     },
-    postFooter:{
+    postFooter: {
         backgroundColor: '#f1f2f1',
         position: 'absolute',
         height: 40,
         width: '100%',
-        left : 0,
+        left: 0,
         marginTop: 5,
         borderRadius: "0 0 10px 10px"
     },
@@ -55,9 +55,9 @@ const styles = {
         left: 20,
         height: 20
     },
-    userNickname:{
+    userNickname: {
         position: 'absolute',
-        fontSize : 12,
+        fontSize: 12,
         color: 'gray',
         top: 12,
         left: 45
@@ -98,6 +98,19 @@ const styles = {
         float: 'left',
         width: '50%',
         height: '100%',
+    },
+    not_exist: {
+        paddingTop: '30%',
+        textAlign: 'center'
+    },
+    not_exist_desc_1: {
+        fontSize: '22px',
+        fontWeight:'bold',
+        color: '#848484',
+        paddingBottom: '10px'
+    },
+    not_exist_desc_2: {
+        color: 'darkgray'
     },
 };
 

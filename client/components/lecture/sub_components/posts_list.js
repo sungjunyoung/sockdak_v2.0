@@ -60,7 +60,7 @@ class PostsList extends Component {
 
 
     onBookmark(post_id) {
-        if(Meteor.user().username === 'guest'){
+        if (Meteor.user().username === 'guest') {
             AlertModule.alert('error', '게스트 계정은 북마크를 하실 수 없어요!');
             return;
         }
@@ -81,7 +81,7 @@ class PostsList extends Component {
     // 라이크 버튼 눌렀을때
     clickLikeButton(post_id) {
 
-        if(Meteor.user().username === 'guest'){
+        if (Meteor.user().username === 'guest') {
             AlertModule.alert('error', '게스트 계정은 좋아요를 하실 수 없어요!');
             return;
         }
@@ -123,7 +123,7 @@ class PostsList extends Component {
             post.post_content += '...';
         } else {
             if (this.state.width < 600) {
-                contentWidth = this.state.width -4;
+                contentWidth = this.state.width - 4;
             } else {
                 contentWidth = 600
             }
@@ -321,15 +321,21 @@ class PostsList extends Component {
                     <ContentAdd/>
                 </FloatingActionButton>
 
-                <Infinite
-                    style={{width: 600}}
-                    containerHeight={this.state.height - 120}
-                    elementHeight={140}
-                    onInfiniteLoad={this.handleInfiniteLoad}
-                    loadingSpinnerDelegate={this.elementInfiniteLoad()}
-                    isInfiniteLoading={this.state.isInfiniteLoading}>
-                    {this.props.posts ? this.renderPostList() : null}
-                </Infinite>
+                {this.props.posts.length === 0 ?
+                    <div className="not_exist" style={Styles.not_exist}>
+                        <img src="/resources/sockdak_not_exist.png" className="not_exist_img"/>
+                        <div className="not_exist_desc_1" style={Styles.not_exist_desc_1}>아직 등록된 글이 없네요 :)</div>
+                        <div className="not_exist_desc_2" style={Styles.not_exist_desc_2}>아래 버튼을 눌러 첫번째 글을 등록해보시겠어요?</div>
+                    </div>
+                    : <Infinite
+                        style={{width: 600}}
+                        containerHeight={this.state.height - 120}
+                        elementHeight={140}
+                        onInfiniteLoad={this.handleInfiniteLoad}
+                        loadingSpinnerDelegate={this.elementInfiniteLoad()}
+                        isInfiniteLoading={this.state.isInfiniteLoading}>
+                        {this.props.posts ? this.renderPostList() : null}
+                    </Infinite>}
             </div>
         )
     }

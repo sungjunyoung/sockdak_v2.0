@@ -104,13 +104,15 @@ const styles = {
         textAlign: 'center'
     },
     not_exist_desc_1: {
-        fontSize: '22px',
+        marginTop: '-20px',
+        fontSize: '16px',
         fontWeight:'bold',
         color: '#848484',
-        paddingBottom: '10px'
+        paddingBottom: '5px'
     },
     not_exist_desc_2: {
-        color: 'darkgray'
+        color: 'darkgray',
+        fontSize: '13px'
     },
 };
 

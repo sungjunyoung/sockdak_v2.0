@@ -94,7 +94,7 @@ class Post extends Component {
 
     commentForm(comment) {
         return (
-            <div className="commentItem" style={{margin: "-6px 0 -6px 0"}}>
+            <div className="commentItem">
 
                 {/*닉네임*/}
                 <div style={Styles.commentUserInfoWrapper}>
@@ -258,7 +258,7 @@ class Post extends Component {
         if (this.state.width < 600) {
             subContanierWidth = this.state.width;
         } else {
-            subContanierWidth = 616
+            subContanierWidth = 600
         }
 
 
@@ -292,7 +292,7 @@ class Post extends Component {
         }
 
         return (
-            <div className="container" style={Object.assign(Styles.container)}>
+            <div className="container" style={Object.assign(Styles.container,{height: this.state.height - 80})}>
                 <WindowResizeListener onResize={windowSize => {
                     this.setState({height: windowSize.windowHeight, width: windowSize.windowWidth});
                 }}/>

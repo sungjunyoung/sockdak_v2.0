@@ -7,6 +7,8 @@ const styles = {
     container: {
         position: 'absolute',
         width: '100%',
+        height: '500px',
+        overflowY:'auto',
         left: 0,
         top: 0,
         paddingTop: 66,

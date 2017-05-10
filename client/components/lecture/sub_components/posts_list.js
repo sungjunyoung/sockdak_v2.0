@@ -278,6 +278,13 @@ class PostsList extends Component {
     }
 
     render() {
+
+        if(!this.props.posts){
+            return (
+                <div></div>
+            )
+        }
+
         return (
             <div>
                 <WindowResizeListener onResize={windowSize => {
@@ -321,6 +328,7 @@ class PostsList extends Component {
                     <ContentAdd/>
                 </FloatingActionButton>
 
+
                 {this.props.posts.length === 0 ?
                     <div className="not_exist" style={Styles.not_exist}>
                         <img src="/resources/sockdak_not_exist.png" className="not_exist_img"/>
@@ -356,7 +364,7 @@ export default createContainer((props) => {
             comments: Comments.find({}).fetch()
         };
     } else {
-        return {posts: [], lecture: {}};
+        return {lecture: {}};
     }
 
 
